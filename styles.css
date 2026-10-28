@@ -3,7 +3,7 @@
 :root {
   --page: #e4ecf7;
   --surface: #f7f9fc;
-  --ink: #12151c;
+  --ink: #000000;
   --muted: #485164;
   --line: #c9d3e2;
   --spectrum: linear-gradient(90deg, #ff1d1d, #ffe551 30%, #f7f9fc 50%, #00ffff 70%, #0000ff 88%, #8b00ff);
