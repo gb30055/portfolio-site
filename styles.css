@@ -239,3 +239,17 @@ h1 em { background: none; }
 .status b { color: var(--ink); font-weight: 600; font-size: 15px; }
 .avatar { width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 0 0 2px #fff; }
 .dot::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #1fa45a; margin-right: 7px; vertical-align: 1px; box-shadow: 0 0 0 3px rgba(31,164,90,0.18); }
+
+/* Key fact as a pill on the project image */
+.case-img { position: relative; }
+.pill {
+  position: absolute; left: 16px; bottom: 16px; z-index: 1;
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 8px 14px; border-radius: 999px;
+  background: rgba(247, 249, 252, 0.92); color: var(--muted);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  font-size: 14px; line-height: 1.2;
+  box-shadow: 0 6px 20px -8px rgba(18, 30, 60, 0.35);
+}
+.pill strong { color: var(--ink); font-weight: 600; }
+.case .more { margin-top: 4px; }
