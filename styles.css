@@ -253,3 +253,7 @@ h1 em { background: none; }
 }
 .pill strong { color: var(--ink); font-weight: 600; }
 .case .more { margin-top: 4px; }
+
+/* Header logo (dark badge) */
+.name.logo { display: block; line-height: 0; }
+.name.logo img { height: 44px; width: auto; }
