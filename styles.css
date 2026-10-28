@@ -257,3 +257,7 @@ h1 em { background: none; }
 /* Header logo (dark badge) */
 .name.logo { display: block; line-height: 0; }
 .name.logo img { height: 44px; width: auto; }
+
+/* Fact pills in brand blue */
+.pill { background: #0697ff; color: #fff; font-weight: 500; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.pill strong { color: #fff; }
