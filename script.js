@@ -29,3 +29,16 @@ document.querySelectorAll(".chips button").forEach((btn) => {
     document.querySelectorAll(".chips button").forEach((b) => b.setAttribute("aria-pressed", b === btn));
   });
 });
+
+// Top lines image grows in place as the page scrolls.
+const band = document.querySelector(".hero-band");
+if (band && !reduceMotion) {
+  let ticking = false;
+  const grow = () => {
+    const t = Math.min(window.scrollY / 700, 1);
+    band.style.setProperty("--grow", (1 + t * 0.5).toFixed(3));
+    ticking = false;
+  };
+  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(grow); } }, { passive: true });
+  grow();
+}
