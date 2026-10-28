@@ -262,5 +262,6 @@ h1 em { background: none; }
 .pill strong { color: #fff; }
 
 /* Top lines grow in place while scrolling */
-.hero { overflow: hidden; }
-.hero-band { transform-origin: 50% 0; transform: scale(var(--grow, 1)); will-change: transform; }
+.hero { overflow-x: clip; }
+.hero-band { transform-origin: 50% 0; transform: translateY(var(--follow, 0px)) scale(var(--grow, 1)); will-change: transform; }
+.hero-grid, .work, .exp, .about, .contact { position: relative; z-index: 1; }

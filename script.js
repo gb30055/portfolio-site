@@ -35,8 +35,9 @@ const band = document.querySelector(".hero-band");
 if (band && !reduceMotion) {
   let ticking = false;
   const grow = () => {
-    const t = Math.min(window.scrollY / 700, 1);
-    band.style.setProperty("--grow", (1 + t * 0.5).toFixed(3));
+    const y = Math.min(window.scrollY, 1000);
+    band.style.setProperty("--grow", (1 + (y / 1000) * 1.2).toFixed(3));
+    band.style.setProperty("--follow", (y * 0.45).toFixed(1) + "px");
     ticking = false;
   };
   window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(grow); } }, { passive: true });
