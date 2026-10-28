@@ -231,7 +231,6 @@ h1 em { -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 /* No rainbow lines */
 .ask::before, .for-label span:first-child::after { display: none; }
 h1 em { background: none; }
-.hero { margin-top: 0; padding-top: 48px; }
 
 /* Hero name tag with photo */
 .status { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; }
