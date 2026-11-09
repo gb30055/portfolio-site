@@ -268,3 +268,14 @@ h1 em { background: none; }
 
 /* Device photos as project thumbnails */
 .case-img img.photo { object-position: center; }
+
+/* Rows of phone screens in case studies */
+.cs .phones {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(170px, 260px); justify-content: center; gap: 16px;
+  overflow-x: auto; margin: 32px calc(50% - min(50vw - 16px, 600px)); padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+}
+.cs .phones figure { margin: 0; scroll-snap-align: start; }
+.cs .phones img { width: 100%; border-radius: 22px; border: 1px solid var(--line); background: #fff; }
+.cs .phones figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.cs-body ul b { color: var(--ink); font-weight: 600; }

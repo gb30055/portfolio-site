@@ -20,6 +20,11 @@ def vid(name, label):
         return f'<figure class="wide"><video src="../assets/{name}.mp4" autoplay muted loop playsinline aria-label="{html.escape(label)}"></video><figcaption>{label}</figcaption></figure>'
     return f'<div class="slot">Screen recording: {label}</div>' if DRAFT else ""
 
+def phones(*items):
+    # A row of phone screens: (file, alt, caption)
+    return '<div class="phones">' + "".join(
+        f'<figure><img src="../assets/{f}" alt="{html.escape(a)}" loading="lazy"><figcaption>{c}</figcaption></figure>' for f, a, c in items) + '</div>'
+
 def quote(text=None, who=None, ask=""):
     if text:
         return f'<blockquote><p>{text}</p><cite>{who}</cite></blockquote>'
@@ -42,6 +47,17 @@ PAGES = {
     sec("SongMatch: discovery like dating","Scrolling a catalogue is tiring. I borrowed a gesture everyone knows: swipe right to like a song, left to skip. Every like lands in a playlist the fan can keep.",
         vid("fc-songmatch","Swiping through songs in SongMatch"),
         fig("fc-songmatch.webp","SongMatch flow from the Explore card to the saved playlist.","From Explore to playlist",wide=True)),
+    sec("SongMatch for artists: pay to be heard, see if it worked","Fans swipe, but artists need a way into that stack. I designed the artist side as a four-step setup: pick songs, choose the clip fans will hear, pick a plan, and review before paying.",
+        phones(("sm-step1-songs.webp","Step 1: choosing songs from the artist's discography.","1. Pick songs"),
+               ("sm-step2-clip.webp","Step 2: dragging a 15-second selection on each song's waveform.","2. Choose the 15 seconds"),
+               ("sm-step3-paid.webp","Step 3: a paid plan by duration, with a slider showing 15 days, about 2,400 listens, for 29.90 euros.","3. Pick a plan"),
+               ("sm-step4-review.webp","Step 4: review of songs, clips, plan, cost and payment before launch.","4. Review and launch")),
+        ul("<b>The artist picks the 15 seconds.</b> A fan decides in one hook, so the artist chooses which part plays, starting from a default clip.",
+           "<b>Every price shows what it buys.</b> Plans show estimated listens next to the cost, and a free tier (100 views a month) lets new artists try it first.",
+           "<b>Results in fans, not impressions.</b> Each promotion shows likes against skips and new followers, with a prompt to renew as it ends."),
+        phones(("sm-active.webp","Promotions overview with progress bars, like and dislike ratios, and a renew prompt.","Active promotions"),
+               ("sm-details.webp","Promotion details: plan, progress, total listens, likes and new followers.","Promotion details"),
+               ("sm-intro.webp","SongMatch intro screen: Music for the right ears, with a swipeable song card.","How SongMatch introduces itself"))),
     sec("Creative Room: feedback pinned to the moment","\"The middle part feels off\" wastes everyone's time. In Creative Room, collaborators select part of the waveform and leave a note there, SoundCloud style, and a timeline keeps every upload, comment and task in order.",
         vid("fc-creative-room","Leaving a comment on part of a track"),
         fig("fancircle-creative-room.webp","Creative Room: a song's waveform with time-stamped comments, next to the feedback history.","Comments pinned to the waveform",wide=True),
