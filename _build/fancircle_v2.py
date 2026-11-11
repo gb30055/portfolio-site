@@ -1,4 +1,4 @@
-# Fancircle v2: the same case study with the UX audit fixes applied. Unlisted (noindex), for comparison.
+# Fancircle (v2, approved 2026-11-11): the case study with the UX audit fixes. Replaces the first version, which is in git history.
 def three(*items, cls=""):
     return phones(*items, cls=("three " + cls).strip())
 
@@ -17,9 +17,8 @@ V2_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
   + "".join(f'<a href="#{i}">{t}</a>' for i, t in [("problem","Problem"),("two-apps","Two apps"),("songmatch","SongMatch"),("artists","For artists"),("creative-room","Creative Room"),("outcome","Outcome")])
   + '</div></nav>')
 
-PAGES["fancircle-v2"] = dict(
+PAGES["fancircle"] = dict(
   cls="dark-stage scroll-story v2",
-  head='<meta name="robots" content="noindex">',
   title="Fancircle", tag="How do new artists find their first true fans?",
   intro="A loyalty-based social app for music, with a fan app and an artist app. I helped shape the product from the idea stage and led design to v1.0.",
   facts=[("Role","Head of Design"),("My part","Co-shaped the product with the founder. Designed both apps end to end, plus the prototypes and pitch decks."),("Team","Founder, COO, PM, 2 to 5 developers, QA"),("Timeline","2023 to 2025, iOS and Android")],
