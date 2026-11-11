@@ -296,3 +296,6 @@ h1 em { background: none; }
 .cs-body ul.decisions li:last-child{border-bottom:1px solid rgba(0,0,0,.12)}
 .cs-body ul.decisions li b{display:block;font-size:clamp(24px,2.8vw,32px);line-height:1.2;font-weight:500;letter-spacing:-.025em;margin-bottom:8px}
 .cs figcaption{text-align:center}
+.back{min-height:36px;padding:0 16px 0 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-size:14px;gap:8px;transition:background .2s,color .2s}
+.back::before{margin-right:0}
+.back:hover{background:rgba(0,0,0,.05);color:var(--ink)}
