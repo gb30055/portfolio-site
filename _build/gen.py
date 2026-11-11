@@ -152,6 +152,7 @@ PAGES = {
 
 TPL = open(os.path.join(ROOT, "_build", "case.tpl.html")).read()
 exec(open(os.path.join(ROOT, "_build", "fancircle_v2.py")).read())
+NEXT_IMG = {"fancircle": "thumb-fancircle.webp", "career-navig8r": "navig8r-home-feed.webp", "scandlearn": "thumb-scandlearn.webp"}
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
     hero = p["hero"] if isinstance(p["hero"], str) else fig(p["hero"][0], p["hero"][1], wide=True)
@@ -160,7 +161,7 @@ for slug, p in PAGES.items():
        .replace("{{STATS}}", "".join(f"<li><strong>{n}</strong><span>{t}</span></li>" for n, t in p["stats"]))
        .replace("{{HERO}}", hero)
        .replace("{{BODY}}", "".join(p["body"]))
-       .replace("{{NEXT_SLUG}}", p["next"]).replace("{{NEXT_TITLE}}", nxt["title"]).replace("{{NEXT_TAG}}", nxt["tag"]))
+       .replace("{{NEXT_IMG}}", NEXT_IMG[p["next"]]).replace("{{NEXT_SLUG}}", p["next"]).replace("{{NEXT_TITLE}}", nxt["title"]).replace("{{NEXT_TAG}}", nxt["tag"]))
     os.makedirs(os.path.join(ROOT, slug), exist_ok=True)
     open(os.path.join(ROOT, slug, "index.html"), "w").write(out)
     print("wrote", slug)

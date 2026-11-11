@@ -66,3 +66,19 @@
  .v2 .story-phones{grid-auto-flow:column;grid-auto-columns:72vw;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 8px}
  .v2 .story-phones figure{scroll-snap-align:start}
 }
+
+/* Next case study: a big dark panel with the next project's cover */
+.next{position:relative;display:grid;gap:32px;align-items:center;margin:96px calc(50% - 50vw) 0;padding:72px max(16px,calc(50vw - var(--max)/2));background:#0d0d0f;color:#fff;text-decoration:none;border:0;overflow:hidden}
+@media (min-width:900px){.next{grid-template-columns:1fr 1.1fr;gap:64px;padding-top:96px;padding-bottom:96px}}
+.next-text{display:grid;gap:16px}
+.next .next-k{font-size:14px;color:#8d8d97;letter-spacing:.02em}
+.next b{font:500 clamp(36px,4.8vw,64px)/1.05 var(--sans);letter-spacing:-.04em;color:#fff;max-width:14ch;text-decoration:none}
+.next:hover b{text-decoration:none}
+.next em{display:inline-flex;align-items:center;gap:14px;font-style:normal;font-size:18px;color:#FFDC5C;font-weight:500}
+.next em i{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#FFDC5C;color:#111;font-style:normal;font-size:22px;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.next:hover em i{transform:translateX(8px)}
+.next-img{display:block;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3;box-shadow:0 40px 80px -30px rgba(0,0,0,.8)}
+.next-img img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.next:hover .next-img img{transform:scale(1.1)}
+.next+.contact,main+.contact{border-top:0}
+.v2 .chapters{transition:opacity .25s,transform .25s}.v2 .chapters.gone{opacity:0;transform:translateY(-100%);pointer-events:none}
