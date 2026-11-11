@@ -43,7 +43,7 @@ PAGES = {
     quote(ask="Stephan Goldhahn, founder"),
     sec("The problem","Artists earn about 0.003€ per stream, and social media gives them reach but no real relationship with the fans who were there first. Most fans say they would support their artists directly if there were a good way to do it."),
     sec("Two apps, one product","Fans want to discover and feel close. Artists want to publish, reward and understand their community. One interface for both would have made each side worse, so I designed two role-based apps on one shared system: 300+ frames for fans, 400+ for artists. The same artist profile and the same rewards look different depending on who is holding the phone.",
-        phones(("fc2-fan-profile.webp","An artist's profile as a fan sees it: Join Fancircle, rewards priced in points, and members-only content.","Fan: the artist's profile"),
+        phones(("fc2-fan-profile.webp","An artist's profile as a member fan sees it: a points bar (7,248 of 10,000), their rank, and how many Fancoins to the next level.","Fan: the artist's profile"),
                ("fc2-artist-profile.webp","The same profile as the artist sees it: edit highlights, and Insights and Edit on every post.","Artist: the same profile"),
                ("fc2-fan-rewards.webp","The fan rewards store: backstage passes, meet and greets and video messages, each priced in loyalty points.","Fan: rewards, paid in points"),
                ("fc2-artist-reward.webp","Creating a reward: the artist picks from 17 reward types, from a wallpaper to a video call.","Artist: creating a reward"))),
