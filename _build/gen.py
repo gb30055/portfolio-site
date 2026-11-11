@@ -6,11 +6,15 @@ def fig(src, alt, cap=None, wide=False):
     c = f"<figcaption>{cap}</figcaption>" if cap else ""
     return f'<figure class="{"wide" if wide else ""}"><img src="../assets/{src}" alt="{html.escape(alt)}" loading="lazy">{c}</figure>'
 
-def sec(h, *parts):
-    return f"<section><h2>{h}</h2>" + "".join(p if p.startswith("<") else f"<p>{p}</p>" for p in parts) + "</section>"
+def sec(h, *parts, cls=""):
+    return f'<section class="{cls}"><h2>{h}</h2>' + "".join(p if p.startswith("<") else f"<p>{p}</p>" for p in parts) + "</section>"
 
-def ul(*items):
-    return "<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+def ul(*items, cls=""):
+    return f'<ul class="{cls}">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+
+def bigstat(stat, label, text):
+    # A large number on the left, the explanation on the right
+    return f'<div class="split"><p class="big-stat">{stat}<small>{label}</small></p><p>{text}</p></div>'
 
 DRAFT = False  # shows empty slots for recordings and quotes; set False before going live
 
@@ -41,7 +45,7 @@ PAGES = {
     vid("fc-walkthrough","60-second screen recording of the Fancircle prototype, with short captions for each decision (no face or voice)"),
     sec("My part","I co-shaped the product with the founder and designed both apps end to end, including SongMatch and Creative Room, plus the prototypes and decks used with investors and artists. The founder set the vision, a project manager ran delivery, and a team that grew to 5 developers and QA built it."),
     quote(ask="Stephan Goldhahn, founder"),
-    sec("The problem","Artists earn about 0.003€ per stream, and social media gives them reach but no real relationship with the fans who were there first. Most fans say they would support their artists directly if there were a good way to do it."),
+    sec("The problem",bigstat("0.003€","what an artist earns per stream","Social media gives artists reach, but no real relationship with the fans who were there first. Most fans say they would support their artists directly if there were a good way to do it.")),
     sec("Two apps, one product","Fans want to discover and feel close. Artists want to publish, reward and understand their community. One interface for both would have made each side worse, so I designed two role-based apps on one shared system: 300+ frames for fans, 400+ for artists. The same artist profile and the same rewards look different depending on who is holding the phone.",
         phones(("fc2-fan-profile.webp","An artist's profile as a member fan sees it: a points bar (7,248 of 10,000), their rank, and how many Fancoins to the next level.","Fan: the artist's profile"),
                ("fc2-artist-profile.webp","The same profile as the artist sees it: edit highlights, and Insights and Edit on every post.","Artist: the same profile"),
@@ -58,7 +62,7 @@ PAGES = {
                ("smf-song.webp","A song card with a 15-second clip playing, and skip and like buttons.","2. Hear a 15-second clip"),
                ("smf-like.webp","Swiping right on a song: a heart appears and the song goes to a playlist.","3. Swipe right to like"),
                ("smf-next.webp","The next song card, with the liked-songs counter at the top.","4. Straight to the next song"),
-               ("smf-playlist.webp","The SongMatch Likes playlist with the liked songs.","5. Every like saved to a playlist"))),
+               ("smf-playlist.webp","The SongMatch Likes playlist with the liked songs.","5. Every like saved to a playlist")), cls="band"),
     sec("SongMatch for artists: pay to be heard, see if it worked","Fans swipe, but artists need a way into that stack. I designed the artist side as a four-step setup: pick songs, choose the clip fans will hear, pick a plan, and review before paying.",
         "<p><b>Wireframes first.</b> In the first version, artists set cost, duration and views as three separate targets.</p>",
         phones(("smv1-a1.webp","First version, step 1: choosing songs, in greyscale.","v1. Choose songs"),
@@ -72,7 +76,7 @@ PAGES = {
                ("sm-step4-review.webp","Step 4: review of songs, clips, plan, cost and payment before launch.","4. Review and launch")),
         ul("<b>The artist picks the 15 seconds.</b> A fan decides in one hook, so the artist chooses which part plays, starting from a default clip.",
            "<b>Every price shows what it buys.</b> Plans show estimated listens next to the cost, and a free tier (100 views a month) lets new artists try it first.",
-           "<b>Results in fans, not impressions.</b> Each promotion shows likes against skips and new followers, with a prompt to renew as it ends."),
+           "<b>Results in fans, not impressions.</b> Each promotion shows likes against skips and new followers, with a prompt to renew as it ends.", cls="decisions"),
         phones(("sm-active.webp","Promotions overview with progress bars, like and dislike ratios, and a renew prompt.","Active promotions"),
                ("sm-details.webp","Promotion details: plan, progress, total listens, likes and new followers.","Promotion details"),
                ("sm-intro.webp","SongMatch intro screen: Music for the right ears, with a swipeable song card.","How SongMatch introduces itself"))),
@@ -95,7 +99,7 @@ PAGES = {
                ("fc-crp-invite.webp","Inviting a collaborator with a role and permissions: collaborator, viewer or editor.","Invite with a role"),
                ("fc-crp-newtask.webp","New Task: assignees, dependencies, status, view permissions and due date.","Create a task"),
                ("fc-crp-task.webp","Task overview: assignees, due date, review status and activity.","Track the task"),
-               ("fc-crp-timeline.webp","The project timeline with uploads, comments and reactions.","One timeline for all of it"))),
+               ("fc-crp-timeline.webp","The project timeline with uploads, comments and reactions.","One timeline for all of it")), cls="band"),
     sec("Outcome",ul("v1.0 designed and built for iOS and Android.","50+ artist commitments before launch, won with the app prototypes and pitch decks I designed.","A registered EU trademark."),"The product did not take off. The company ran out of money before it found its users."),
     sec("What I'd do differently","Our scope grew faster than the team could build, and the core loop was never tested on its own. Today I'd push for a tight MVP around that one loop, agree on a single success metric, and put it in front of real fans first. Saying no to features is part of the job."),
   ], next="career-navig8r"),
