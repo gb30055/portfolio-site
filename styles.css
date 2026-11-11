@@ -295,3 +295,4 @@ h1 em { background: none; }
 .cs-body ul.decisions li{padding:28px 0;margin:0;border-top:1px solid rgba(0,0,0,.12)}
 .cs-body ul.decisions li:last-child{border-bottom:1px solid rgba(0,0,0,.12)}
 .cs-body ul.decisions li b{display:block;font-size:clamp(24px,2.8vw,32px);line-height:1.2;font-weight:500;letter-spacing:-.025em;margin-bottom:8px}
+.cs figcaption{text-align:center}
