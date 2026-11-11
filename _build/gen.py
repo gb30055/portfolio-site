@@ -76,6 +76,7 @@ PAGES = {
                ("sm-intro.webp","SongMatch intro screen: Music for the right ears, with a swipeable song card.","How SongMatch introduces itself"))),
     sec("Creative Room: feedback pinned to the moment","\"The middle part feels off\" wastes everyone's time. In Creative Room, collaborators select part of the waveform and leave a note there, SoundCloud style, and a timeline keeps every upload, comment and task in order.",
         vid("fc-creative-room","Leaving a comment on part of a track"),
+        fig("fc-cr-wireframes.webp","User flow and wireframes for giving feedback: open a file, tap Give Feedback, tap the waveform or select a section, type the comment, and it appears under the file with its time range.","I mapped the flow and wireframed it before any visual design",wide=True),
         fig("fancircle-creative-room.webp","Creative Room: a song's waveform with time-stamped comments, next to the feedback history.","Comments pinned to the waveform",wide=True),
         fig("fc-timeline.webp","Creative Room project timeline.","The project timeline",wide=True)),
     sec("Outcome",ul("v1.0 designed and built for iOS and Android.","50+ artist commitments before launch, won with the app prototypes and pitch decks I designed.","A registered EU trademark."),"The product did not take off. The company ran out of money before it found its users."),
