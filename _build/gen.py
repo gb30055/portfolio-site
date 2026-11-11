@@ -160,3 +160,13 @@ for slug, p in PAGES.items():
     os.makedirs(os.path.join(ROOT, slug), exist_ok=True)
     open(os.path.join(ROOT, slug, "index.html"), "w").write(out)
     print("wrote", slug)
+
+# Design explorations of the Fancircle page (not linked from the site)
+src = open(os.path.join(ROOT, "fancircle", "index.html")).read()
+for v in "abc":
+    out = (src.replace('<body class="cs">', f'<body class="cs v-{v}">')
+              .replace('<link rel="stylesheet" href="../styles.css">', '<link rel="stylesheet" href="../styles.css">\n<link rel="stylesheet" href="../explore.css">\n<meta name="robots" content="noindex">')
+              .replace('</body>', '<script src="../explore.js"></script>\n</body>'))
+    os.makedirs(os.path.join(ROOT, "fancircle-" + v), exist_ok=True)
+    open(os.path.join(ROOT, "fancircle-" + v, "index.html"), "w").write(out)
+    print("wrote fancircle-" + v)
