@@ -20,9 +20,9 @@ def vid(name, label):
         return f'<figure class="wide"><video src="../assets/{name}.mp4" autoplay muted loop playsinline aria-label="{html.escape(label)}"></video><figcaption>{label}</figcaption></figure>'
     return f'<div class="slot">Screen recording: {label}</div>' if DRAFT else ""
 
-def phones(*items):
+def phones(*items, cls=""):
     # A row of phone screens: (file, alt, caption)
-    return '<div class="phones">' + "".join(
+    return f'<div class="phones {cls}">' + "".join(
         f'<figure><img src="../assets/{f}" alt="{html.escape(a)}" loading="lazy"><figcaption>{c}</figcaption></figure>' for f, a, c in items) + '</div>'
 
 def quote(text=None, who=None, ask=""):
@@ -46,7 +46,7 @@ PAGES = {
         phones(("fc2-fan-profile.webp","An artist's profile as a member fan sees it: a points bar (7,248 of 10,000), their rank, and how many Fancoins to the next level.","Fan: the artist's profile"),
                ("fc2-artist-profile.webp","The same profile as the artist sees it: edit highlights, and Insights and Edit on every post.","Artist: the same profile"),
                ("fc2-fan-rewards.webp","The fan rewards store: backstage passes, meet and greets and video messages, each priced in loyalty points.","Fan: rewards, paid in points"),
-               ("fc2-artist-reward.webp","Creating a reward: the artist picks from 17 reward types, from a wallpaper to a video call.","Artist: creating a reward"))),
+               ("fc2-artist-reward.webp","Creating a reward: the artist picks from 17 reward types, from a wallpaper to a video call.","Artist: creating a reward"), cls="two")),
     sec("SongMatch: discovery like dating","Scrolling a catalogue is tiring. I borrowed a gesture everyone knows: swipe right to like a song, left to skip. Every like lands in a playlist the fan can keep.",
         vid("fc-songmatch","Swiping through songs in SongMatch"),
         phones(("smf-explore.webp","The SongMatch card on the Explore page.","1. Found on Explore"),
