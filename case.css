@@ -26,7 +26,7 @@
  .story-steps{position:sticky;top:120px;align-self:start;list-style:none;padding:0;margin:0}
  .cs-body section.band .story-steps li{font-size:clamp(24px,2.6vw,34px);line-height:1.2;letter-spacing:-.025em;font-weight:500;color:rgba(0,0,0,.25);padding:14px 0;transition:color .3s}
  .cs-body section.band .story-steps li.on{color:#111}
- .story-phones{display:grid;gap:56vh;padding:10vh 0 30vh}
+ .story-phones{display:grid;gap:28vh;padding:5vh 0 15vh}
  .story-phones img{width:100%;border-radius:28px;border:1px solid rgba(0,0,0,.08);box-shadow:0 30px 60px -20px rgba(60,45,0,.35)}
  .story-phones figcaption{display:none}
 }
