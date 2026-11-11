@@ -9,8 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../case.css">
 </head>
-<body class="cs">
+<body class="cs {{CLS}}">
 <header class="top">
   <a class="name logo" href="../"><img src="../assets/logo.webp?v=2" width="136" height="44" alt="Genc Berisha, The Qualia Lab"></a>
   <nav aria-label="Main">
@@ -21,12 +22,14 @@
   </nav>
 </header>
 <main class="wrap">
+  <div class="stage">
   <a class="back" href="../#work">All work</a>
   <h1 class="cs-title">{{TAG}}</h1>
   <p class="cs-intro"><b>{{TITLE}}.</b> {{INTRO}}</p>
   {{HERO}}
   <dl class="cs-facts">{{FACTS}}</dl>
   <ul class="cs-stats">{{STATS}}</ul>
+  </div>
   <article class="cs-body">{{BODY}}</article>
   <a class="next" href="../{{NEXT_SLUG}}/"><span>Next case study</span><b>{{NEXT_TITLE}}</b><em>{{NEXT_TAG}}</em></a>
 </main>
@@ -36,5 +39,6 @@
   <p class="links"><a href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a><a href="../genc-berisha-cv.pdf">Download CV</a></p>
   <p class="fine">© 2026 Genc Berisha.</p>
 </footer>
+<script src="../case.js"></script>
 </body>
 </html>

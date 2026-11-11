@@ -36,6 +36,7 @@ def quote(text=None, who=None, ask=""):
 
 PAGES = {
 "fancircle": dict(
+  cls="dark-stage scroll-story",
   title="Fancircle", tag="How do new artists find their first true fans?",
   intro="A loyalty-based social app for music, with a fan app and an artist app. I helped shape the product from the idea stage and led design to v1.0.",
   facts=[("Role","Head of Design"),("Team","Founder, COO, project manager, 2 growing to 5 developers, QA"),("Timeline","2023 to 2025"),("Platform","iOS and Android")],
@@ -151,7 +152,7 @@ PAGES = {
 TPL = open(os.path.join(ROOT, "_build", "case.tpl.html")).read()
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
-    out = (TPL.replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
+    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
        .replace("{{FACTS}}", "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in p["facts"]))
        .replace("{{STATS}}", "".join(f"<li><strong>{n}</strong><span>{t}</span></li>" for n, t in p["stats"]))
        .replace("{{HERO}}", fig(p["hero"][0], p["hero"][1], wide=True))
@@ -161,12 +162,3 @@ for slug, p in PAGES.items():
     open(os.path.join(ROOT, slug, "index.html"), "w").write(out)
     print("wrote", slug)
 
-# Design explorations of the Fancircle page (not linked from the site)
-src = open(os.path.join(ROOT, "fancircle", "index.html")).read()
-for v in "abc":
-    out = (src.replace('<body class="cs">', f'<body class="cs v-{v}">')
-              .replace('<link rel="stylesheet" href="../styles.css">', '<link rel="stylesheet" href="../styles.css">\n<link rel="stylesheet" href="../explore.css">\n<meta name="robots" content="noindex">')
-              .replace('</body>', '<script src="../explore.js"></script>\n</body>'))
-    os.makedirs(os.path.join(ROOT, "fancircle-" + v), exist_ok=True)
-    open(os.path.join(ROOT, "fancircle-" + v, "index.html"), "w").write(out)
-    print("wrote fancircle-" + v)

@@ -1,22 +1,15 @@
-// Exploration behaviour, only loaded by the fancircle-a/b/c pages
+// Case study extras: rise-in motion, and the scroll story on pages with body.scroll-story
 (function(){
   var v=document.body.className;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Gentle rise-in for phone rows and big moments (A and C)
-  if(/v-a|v-c/.test(v)&&'IntersectionObserver' in window&&!reduce){
+  if('IntersectionObserver' in window&&!reduce){
     var els=document.querySelectorAll('.phones figure, .cs-body h2, .big-stat, ul.decisions li');
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
     els.forEach(function(el,i){el.classList.add('reveal');el.style.transitionDelay=(el.matches('.phones figure')?(Array.prototype.indexOf.call(el.parentNode.children,el)*80):0)+'ms';io.observe(el);});
   }
-  // B: wrap the top of the page in a dark stage
-  if(/v-b/.test(v)){
-    var main=document.querySelector('main.wrap'),stage=document.createElement('div');stage.className='stage';
-    var stop=main.querySelector('.cs-body');
-    while(main.firstChild&&main.firstChild!==stop){stage.appendChild(main.firstChild);}
-    main.insertBefore(stage,stop);
-  }
-  // C: turn the final SongMatch fan flow into a sticky story
-  if(/v-c/.test(v)){
+  // Turn the last phone row of the first coloured section into a sticky story
+  if(/scroll-story/.test(v)){
     var sec=document.querySelector('.cs-body section.band');if(!sec)return;
     var rows=sec.querySelectorAll('.phones'),row=rows[rows.length-1];
     var story=document.createElement('div');story.className='story';

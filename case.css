@@ -1,0 +1,34 @@
+/* Case study extras: rise-in motion, dark stage (body.dark-stage), scroll story (body.story) */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* Dark stage at the top */
+.dark-stage{--stage:#0d0d0f}
+.dark-stage .top{background:var(--stage);box-shadow:0 0 0 100vmax var(--stage);clip-path:inset(0 -100vmax)}
+.dark-stage .top a,.dark-stage .top nav a{color:#e9e9ee}
+.dark-stage .top .nav-cta{background:#FFDC5C;color:#111}
+.dark-stage .stage{background:var(--stage);box-shadow:0 0 0 100vmax var(--stage);clip-path:inset(0 -100vmax);padding-bottom:64px;color:#e9e9ee}
+.dark-stage .stage .back{color:#a9a9b3}
+.dark-stage .stage .cs-title{color:#fff;font-size:clamp(44px,6.4vw,84px);max-width:16ch}
+.dark-stage .stage .cs-intro{color:#a9a9b3}.dark-stage .stage .cs-intro b{color:#fff}
+.dark-stage .stage figure img{border-radius:var(--r-lg)}
+.dark-stage .stage .cs-facts{border-color:rgba(255,255,255,.12)}
+.dark-stage .stage .cs-facts dt{color:#8d8d97}.dark-stage .stage .cs-facts dd{color:#f2f2f5}
+.dark-stage .stage .cs-stats{margin-bottom:0}
+.dark-stage .stage .cs-stats strong{color:#FFDC5C;font-size:clamp(56px,7vw,88px)}
+.dark-stage .stage .cs-stats span{color:#a9a9b3}
+
+/* Scroll story for the first coloured section's last phone row */
+.story{display:grid;gap:24px;margin:40px 0}
+@media (min-width:900px){
+ .story{grid-template-columns:minmax(0,1fr) 340px;gap:64px;margin:56px calc(50% - min(50vw - 16px, 560px))}
+ .story-steps{position:sticky;top:120px;align-self:start;list-style:none;padding:0;margin:0}
+ .cs-body section.band .story-steps li{font-size:clamp(24px,2.6vw,34px);line-height:1.2;letter-spacing:-.025em;font-weight:500;color:rgba(0,0,0,.25);padding:14px 0;transition:color .3s}
+ .cs-body section.band .story-steps li.on{color:#111}
+ .story-phones{display:grid;gap:56vh;padding:10vh 0 30vh}
+ .story-phones img{width:100%;border-radius:28px;border:1px solid rgba(0,0,0,.08);box-shadow:0 30px 60px -20px rgba(60,45,0,.35)}
+ .story-phones figcaption{display:none}
+}
+@media (max-width:899px){.story-steps{display:none}.story-phones{display:grid;gap:24px}.story-phones img{border-radius:22px}}
+@media (max-width:1100px){.v-a .cs-body section.band::after{display:none}}
