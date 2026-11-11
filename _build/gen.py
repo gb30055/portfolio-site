@@ -6,8 +6,9 @@ def fig(src, alt, cap=None, wide=False):
     c = f"<figcaption>{cap}</figcaption>" if cap else ""
     return f'<figure class="{"wide" if wide else ""}"><img src="../assets/{src}" alt="{html.escape(alt)}" loading="lazy">{c}</figure>'
 
-def sec(h, *parts, cls=""):
-    return f'<section class="{cls}"><h2>{h}</h2>' + "".join(p if p.startswith("<") else f"<p>{p}</p>" for p in parts) + "</section>"
+def sec(h, *parts, cls="", id=""):
+    i = f' id="{id}"' if id else ""
+    return f'<section{i} class="{cls}"><h2>{h}</h2>' + "".join(p if p.startswith("<") else f"<p>{p}</p>" for p in parts) + "</section>"
 
 def ul(*items, cls=""):
     return f'<ul class="{cls}">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
@@ -150,12 +151,14 @@ PAGES = {
 }
 
 TPL = open(os.path.join(ROOT, "_build", "case.tpl.html")).read()
+exec(open(os.path.join(ROOT, "_build", "fancircle_v2.py")).read())
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
-    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
+    hero = p["hero"] if isinstance(p["hero"], str) else fig(p["hero"][0], p["hero"][1], wide=True)
+    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
        .replace("{{FACTS}}", "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in p["facts"]))
        .replace("{{STATS}}", "".join(f"<li><strong>{n}</strong><span>{t}</span></li>" for n, t in p["stats"]))
-       .replace("{{HERO}}", fig(p["hero"][0], p["hero"][1], wide=True))
+       .replace("{{HERO}}", hero)
        .replace("{{BODY}}", "".join(p["body"]))
        .replace("{{NEXT_SLUG}}", p["next"]).replace("{{NEXT_TITLE}}", nxt["title"]).replace("{{NEXT_TAG}}", nxt["tag"]))
     os.makedirs(os.path.join(ROOT, slug), exist_ok=True)

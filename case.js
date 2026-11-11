@@ -24,3 +24,10 @@
     ph.querySelectorAll('figure').forEach(function(f){io2.observe(f)});
   }
 })();
+// Chapter nav: highlight the section in view (v2)
+(function(){
+  var nav=document.querySelector('.chapters');if(!nav||!('IntersectionObserver' in window))return;
+  var links={};nav.querySelectorAll('a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){nav.querySelectorAll('a').forEach(function(a){a.classList.remove('on')});var a=links[e.target.id];if(a){a.classList.add('on');var d=a.parentNode;if(a.offsetLeft<d.scrollLeft||a.offsetLeft+a.offsetWidth>d.scrollLeft+d.clientWidth)d.scrollTo({left:a.offsetLeft-16,behavior:'smooth'});}}})},{rootMargin:'-30% 0px -60% 0px'});
+  Object.keys(links).forEach(function(id){var s=document.getElementById(id);if(s)io.observe(s)});
+})();
