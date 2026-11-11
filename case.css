@@ -38,3 +38,4 @@
 .dark-stage .name.logo .q-on-light{display:none}
 .dark-stage .name.logo .q-on-dark{display:block}
 .dark-stage .logo-text small{color:#a9a9b3}
+.story-phones figure.reveal{opacity:1;transform:none;transition:none}
