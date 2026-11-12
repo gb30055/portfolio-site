@@ -13,6 +13,14 @@ V2_SUMMARY = ('<div class="tldr"><p class="tldr-h">The short version</p><ol>'
   '<li><a href="#creative-room"><b>Feedback is pinned to the moment.</b> Notes sit on the waveform, not in a vague chat thread.</a></li>'
   '</ol></div>')
 
+WAVENOTE = ('<div class="wavenote" data-len="141">'
+  '<div class="wn-head"><span class="wn-file">Vocals_v1.wav</span><span class="wn-try">Interactive</span></div>'
+  '<div class="wn-stage"><div class="wn-pins"></div><div class="wn-wave" role="slider" aria-label="Track waveform. Drag to select a part of the track." aria-valuemin="0" aria-valuemax="141" aria-valuenow="0" tabindex="0"><div class="wn-bars"></div><div class="wn-sel" hidden><span></span></div></div>'
+  '<div class="wn-times"><span>00:00</span><span class="wn-hint">Drag across the track</span><span>02:21</span></div></div>'
+  '<form class="wn-form" hidden><div class="wn-at">Leaving feedback at <b></b><button type="button" class="wn-cancel">Cancel</button></div>'
+  '<div class="wn-row"><input type="text" maxlength="120" placeholder="Write your note…" aria-label="Your note"><button type="submit" class="wn-send" aria-label="Post note">↑</button></div></form>'
+  '<ol class="wn-list"></ol></div>')
+
 V2_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
   + "".join(f'<a href="#{i}">{t}</a>' for i, t in [("problem","Problem"),("two-apps","Two apps"),("songmatch","SongMatch"),("artists","For artists"),("creative-room","Creative Room"),("outcome","Outcome")])
   + '</div></nav>')
@@ -66,7 +74,9 @@ PAGES["fancircle"] = dict(
         "<p><b>The final design: the note lives on the waveform.</b> Anyone opening the track sees exactly where each comment points.</p>",
         three(("fc-crf-2.webp","A section of the waveform selected, 00:15 to 00:32.","Drag over a section"),
               ("fc-crf-3.webp","Writing the note: Leaving feedback at 00:15 to 00:32.","Write the note"),
-              ("fc-crf-4.webp","The comment appears as a bubble above its part of the waveform.","Pinned to the waveform")), cls="band", id="creative-room"),
+              ("fc-crf-4.webp","The comment appears as a bubble above its part of the waveform.","Pinned to the waveform")),
+        "<p><b>Try it.</b> Drag across the track and leave a note on the part you mean.</p>",
+        WAVENOTE, cls="band", id="creative-room"),
     sec("Outcome",bigstat("50+","artists committed before launch","Won with the app prototypes and pitch decks I designed. v1.0 was designed and built for iOS and Android, and the brand got a registered EU trademark."),
         "The product did not take off. The company ran out of money before it found its users.", id="outcome"),
     sec("What I'd do differently","Our scope grew faster than the team could build, and the core loop was never tested on its own. Today I'd push for a tight MVP around that one loop, agree on a single success metric, and put it in front of real fans first. Saying no to features is part of the job."),

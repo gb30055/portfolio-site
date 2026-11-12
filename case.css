@@ -82,3 +82,43 @@
 .next:hover .next-img img{transform:scale(1.1)}
 .next+.contact,main+.contact{border-top:0}
 .v2 .chapters{transition:opacity .25s,transform .25s}.v2 .chapters.gone{opacity:0;transform:translateY(-100%);pointer-events:none}
+
+/* Creative Room demo: drag across the waveform, leave a note */
+.wavenote{max-width:760px;margin:32px auto 8px;background:#fff;border-radius:28px;padding:24px 24px 16px;box-shadow:0 30px 60px -25px rgba(60,45,0,.35);color:#111;font-size:15px}
+.wn-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.wn-file{font-weight:600}
+.wn-try{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#111;color:#FFDC5C}
+.wn-stage{position:relative;padding-top:56px}
+.wn-pins{position:absolute;inset:0 0 auto 0;height:52px}
+.wn-pin{position:absolute;bottom:6px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;max-width:220px;padding:4px 10px 4px 4px;border-radius:999px;background:#dfe6ff;color:#1d2a66;font-size:12px;white-space:nowrap;border:0;cursor:pointer;animation:wn-pop .35s cubic-bezier(.2,.9,.3,1.3)}
+.wn-pin::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#dfe6ff}
+.wn-pin i{flex:none;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#1d2a66;color:#fff;font-style:normal;font-size:10px;font-weight:600}
+.wn-pin span{overflow:hidden;text-overflow:ellipsis}
+.wn-pin.mine{background:#FFDC5C;color:#111}.wn-pin.mine::after{border-top-color:#FFDC5C}.wn-pin.mine i{background:#111;color:#FFDC5C}
+@keyframes wn-pop{from{opacity:0;transform:translate(-50%,8px) scale(.8)}}
+.wn-wave{position:relative;height:120px;cursor:crosshair;touch-action:none;user-select:none;-webkit-user-select:none;outline:none;border-radius:12px}
+.wn-wave:focus-visible{box-shadow:0 0 0 3px #111}
+.wn-bars{position:absolute;inset:0;display:flex;align-items:center;gap:2px}
+.wn-bars i{flex:1;border-radius:2px;background:#cfcfd4;transition:background .2s}
+.wn-bars i.c{background:#9db0ff}.wn-bars i.m{background:#FFDC5C}.wn-bars i.s{background:#111}
+.wn-sel{position:absolute;top:-6px;bottom:-6px;border:3px solid #111;border-radius:12px;pointer-events:none}
+.wn-sel span{position:absolute;left:50%;bottom:-30px;transform:translateX(-50%);background:#111;color:#fff;font-size:12px;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.wn-times{display:flex;justify-content:space-between;margin-top:36px;font-size:12px;color:#77777f}
+.wn-hint{color:#111;font-weight:500}
+.wn-form{margin-top:16px;border-radius:16px;overflow:hidden;background:#f2f2f4}
+.wn-at{display:flex;justify-content:space-between;align-items:center;background:#111;color:#cfcfd4;font-size:13px;padding:0 6px 0 14px;min-height:44px}
+.wn-at b{color:#fff;margin-right:auto;margin-left:6px}
+.wn-cancel{background:none;border:0;color:#ff6b6b;font:inherit;padding:0 10px;min-height:44px;cursor:pointer}
+.wn-row{display:flex;gap:8px;padding:8px}
+.wn-row input{flex:1;min-width:0;height:44px;border:1px solid #ddd;border-radius:12px;padding:0 14px;font:inherit;background:#fff}
+.wn-send{width:44px;height:44px;border:0;border-radius:12px;background:#FFDC5C;color:#111;font-size:20px;font-weight:600;cursor:pointer}
+.wn-list{list-style:none;padding:0;margin:16px 0 0}
+.wn-list li{display:grid;grid-template-columns:32px 1fr;gap:2px 10px;padding:12px 0;border-top:1px solid #eee;font-size:14px;color:#333}
+.wn-list li i{grid-row:span 2;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#1d2a66;color:#fff;font-style:normal;font-size:11px;font-weight:600}
+.wn-list li.mine i{background:#111;color:#FFDC5C}
+.wn-list li b{font-weight:600;color:#111}.wn-list li b small{font-weight:500;margin-left:6px;padding:2px 6px;border-radius:6px;background:#eef1ff;color:#1d2a66;font-size:11px}
+.wn-list li.mine b small{background:#fff3c2;color:#111}
+.wn-list li.on{background:linear-gradient(90deg,rgba(255,220,92,.25),transparent)}
+@media (max-width:600px){.wavenote{padding:18px 14px 10px;border-radius:22px}.wn-wave{height:96px}.wn-bars{gap:1px}.wn-pin{max-width:150px}}
+.wn-row input:focus{outline:none;border-color:#111}
+.wn-pin{transition:bottom .25s}
