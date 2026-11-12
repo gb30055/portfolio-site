@@ -1,3 +1,5 @@
 _build
 README.md
 .assetsignore
+wrangler.jsonc
+.wrangler
