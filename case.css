@@ -123,3 +123,12 @@
 .wn-row input:focus{outline:none;border-color:#111}
 .wn-pin{transition:bottom .25s}
 .wn-list li{padding:12px 12px 12px 14px;border-radius:12px}
+/* Glow under the waveform demo in The Qualia Lab colours */
+@property --wn-a{syntax:"<angle>";inherits:false;initial-value:0deg}
+.wavenote{position:relative;isolation:isolate}
+.wavenote::before{content:"";position:absolute;inset:-10px;z-index:-1;border-radius:36px;background:conic-gradient(from var(--wn-a),#0000FF,#8B00FF,#FF1D1D,#FFE551,#ffffff,#00FFFF,#0000FF);filter:blur(30px);opacity:.75;animation:wn-spin 8s linear infinite}
+@keyframes wn-spin{to{--wn-a:360deg}}
+@media (prefers-reduced-motion:reduce){.wavenote::before{animation:none}}
+.wavenote{background:transparent}
+.wavenote::before{z-index:-2}
+.wavenote::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:#fff}
