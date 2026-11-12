@@ -33,7 +33,7 @@ PAGES["career-navig8r"] = dict(
   footer=V2_FOOTER,
   title="Career Navig8r", tag="How do we get more mentors to finish their profile?",
   intro="A mentoring platform where people learn from those who already succeeded in the job they want. I was the only designer, on onboarding and the core product.",
-  facts=[("Role","Product Designer, sole designer"),("My part","Took over from a previous designer. Redesigned mentor onboarding, and designed the feed, posting, search and mentor cards."),("Team","Founder and developers"),("Timeline","2025 to 2026, web"),("Status","Designed and tested in walkthroughs, not yet built")],
+  facts=[("Role","Product Designer, sole designer"),("My part","Took over from a previous designer. Redesigned mentor onboarding, and designed the feed, posting, search and mentor cards."),("Team","Founder and developers"),("Timeline","2025 to 2026, web")],
   stats=[("13 → 6","minutes to finish setup, timed in team walkthroughs"),("30 → 8","controls before a mentor picks a day"),("5","focused steps instead of 4 crowded ones")],
   hero=CN_HERO, summary=CN_SUMMARY, chapters=CN_CHAPTERS,
   body=[
@@ -74,6 +74,6 @@ PAGES["career-navig8r"] = dict(
         desk(("cn2-search.webp","Search overlay with filters for Navig8rs, Executive Mentors, Questions and Career updates, plus popular and recent searches.","Search suggests before you type"),
              ("cn2-public.webp","Connect with a Navig8r: directory with sector, job field and level filters, active filter chips and mentor cards.","The directory splits Navig8rs from Executive Mentors")),
         fig("cn-cards.webp","Mentor card variants, from a full card with levels and skills to a compact one with name, rating and price.","Card variants I tested, from full detail to compact"), id="beyond"),
-    sec("Outcome",bigstat("13 → 6","minutes to finish setup","Timed in team walkthroughs of the live old flow and the new prototype. Most of the time saved came from fewer fields per step, and from not filling in time pickers for days a mentor doesn't work. The new design isn't built yet, so this is an estimate, not usage data."), id="outcome"),
-    sec("What I'd do differently",'<p class="lesson-big">Measure the drop-off before you fix it.</p>',"The time savings come from walkthroughs, not usage data. When it gets built, I'd add step-by-step completion tracking from day one, to see where mentors really drop off.", cls="lesson"),
+    sec("Outcome",bigstat("13 → 6","minutes to finish setup","Timed in team walkthroughs of the old flow and the new design. Most of the time saved came from fewer fields per step, and from not filling in time pickers for days a mentor doesn't work. It's an estimate from walkthroughs, not usage data."), id="outcome"),
+    sec("What I'd do differently",'<p class="lesson-big">Measure the drop-off before you fix it.</p>',"The time savings come from walkthroughs, not usage data. Next time I'd add step-by-step completion tracking from day one, to see where mentors really drop off.", cls="lesson"),
   ], next="scandlearn")
