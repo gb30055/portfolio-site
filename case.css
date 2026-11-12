@@ -213,8 +213,7 @@
 
 /* Old (before) frames: greyed, flat, with a Before strip */
 .cs .phones figure.old .old-shot{position:relative;border-radius:14px;overflow:hidden;background:#1d1d20;outline:1px dashed rgba(0,0,0,.25);outline-offset:4px}
-.cs .phones figure.old img{border-radius:0;box-shadow:none;filter:grayscale(1) contrast(.92);opacity:.72;transition:filter .35s,opacity .35s;display:block;width:100%}
-.cs .phones figure.old:hover img,.cs .phones figure.old:focus-within img{filter:none;opacity:1}
+.cs .phones figure.old img{border-radius:0;box-shadow:none;display:block;width:100%}
 .cs .old-strip{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;margin:0;padding:10px 16px;background:#1d1d20;color:#fff;font-size:12px;line-height:1;letter-spacing:.14em;text-transform:uppercase}
 .cs .old-strip span:first-child{font-weight:600;display:flex;align-items:center;gap:8px}
 .cs .old-strip span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:#9a9aa0}
