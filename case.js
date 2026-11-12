@@ -68,3 +68,10 @@
   if(!('IntersectionObserver' in window)){l.classList.add('on');return}
   var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classList.add('on');io.disconnect()}},{threshold:.2});io.observe(l.parentNode);
 })();
+// Career Navig8r availability demo: pickers only for days that are on
+(function(){
+  var a=document.querySelector('.avail');if(!a)return;
+  var lis=a.querySelectorAll('.av-days li'),n=a.querySelector('.av-n');
+  function upd(){var c=1;lis.forEach(function(li){var on=li.querySelector('.av-sw').checked;li.classList.toggle('on',on);li.querySelector('.av-slots').hidden=!on;c+=1+(on?3:0)});n.textContent=c}
+  lis.forEach(function(li){li.querySelector('.av-sw').addEventListener('change',upd)});upd();
+})();
