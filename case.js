@@ -16,11 +16,15 @@
     var steps=document.createElement('ol');steps.className='story-steps';
     var ph=document.createElement('div');ph.className='story-phones';
     Array.prototype.forEach.call(row.querySelectorAll('figure'),function(f,i){
-      var li=document.createElement('li');li.textContent=f.querySelector('figcaption').textContent;steps.appendChild(li);ph.appendChild(f);f.dataset.i=i;
+      var li=document.createElement('li'),t=f.querySelector('figcaption').textContent,m=t.match(/^(\d+)\.\s*(.*)$/);
+      li.innerHTML='<span class="sn">'+('0'+(m?m[1]:i+1)).slice(-2)+'</span><span class="st"></span>';li.querySelector('.st').textContent=m?m[2]:t;
+      steps.appendChild(li);ph.appendChild(f);f.dataset.i=i;
     });
     story.appendChild(steps);story.appendChild(ph);row.replaceWith(story);
-    var lis=steps.children;lis[0].classList.add('on');
-    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Array.prototype.forEach.call(lis,function(l){l.classList.remove('on')});lis[e.target.dataset.i].classList.add('on');}})},{rootMargin:'-45% 0px -45% 0px'});
+    var lis=steps.children,figs=ph.querySelectorAll('figure');
+    function on(i){Array.prototype.forEach.call(lis,function(l,k){l.classList.toggle('on',k===i);l.classList.toggle('done',k<i)});figs.forEach(function(f,k){f.classList.toggle('on',k===i)});steps.style.setProperty('--p',lis.length>1?i/(lis.length-1):0)}
+    on(0);
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)on(+e.target.dataset.i)})},{rootMargin:'-45% 0px -45% 0px'});
     ph.querySelectorAll('figure').forEach(function(f){io2.observe(f)});
   }
 })();
