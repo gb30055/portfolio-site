@@ -28,11 +28,12 @@ AVAIL = ('<div class="avail">'
     for d in DAYS) + '</ul>'
   '<p class="av-count"><b class="av-n">8</b> controls on screen, growing only with the days you switch on. The old page showed about <b>30</b> before you picked anything.</p></div>')
 
-def loupe(src, alt, cap, x, y, lx, ly, d, z):
+def loupe(src, alt, cap, x, y, lx, ly, d, z, old=False):
     # Whole screen with a fixed magnifier: content centred on (x,y), lens placed at (lx,ly), all as fractions
     st = f"--x:{x};--y:{y};--lx:{lx};--ly:{ly};--d:{d};--z:{z};--img:url(../assets/{src})"
-    return (f'<figure class="lp-fig"><div class="lp" style="{st}"><img src="../assets/{src}"{full_attr(src.replace("-hi",""))} alt="{alt}" loading="lazy">'
-            '<span class="lp-ring" aria-hidden="true"></span><span class="lp-lens" aria-hidden="true"></span></div>'
+    strip = '<p class="old-strip"><span>Before</span><span>Old version</span></p>' if old else ''
+    return (f'<figure class="lp-fig{" old" if old else ""}"><div class="lp" style="{st}"><img src="../assets/{src}"{full_attr(src.replace("-hi",""))} alt="{alt}" loading="lazy">'
+            f'<span class="lp-ring" aria-hidden="true"></span><span class="lp-lens" aria-hidden="true"></span>{strip}</div>'
             f'<figcaption>{cap}</figcaption></figure>')
 
 PAGES["career-navig8r"] = dict(
@@ -47,8 +48,10 @@ PAGES["career-navig8r"] = dict(
     sec("The problem",bigstat("30","controls on one setup page","No mentors, no bookings. I took over mentor onboarding from a previous designer, and it was the hardest flow in the product: 4 crowded steps, a 100-word essay, and one page asking for availability, languages and links all at once."),
         '<p class="evidence">The founder\'s verdict on the old flow was simple: <b>the process is too long.</b> That became the brief.</p>',
         "<p>Click any screen to see the whole page.</p>",
-        desk(("cn2-b_avail.webp","The old Availability page: time zone, every day with its own time pickers, languages, and LinkedIn, Twitter and Instagram links, all on one page.","Before: time pickers for all 7 days, languages and links on one page"),
-             ("cn2-b_focus.webp","The old Mentoring Focus page: job role, a 100-word essay, skills, a key project and an intro video side by side.","Before: role, essay, skills and a key project at once")), id="problem"),
+        '<div class="lp-row">'
+        + loupe("cn2-b_avail-hi.webp","The old Availability page: time zone, every day with its own time pickers, languages, and LinkedIn, Twitter and Instagram links, all on one page. The magnifier shows that days switched off still show their time pickers.","Before: time pickers for all 7 days, even the ones switched off",0.20,0.45,0.70,0.54,40,1.6,old=True)
+        + loupe("cn2-b_focus-hi.webp","The old Mentoring Focus page: job role, a 100-word essay, skills, a key project and an intro video side by side. The magnifier shows the essay field, half covered by a tips popup.","Before: a 100-word essay, half hidden by a tips popup",0.36,0.23,0.70,0.56,42,1.4,old=True)
+        + '</div>', id="problem"),
     sec("Mapped before it was drawn","Before any screen, I mapped who signs up and what each of them has to give us. Basic users get a short profile. Mentors get their own setup, split so every step has one job.",
         fig("cn2-flow-profile.webp","Flow: profile setup for a basic user, from work experience to language, about me and social links, until the profile is complete.","Basic user profile: the short path",wide=True),
         '<ol class="steps-cmp"><li><span>Old mentor setup</span><b>Work experience</b><b>Availability + languages + links</b><b>Mentoring focus</b><b>Plans and pricing</b></li>'
@@ -84,8 +87,10 @@ PAGES["career-navig8r"] = dict(
              ("cn2-b_plans.webp","The old plans page: Lite, Standard, Professional and Enterprise in one grid.","Before: four offers in one grid"),
              ("cn2-exec-specialism.webp","Mentoring Specialism: pick up to six areas, with suggestions, plus psychometric tools.","After: up to six specialisms, picked from suggestions")), id="executive"),
     sec("Beyond setup","Setup only matters if mentees find the mentors. I designed search and the mentor directory. A junior designer built the mentor cards, posts, comments and other components, with me setting the direction and reviewing each round. Together we tested how much a mentor card can hold before it gets hard to scan.",
-        desk(("cn2-search.webp","Search overlay with filters for Navig8rs, Executive Mentors, Questions and Career updates, plus popular and recent searches.","Search suggests before you type"),
-             ("cn2-public.webp","Connect with a Navig8r: directory with sector, job field and level filters, active filter chips and mentor cards.","The directory splits Navig8rs from Executive Mentors")),
+        '<div class="lp-row">'
+        + loupe("cn2-search-hi.webp","Search overlay with filters for Navig8rs, Executive Mentors, Questions and Career updates, plus popular and recent searches. The magnifier shows the filter chips and the first suggestions.","Filters and suggestions before you type",0.28,0.2,0.70,0.58,44,1.6)
+        + loupe("cn2-public-hi.webp","Connect with a Navig8r: directory with sector, job field and level filters, active filter chips and mentor cards. The magnifier shows the active filter chips, each one removable.","Every active filter stays visible and removable",0.40,0.56,0.75,0.52,40,1.7)
+        + '</div>',
         fig("cn-cards.webp","Mentor card variants, from a full card with levels and skills to a compact one with name, rating and price.","Card variants we tested, from full detail to compact"), id="beyond"),
     sec("Outcome",bigstat("13 → 6","minutes to finish setup","Timed in team walkthroughs of the old flow and the new design. Most of the time saved came from fewer fields per step, and from not filling in time pickers for days a mentor doesn't work. It's an estimate from walkthroughs, not usage data."), id="outcome"),
     sec("What I'd do differently",'<p class="lesson-big">Measure the drop-off before you fix it.</p>',"The time savings come from walkthroughs, not usage data. Next time I'd add step-by-step completion tracking from day one, to see where mentors really drop off.", cls="lesson"),

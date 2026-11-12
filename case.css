@@ -319,4 +319,5 @@ html{overflow-x:clip}
 .lp-lens::before{content:"";position:absolute;inset:-6px;border-radius:50%;padding:5px;background:conic-gradient(from 200deg,#0000FF,#8B00FF,#FF1D1D,#FFE551,#fff,#00FFFF,#0000FF);opacity:.55;filter:blur(1.5px);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 .lp-lens::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(120% 80% at 30% 15%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%)}
+.lp-fig.old .lp{outline:1px dashed rgba(0,0,0,.25);outline-offset:4px}.cs .lp-fig.old .old-strip{border-radius:0 0 14px 14px;z-index:1}.lp-ring,.lp-lens{z-index:2}
 @media (max-width:767px){.lp-row{grid-template-columns:1fr;margin-left:0;margin-right:0}}
