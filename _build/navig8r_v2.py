@@ -28,6 +28,13 @@ AVAIL = ('<div class="avail">'
     for d in DAYS) + '</ul>'
   '<p class="av-count"><b class="av-n">8</b> controls on screen, growing only with the days you switch on. The old page showed about <b>30</b> before you picked anything.</p></div>')
 
+def loupe(src, alt, cap, x, y, lx, ly, d, z):
+    # Whole screen with a fixed magnifier: content centred on (x,y), lens placed at (lx,ly), all as fractions
+    st = f"--x:{x};--y:{y};--lx:{lx};--ly:{ly};--d:{d};--z:{z};--img:url(../assets/{src})"
+    return (f'<figure class="lp-fig"><div class="lp" style="{st}"><img src="../assets/{src}"{full_attr(src.replace("-hi",""))} alt="{alt}" loading="lazy">'
+            '<span class="lp-ring" aria-hidden="true"></span><span class="lp-lens" aria-hidden="true"></span></div>'
+            f'<figcaption>{cap}</figcaption></figure>')
+
 PAGES["career-navig8r"] = dict(
   cls="dark-stage v2 dark-end navig8r",
   footer=V2_FOOTER,
@@ -58,8 +65,10 @@ PAGES["career-navig8r"] = dict(
     sec("Show only what's needed","The old page showed every control for every day. Now time pickers appear only for days that are switched on, and one slot can be applied to all selected days.",
         "<p><b>Try it.</b> Switch a day on, set its hours, then copy them to your other days with the apply button.</p>",
         AVAIL,
-        desk(("cn2-avail-apply-zoom.webp","Close-up: Tuesday with two time slots, and a tooltip on the copy icon: Apply to your selected days.","Copy one slot to every selected day"),
-             ("cn2-avail-warn-zoom.webp","Close-up of a warning: Please select more days to apply this timeslot. Enable other days using the toggle switches.","A clear warning when there's nowhere to copy to")), cls="band", id="availability"),
+        '<div class="lp-row">'
+        + loupe("cn2-avail-apply-hi.webp","Availability with Tuesday on and two time slots. A magnifier shows the copy button and its tooltip: Apply to your selected days.","Copy one slot to every selected day",0.80,0.525,0.36,0.55,52,2.6)
+        + loupe("cn2-avail-warn-hi.webp","Availability with a warning at the top. A magnifier shows it: Please select more days to apply this timeslot.","A clear warning when there's nowhere to copy to",0.81,0.178,0.40,0.55,54,2.2)
+        + '</div>', cls="warm", id="availability"),
     sec("A separate path for executive mentors","Senior, certified mentors needed more than the basic setup: proof of certification, specialisms and their own plans. I gave them their own application and setup instead of piling more fields onto everyone else's.",
         "<p><b>A clear way in.</b> Mentors who already have a profile see two paths side by side, so the upgrade is a choice, not a hidden form.</p>",
         '<figure class="tiers"><div class="tier-row">'
