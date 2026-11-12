@@ -62,6 +62,10 @@ PAGES["career-navig8r"] = dict(
              ("cn2-avail-warn-zoom.webp","Close-up of a warning: Please select more days to apply this timeslot. Enable other days using the toggle switches.","A clear warning when there's nowhere to copy to")), cls="band", id="availability"),
     sec("A separate path for executive mentors","Senior, certified mentors needed more than the basic setup: proof of certification, specialisms and their own plans. I gave them their own application and setup instead of piling more fields onto everyone else's.",
         "<p><b>A clear way in.</b> Mentors who already have a profile see two paths side by side, so the upgrade is a choice, not a hidden form.</p>",
+        '<figure class="tiers"><div class="tier-row">'
+        '<div class="tier"><img src="../assets/cn2-icon-bulb.webp" alt="" width="120" height="120"><div><b>Navig8r</b><span>Peer mentors. Share experience, guide mentees, no certification needed.</span></div></div>'
+        '<div class="tier exec"><img src="../assets/cn2-icon-trophy.webp" alt="" width="120" height="120"><div><b>Executive Mentor</b><span>Accredited mentors. Verified status and their own plans for mentees who want expert guidance.</span></div></div>'
+        '</div><figcaption>3D icons for the two mentor tiers, generated with AI from a JSON prompt I wrote so both match</figcaption></figure>',
         desk(("cn2-path.webp","Level up your Mentorship Path: Enjoy your Navigator profile, or Apply as Executive Mentor for accredited mentors.","The entry point: two paths, side by side"),
              ("cn2-exec-apply.webp","Apply as Executive Mentor: name, email, coaching body, membership number and level, proof upload.","Apply with proof of certification")),
         fig("cn2-flow-mentor.webp","Flow: executive mentor setup. Experience level, career, specialisms, psychometric tools, then if certified: membership body, ID, level and proof.","Executive mentor flow",wide=True),

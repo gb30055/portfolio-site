@@ -282,3 +282,12 @@ html.lb-on{overflow:hidden}
 .av-reset:hover{color:#1b1b1f;border-color:#c9c9cf}
 .av-reset:disabled{opacity:.4;cursor:default}
 .av-reset:focus-visible{outline:2px solid #111;outline-offset:2px}
+/* Mentor tiers with 3D icons */
+.cs figure.tiers{max-width:960px;margin:28px auto 36px}
+.tier-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tier{display:flex;align-items:center;gap:18px;padding:20px 24px 20px 16px;border-radius:20px;background:#EAF7EC;border:1px solid #CFEBD4}
+.tier.exec{background:#FDEDE3;border-color:#F6D3BE}
+.tier img{width:104px;height:104px;flex:0 0 104px;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(0,0,0,.12))}
+.tier b{display:block;font-size:19px;font-weight:600;margin-bottom:4px}
+.tier span{display:block;font-size:15px;line-height:1.45;color:#55555c}
+@media (max-width:640px){.tier-row{grid-template-columns:1fr}.tier img{width:80px;height:80px;flex-basis:80px}}
