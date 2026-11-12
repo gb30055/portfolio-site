@@ -8,7 +8,7 @@ CN_HERO = ('<figure class="wide cover-desk" aria-label="Career Navig8r: the ment
   '<img src="../assets/cn2-public.webp" alt="" loading="eager"></figure>')
 
 CN_SUMMARY = ('<div class="tldr"><p class="tldr-h">The short version</p><ol>'
-  '<li><a href="#setup"><b>One topic per step.</b> Mentor setup became 5 short steps instead of 4 crowded ones.</a></li>'
+  '<li><a href="#setup"><b>One topic per step.</b> I split mentor setup into 5 short steps instead of 4 crowded ones.</a></li>'
   '<li><a href="#availability"><b>Show only what\'s needed.</b> Time pickers appear only for days that are on. A mentor starts with 8 controls, not about 30.</a></li>'
   '<li><a href="#executive"><b>A separate path for executive mentors.</b> Certified senior mentors apply, then set their specialisms and plans.</a></li>'
   '</ol></div>')
@@ -32,11 +32,12 @@ PAGES["career-navig8r"] = dict(
   footer=V2_FOOTER,
   title="Career Navig8r", tag="How do we get more mentors to finish their profile?",
   intro="A mentoring platform where people learn from those who already succeeded in the job they want. I was the only designer, on onboarding and the core product.",
-  facts=[("Role","Product Designer, sole designer"),("My part","Took over from a previous designer. Redesigned mentor onboarding, and designed the feed, posting, search and mentor cards."),("Team","Founder and developers"),("Timeline","2025 to 2026, web")],
+  facts=[("Role","Product Designer, sole designer"),("My part","Took over from a previous designer. Redesigned mentor onboarding, and designed the feed, posting, search and mentor cards."),("Team","Founder and developers"),("Timeline","2025 to 2026, web"),("Status","Designed and tested in walkthroughs, not yet built")],
   stats=[("13 → 6","minutes to finish setup, timed in team walkthroughs"),("30 → 8","controls before a mentor picks a day"),("5","focused steps instead of 4 crowded ones")],
   hero=CN_HERO, summary=CN_SUMMARY, chapters=CN_CHAPTERS,
   body=[
     sec("The problem",bigstat("30","controls on one setup page","No mentors, no bookings. I took over mentor onboarding from a previous designer, and it was the hardest flow in the product: 4 crowded steps, a 100-word essay, and one page asking for availability, languages and links all at once."),
+        '<p class="evidence">The founder\'s verdict on the old flow was simple: <b>the process is too long.</b> That became the brief.</p>',
         "<p>Click any screen to see the whole page.</p>",
         desk(("cn2-b_avail.webp","The old Availability page: time zone, every day with its own time pickers, languages, and LinkedIn, Twitter and Instagram links, all on one page.","Before: time pickers for all 7 days, languages and links on one page"),
              ("cn2-b_focus.webp","The old Mentoring Focus page: job role, a 100-word essay, skills, a key project and an intro video side by side.","Before: role, essay, skills and a key project at once")), id="problem"),
@@ -44,7 +45,7 @@ PAGES["career-navig8r"] = dict(
         fig("cn2-flow-profile.webp","Flow: profile setup for a basic user, from work experience to language, about me and social links, until the profile is complete.","Basic user profile: the short path",wide=True),
         '<ol class="steps-cmp"><li><span>Old mentor setup</span><b>Work experience</b><b>Availability + languages + links</b><b>Mentoring focus</b><b>Plans and pricing</b></li>'
         '<li><span>New mentor setup</span><b>Work experience</b><b>Availability</b><b>Mentoring focus</b><b>Plans and pricing</b><b>Promotion</b></li></ol>', cls="band", id="process"),
-    sec("One topic per step","Setup became 5 steps: Work Experience, Availability, Mentoring Focus, Plans and Pricing, and Promotion. Each step asks one question, and the left column says why it matters to mentees.",
+    sec("One topic per step","I split setup into 5 steps: Work Experience, Availability, Mentoring Focus, Plans and Pricing, and Promotion. Each step asks one question, and the left column says why it matters to mentees.",
         "<p><b>Before and after.</b> The old Work Experience page stacked every job and a key project into one long form. The new one asks for one job at a time.</p>",
         desk(("cn2-b_work.webp","The old Work Experience page: job title, organisation, dates and a key project form stacked for each role.","Before: every job and a key project in one long form"),
              ("cn2-work-add.webp","The new Work Experience step, adding a single job.","After: one job at a time")),
@@ -72,6 +73,6 @@ PAGES["career-navig8r"] = dict(
         desk(("cn2-search.webp","Search overlay with filters for Navig8rs, Executive Mentors, Questions and Career updates, plus popular and recent searches.","Search suggests before you type"),
              ("cn2-public.webp","Connect with a Navig8r: directory with sector, job field and level filters, active filter chips and mentor cards.","The directory splits Navig8rs from Executive Mentors")),
         fig("cn-cards.webp","Mentor card variants, from a full card with levels and skills to a compact one with name, rating and price.","Card variants I tested, from full detail to compact"), id="beyond"),
-    sec("Outcome",bigstat("13 → 6","minutes to finish setup","Timed in team walkthroughs of the old and new flows. Most of the time saved came from fewer fields per step, and from not filling in time pickers for days a mentor doesn't work. This is not usage data."), id="outcome"),
-    sec("What I'd do differently",'<p class="lesson-big">Measure the drop-off before you fix it.</p>',"The time savings come from walkthroughs, not usage data. Next time I'd add step-by-step completion tracking before launch, to see where mentors really drop off.", cls="lesson"),
+    sec("Outcome",bigstat("13 → 6","minutes to finish setup","Timed in team walkthroughs of the live old flow and the new prototype. Most of the time saved came from fewer fields per step, and from not filling in time pickers for days a mentor doesn't work. The new design isn't built yet, so this is an estimate, not usage data."), id="outcome"),
+    sec("What I'd do differently",'<p class="lesson-big">Measure the drop-off before you fix it.</p>',"The time savings come from walkthroughs, not usage data. When it gets built, I'd add step-by-step completion tracking from day one, to see where mentors really drop off.", cls="lesson"),
   ], next="scandlearn")
