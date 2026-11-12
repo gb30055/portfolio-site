@@ -474,3 +474,6 @@ h1 em { background: none; }
   .r-none { display: none; }
 }
 .r-mono.has-logo img { width: 28px; height: 28px; display: block; }
+.r-mono.r-fill { overflow: hidden; box-shadow: none; }
+.r-mono.r-fill img { width: 100%; height: 100%; display: block; }
+.roles li[data-tint="navig8r"] .r-mono.has-logo { background: #fff; }
