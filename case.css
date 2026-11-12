@@ -388,3 +388,5 @@ html{overflow-x:clip}
 @media (max-width:899px){.next-img{aspect-ratio:4/5}.next-img::after{background:linear-gradient(0deg,rgba(8,8,10,.95) 0%,rgba(8,8,10,.75) 45%,rgba(8,8,10,.05) 80%)}.next b{font-size:32px}}
 /* keep the rail line under the step numbers */
 @media (min-width:900px){.story-steps::before,.story-steps::after{z-index:0}.cs-body section.band .story-steps li{z-index:1}}
+/* No hard edges anywhere: fade every coloured section's glows to nothing at the top and bottom */
+.cs-body section.band::before,.cs-body section.warm::before{-webkit-mask:linear-gradient(180deg,transparent 0,#000 240px,#000 calc(100% - 240px),transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 240px,#000 calc(100% - 240px),transparent 100%)}
