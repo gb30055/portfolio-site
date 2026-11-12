@@ -18,14 +18,15 @@ CN_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
   + '</div></nav>')
 
 DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
-AVAIL = ('<div class="avail" data-old="30">'
+AVAIL = ('<div class="avail">'
+  '<div class="av-toast" role="status" aria-live="polite" hidden></div>'
   '<div class="av-head"><span class="av-title">Set your availability</span><span class="wn-try">Interactive</span></div>'
   '<p class="av-zone">Time zone <b>Europe, London</b></p>'
   '<ul class="av-days">' + "".join(
-    f'<li><label class="av-row"><span>{d}</span><input type="checkbox" class="av-sw" aria-label="Available on {d}"></label>'
-    '<div class="av-slots" hidden><span>from</span><b>09:00</b><span>to</span><b>17:00</b><button type="button" class="av-add" aria-label="Add a time slot">+</button></div></li>'
+    f'<li data-day="{d}"><label class="av-row"><span>{d}</span><input type="checkbox" class="av-sw" aria-label="Available on {d}"></label>'
+    '<div class="av-slots" hidden></div></li>'
     for d in DAYS) + '</ul>'
-  '<p class="av-count"><b class="av-n">0</b> controls on screen, growing only with the days you switch on. The old page showed about <b>30</b> before you picked anything.</p></div>')
+  '<p class="av-count"><b class="av-n">8</b> controls on screen, growing only with the days you switch on. The old page showed about <b>30</b> before you picked anything.</p></div>')
 
 PAGES["career-navig8r"] = dict(
   cls="dark-stage v2 dark-end navig8r",
@@ -55,7 +56,7 @@ PAGES["career-navig8r"] = dict(
              ("cn2-promotion.webp","Promotion step: LinkedIn, Twitter and Instagram links, and openness to media requests.","Promotion: the links moved out of availability"),
              ("cn2-plans.webp","Plans and Pricing step: Lite, Standard and Professional plans, each with an Offer switch.","Plans and Pricing: one card per plan")), id="setup"),
     sec("Show only what's needed","The old page showed every control for every day. Now time pickers appear only for days that are switched on, and one slot can be applied to all selected days.",
-        "<p><b>Try it.</b> Switch days on and off, and watch how little is on screen.</p>",
+        "<p><b>Try it.</b> Switch a day on, set its hours, then copy them to your other days with the apply button.</p>",
         AVAIL,
         desk(("cn2-avail-apply-zoom.webp","Close-up: Tuesday with two time slots, and a tooltip on the copy icon: Apply to your selected days.","Copy one slot to every selected day"),
              ("cn2-avail-warn-zoom.webp","Close-up of a warning: Please select more days to apply this timeslot. Enable other days using the toggle switches.","A clear warning when there's nowhere to copy to")), cls="band", id="availability"),

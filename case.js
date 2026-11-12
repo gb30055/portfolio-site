@@ -68,12 +68,39 @@
   if(!('IntersectionObserver' in window)){l.classList.add('on');return}
   var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classList.add('on');io.disconnect()}},{threshold:.2});io.observe(l.parentNode);
 })();
-// Career Navig8r availability demo: pickers only for days that are on
+// Career Navig8r availability demo: slots per day, add/remove, apply to selected days
 (function(){
   var a=document.querySelector('.avail');if(!a)return;
-  var lis=a.querySelectorAll('.av-days li'),n=a.querySelector('.av-n');
-  function upd(){var c=1;lis.forEach(function(li){var on=li.querySelector('.av-sw').checked;li.classList.toggle('on',on);li.querySelector('.av-slots').hidden=!on;c+=1+(on?3:0)});n.textContent=c}
-  lis.forEach(function(li){li.querySelector('.av-sw').addEventListener('change',upd)});upd();
+  var lis=[].slice.call(a.querySelectorAll('.av-days li')),n=a.querySelector('.av-n'),toast=a.querySelector('.av-toast'),tt;
+  var H=[];for(var h=6;h<=22;h++)H.push((h<10?'0':'')+h+':00');
+  var ic={add:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    copy:'<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="7" width="10" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 4.5h7.5A2 2 0 0 1 16.5 6.5V13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    del:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'};
+  function sel(v,lbl){return '<select aria-label="'+lbl+'">'+H.map(function(t){return '<option'+(t===v?' selected':'')+'>'+t+'</option>'}).join('')+'</select>'}
+  function row(day,f,t){var d=document.createElement('div');d.className='av-slot';
+    d.innerHTML='<span class="av-l">from</span>'+sel(f,day+' from')+'<span class="av-l">to</span>'+sel(t,day+' to')+
+    '<button type="button" class="av-ib av-plus" aria-label="Add a time slot">'+ic.add+'</button>'+
+    '<button type="button" class="av-ib av-apply" aria-label="Apply to your selected days">'+ic.copy+'<span class="av-tip" aria-hidden="true">Apply to your selected days</span></button>'+
+    '<button type="button" class="av-ib av-del" aria-label="Remove this time slot">'+ic.del+'</button>';return d}
+  function slots(li){return [].slice.call(li.querySelectorAll('.av-slot')).map(function(r){var s=r.querySelectorAll('select');return [s[0].value,s[1].value]})}
+  function say(msg,bad){clearTimeout(tt);toast.innerHTML=msg;toast.className='av-toast'+(bad?' bad':'');toast.hidden=false;tt=setTimeout(function(){toast.hidden=true},4200)}
+  function upd(){var c=1;lis.forEach(function(li){var on=li.querySelector('.av-sw').checked;li.classList.toggle('on',on);li.querySelector('.av-slots').hidden=!on;c+=1+(on?li.querySelectorAll('.av-slot').length*5:0)});n.textContent=c}
+  function fill(li,list){var box=li.querySelector('.av-slots');box.innerHTML='';list.forEach(function(s){box.appendChild(row(li.dataset.day,s[0],s[1]))})}
+  lis.forEach(function(li){
+    var sw=li.querySelector('.av-sw'),box=li.querySelector('.av-slots');
+    sw.addEventListener('change',function(){if(sw.checked&&!box.children.length)fill(li,[['09:00','17:00']]);upd()});
+    box.addEventListener('change',function(e){var r=e.target.closest('.av-slot');if(!r)return;var s=r.querySelectorAll('select');
+      if(H.indexOf(s[1].value)<=H.indexOf(s[0].value))s[1].value=H[Math.min(H.indexOf(s[0].value)+1,H.length-1)]});
+    box.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var r=b.closest('.av-slot');
+      if(b.classList.contains('av-plus')){var t=r.querySelectorAll('select')[1].value,i=Math.min(H.indexOf(t)+1,H.length-2);r.after(row(li.dataset.day,H[i],H[Math.min(i+3,H.length-1)]));upd()}
+      else if(b.classList.contains('av-del')){r.remove();if(!box.children.length){sw.checked=false}upd()}
+      else if(b.classList.contains('av-apply')){
+        var to=lis.filter(function(o){return o!==li&&o.querySelector('.av-sw').checked});
+        if(!to.length){say('<b>Please select more days to apply this timeslot</b><span>Switch on other days first, then apply.</span>',true);return}
+        var list=slots(li);to.forEach(function(o){fill(o,list);o.classList.remove('flash');void o.offsetWidth;o.classList.add('flash')});upd();
+        say('<b>Applied to '+to.map(function(o){return o.dataset.day}).join(', ')+'</b>')}
+    });
+  });upd();
 })();
 
 /* Lightbox: click any screen in the article to see it large (full page when one exists) */
