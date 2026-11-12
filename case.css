@@ -132,3 +132,4 @@
 .wavenote{background:transparent}
 .wavenote::before{z-index:-2}
 .wavenote::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:#fff}
+.wn-send{display:grid;place-items:center}
