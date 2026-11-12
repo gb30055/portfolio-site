@@ -283,14 +283,38 @@ html.lb-on{overflow:hidden}
 .av-reset:disabled{opacity:.4;cursor:default}
 .av-reset:focus-visible{outline:2px solid #111;outline-offset:2px}
 /* Mentor tiers with 3D icons */
-.cs figure.tiers{max-width:960px;margin:28px auto 36px}
-.tier-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.tier{display:flex;align-items:center;gap:18px;padding:20px 24px 20px 16px;border-radius:20px;background:#EAF7EC;border:1px solid #CFEBD4}
-.tier.exec{background:#FDEDE3;border-color:#F6D3BE}
-.tier img{width:104px;height:104px;flex:0 0 104px;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(0,0,0,.12))}
-.tier b{display:block;font-size:19px;font-weight:600;margin-bottom:4px}
-.tier span{display:block;font-size:15px;line-height:1.45;color:#55555c}
-@media (max-width:640px){.tier-row{grid-template-columns:1fr}.tier img{width:80px;height:80px;flex-basis:80px}}
+.cs figure.tiers{max-width:980px;margin:96px auto 44px}
+.tier-row{display:grid;grid-template-columns:1fr 1fr;gap:28px;perspective:1100px}
+.tier{position:relative;padding:118px 34px 34px;border-radius:28px;isolation:isolate;
+  background:radial-gradient(90% 70% at 18% 0%,rgba(150,230,170,.55),transparent 60%),linear-gradient(165deg,#F7FDF8 0%,#E2F4E7 100%);
+  box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.04),0 30px 60px -30px rgba(30,90,50,.35);
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;transform-style:preserve-3d}
+.tier.exec{color:#fff;
+  background:radial-gradient(80% 70% at 18% 0%,rgba(255,176,70,.42),transparent 62%),radial-gradient(70% 60% at 100% 100%,rgba(255,120,60,.18),transparent 60%),linear-gradient(165deg,#2B1F15 0%,#110B07 100%);
+  box-shadow:0 34px 70px -30px rgba(70,35,5,.7)}
+.tier.exec::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;z-index:-1;
+  background:conic-gradient(from var(--a,200deg),#FFE551,#FF1D1D,#8B00FF,#0000FF,#00FFFF,#fff,#FFE551);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.75;animation:tierSpin 9s linear infinite}
+.tier.exec::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,230,180,.16) 45%,transparent 60%);background-size:250% 100%;animation:tierSheen 6s ease-in-out infinite}
+@property --a{syntax:"<angle>";inherits:false;initial-value:200deg}
+@keyframes tierSpin{to{--a:560deg}}
+@keyframes tierSheen{0%,40%{background-position:120% 0}100%{background-position:-120% 0}}
+.tier-ic{position:absolute;top:-70px;left:22px;width:170px;height:170px;transform:translateZ(60px)}
+.cs .tier-ic img{background:none;border-radius:0;width:100%;height:100%;object-fit:contain;animation:tierFloat 5.5s ease-in-out infinite;filter:drop-shadow(0 22px 22px rgba(20,60,30,.25))}
+.cs .tier.exec .tier-ic img{animation-delay:-2.7s;filter:drop-shadow(0 22px 26px rgba(255,150,40,.35))}
+.tier-ic::after{content:"";position:absolute;left:22%;right:22%;bottom:-6px;height:18px;border-radius:50%;background:rgba(0,0,0,.18);filter:blur(10px);z-index:-1;animation:tierShadow 5.5s ease-in-out infinite}
+.tier.exec .tier-ic::after{background:rgba(255,150,40,.45);animation-delay:-2.7s}
+@keyframes tierFloat{50%{transform:translateY(-10px) rotate(-2deg)}}
+@keyframes tierShadow{50%{transform:scaleX(.8);opacity:.6}}
+.tier-tx{transform:translateZ(30px)}
+.tier-tag{display:inline-block;font-style:normal;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:#2F7A45;background:rgba(255,255,255,.75);padding:6px 11px;border-radius:999px;margin-bottom:14px}
+.tier.exec .tier-tag{color:#FFD98A;background:rgba(255,200,120,.12);box-shadow:inset 0 0 0 1px rgba(255,210,140,.3)}
+.tier b{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.tier span{display:block;font-size:16px;line-height:1.5;color:#46504a}
+.tier.exec span{color:#D8C7B5}
+@media (prefers-reduced-motion:reduce){.tier,.tier-ic img,.tier-ic::after,.tier.exec::before,.tier.exec::after{animation:none;transition:none;transform:none}}
+@media (max-width:640px){.cs figure.tiers{margin-top:84px}.tier-row{grid-template-columns:1fr;gap:88px}.tier{padding:96px 24px 26px}.tier-ic{width:140px;height:140px;top:-60px}.tier b{font-size:23px}}
 /* One dark end: Next case study and Let's talk share the glass background */
 .dark-end .next::after{display:none}
 .dark-end .next>*{position:relative;z-index:2}

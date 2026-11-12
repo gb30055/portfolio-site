@@ -189,3 +189,9 @@
   function s(){c.style.setProperty('--nh',n.offsetHeight+'px')}
   s();addEventListener('resize',s);addEventListener('load',s);
 })();
+
+// Mentor tier cards tilt toward the pointer
+(function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches||!matchMedia('(hover: hover)').matches)return;
+document.querySelectorAll('.tier').forEach(function(t){
+t.addEventListener('pointermove',function(e){var r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;t.style.transition='transform .12s ease-out';t.style.setProperty('--ry',(x*10).toFixed(2)+'deg');t.style.setProperty('--rx',(-y*8).toFixed(2)+'deg')});
+t.addEventListener('pointerleave',function(){t.style.transition='';t.style.setProperty('--ry','0deg');t.style.setProperty('--rx','0deg')})})})();
