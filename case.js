@@ -75,3 +75,58 @@
   function upd(){var c=1;lis.forEach(function(li){var on=li.querySelector('.av-sw').checked;li.classList.toggle('on',on);li.querySelector('.av-slots').hidden=!on;c+=1+(on?3:0)});n.textContent=c}
   lis.forEach(function(li){li.querySelector('.av-sw').addEventListener('change',upd)});upd();
 })();
+
+/* Lightbox: click any screen in the article to see it large (full page when one exists) */
+(function () {
+  var imgs = [].slice.call(document.querySelectorAll('main figure img, .cs section figure img'))
+    .filter(function (im, i, a) { return a.indexOf(im) === i && !im.closest('.next, .close, .cover-desk, .cover-phones'); });
+  if (!imgs.length) return;
+  var box = document.createElement('div');
+  box.className = 'lb'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Image viewer'); box.hidden = true;
+  box.innerHTML = '<div class="lb-scroll"><img class="lb-img" alt=""></div>' +
+    '<button type="button" class="lb-btn lb-close" aria-label="Close">✕</button>' +
+    '<button type="button" class="lb-btn lb-prev" aria-label="Previous image">←</button>' +
+    '<button type="button" class="lb-btn lb-next" aria-label="Next image">→</button>' +
+    '<p class="lb-cap"><span class="lb-n"></span><span class="lb-t"></span></p>';
+  document.body.appendChild(box);
+  var big = box.querySelector('.lb-img'), sc = box.querySelector('.lb-scroll'), cur = 0, last = null;
+  function show(i) {
+    cur = (i + imgs.length) % imgs.length;
+    var im = imgs[cur], fc = im.closest('figure') && im.closest('figure').querySelector('figcaption');
+    big.src = im.getAttribute('data-full') ? im.getAttribute('data-full') : im.currentSrc || im.src;
+    big.alt = im.alt;
+    big.classList.toggle('tall', !!im.getAttribute('data-full'));
+    box.querySelector('.lb-n').textContent = (cur + 1) + ' / ' + imgs.length;
+    box.querySelector('.lb-t').textContent = fc ? fc.textContent : '';
+    sc.scrollTop = 0;
+  }
+  function open(i) { last = document.activeElement; show(i); box.hidden = false; document.documentElement.classList.add('lb-on'); box.querySelector('.lb-close').focus(); }
+  function close() { box.hidden = true; document.documentElement.classList.remove('lb-on'); big.removeAttribute('src'); if (last) last.focus(); }
+  imgs.forEach(function (im, i) {
+    im.classList.add('zoomable'); im.tabIndex = 0; im.setAttribute('role', 'button');
+    im.addEventListener('click', function () { open(i); });
+    im.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
+  });
+  box.querySelector('.lb-close').onclick = close;
+  box.querySelector('.lb-prev').onclick = function () { show(cur - 1); };
+  box.querySelector('.lb-next').onclick = function () { show(cur + 1); };
+  sc.addEventListener('click', function (e) { if (e.target === sc) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (box.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') show(cur + 1);
+    else if (e.key === 'ArrowLeft') show(cur - 1);
+    else if (e.key === 'Tab') { // keep focus inside
+      var f = [].slice.call(box.querySelectorAll('button')), k = f.indexOf(document.activeElement);
+      e.preventDefault(); f[(k + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+    }
+  });
+  var x0 = null, y0 = null;
+  sc.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  sc.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) show(cur + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+})();

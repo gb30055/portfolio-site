@@ -2,9 +2,18 @@
 import html, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+def full_attr(src):
+    # Lightbox source: assets/full/<name> (close-ups "-zoom" open their whole screen)
+    import os
+    here = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "full")
+    for n in (src, src.replace("-zoom", "")):
+        if os.path.exists(os.path.join(here, n)):
+            return f' data-full="../assets/full/{n}"'
+    return ""
+
 def fig(src, alt, cap=None, wide=False):
     c = f"<figcaption>{cap}</figcaption>" if cap else ""
-    return f'<figure class="{"wide" if wide else ""}"><img src="../assets/{src}" alt="{html.escape(alt)}" loading="lazy">{c}</figure>'
+    return f'<figure class="{"wide" if wide else ""}"><img src="../assets/{src}"{full_attr(src)} alt="{html.escape(alt)}" loading="lazy">{c}</figure>'
 
 def sec(h, *parts, cls="", id=""):
     i = f' id="{id}"' if id else ""
@@ -28,7 +37,7 @@ def vid(name, label):
 def phones(*items, cls=""):
     # A row of phone screens: (file, alt, caption)
     def one(f, a, c):
-        img = f'<img src="../assets/{f}" alt="{html.escape(a)}" loading="lazy">'
+        img = f'<img src="../assets/{f}"{full_attr(f)} alt="{html.escape(a)}" loading="lazy">'
         if c.startswith("Before: "):
             # Old version: greyed frame with a Before strip under it
             c = c[8:9].upper() + c[9:]
@@ -171,7 +180,7 @@ NEXT_IMG = {"fancircle": "thumb-fancircle.webp", "career-navig8r": "navig8r-home
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
     hero = p["hero"] if isinstance(p["hero"], str) else fig(p["hero"][0], p["hero"][1], wide=True)
-    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{FOOTER}}", p.get("footer", OLD_FOOTER)).replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
+    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{FOOTER}}", p.get("footer", OLD_FOOTER)).replace("{{TITLE}}", p["title"]).replace("{{DESC}}", p["tag"] if p["tag"][-1:] in "?.!" else p["tag"] + ".").replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
        .replace("{{FACTS}}", "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in p["facts"]))
        .replace("{{STATS}}", "".join(f"<li><strong>{n}</strong><span>{t}</span></li>" for n, t in p["stats"]))
        .replace("{{HERO}}", hero)
