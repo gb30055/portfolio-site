@@ -159,3 +159,17 @@
 .close-lines{inset:0;height:auto;background:url("../assets/glass-footer.webp") center/cover no-repeat;mix-blend-mode:normal;opacity:0;-webkit-mask-image:none;mask-image:none;transform:none;transition:opacity 1.2s ease}
 .close-lines.on{opacity:1}
 @media (max-width:640px){.close-lines{background-image:url("../assets/glass-footer-m.webp")}}
+/* Email me + copy icon as one split button */
+.cta-split{display:inline-flex;align-items:stretch;border-radius:999px;background:#FFDC5C;transition:transform .2s}
+.cta-split:hover{transform:translateY(-2px)}
+.close-ctas .cta-split .cta-y{background:none;border-radius:999px 0 0 999px;padding:0 18px 0 22px}
+.cta-split .cta-y:hover{transform:none}
+.close-ctas .cta-copy{position:relative;display:inline-grid;place-items:center;min-height:48px;width:52px;padding:0;border:0;border-left:1px solid rgba(0,0,0,.18);border-radius:0 999px 999px 0;background:none;color:#111;cursor:pointer}
+.cta-copy:hover{background:rgba(0,0,0,.07)}
+.cta-copy .i-ok{display:none}
+.cta-copy.done .i-copy{display:none}.cta-copy.done .i-ok{display:block}
+.cta-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#111;font:500 13px/1 var(--sans);padding:7px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+.cta-copy.done .cta-tip{opacity:1}
+@media (max-width:640px){.close-ctas .cta-split{flex:1 1 100%}.close-ctas .cta-split .cta-y{flex:1;justify-content:center}}
+@media (max-width:640px){.close-ctas .cta-split .cta-copy{flex:0 0 56px}}
+@media (max-width:640px){.cta-tip{left:auto;right:0;transform:none}}
