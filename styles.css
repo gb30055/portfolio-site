@@ -334,3 +334,28 @@ h1 em { background: none; }
 @media (min-width: 900px) { .pcard { grid-template-columns: 1fr 1.15fr; gap: 64px; } .p-text { padding-top: 8px; } }
 @media (max-width: 899px) { .pcard { display: flex; flex-direction: column; gap: 0; } .p-text { display: contents; } .p-side { order: 1; margin: 0 0 24px; } .p-btn { order: 2; align-self: flex-start; } .p-stats div { display: flex; flex-direction: column; justify-content: space-between; } .p-desc { margin-bottom: 20px; } }
 @media (prefers-reduced-motion: reduce) { .pcard, .p-media img, .p-media video { transition: none; } }
+
+/* Hero v2 (2026-11-12): faster to scan for recruiters */
+.hero { padding-bottom: 40px; }
+.hero h1 { max-width: 15ch; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 0; }
+.h-cta { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 500; font-size: 16px; text-decoration: none; color: var(--ink); border: 1px solid rgba(0,0,0,.18); background: rgba(255,255,255,.55); transition: background .2s, transform .2s; }
+.h-cta:hover { background: #fff; }
+.h-cta.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+.h-cta.dark:hover { background: #222; }
+.proof { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 32px 0 0; padding: 20px 0 0; border-top: 1px solid rgba(0,0,0,.08); max-width: 640px; }
+.proof li { display: grid; line-height: 1.25; }
+.proof b { font-size: 16px; font-weight: 600; color: var(--ink); }
+.proof span { font-size: 13px; color: var(--muted); }
+.hero-grid { align-items: center; }
+.thread { min-height: 0; justify-content: flex-start; }
+.bubble.typing { display: inline-flex; gap: 4px; width: auto; }
+.bubble.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: tdot 1s infinite ease-in-out; }
+.bubble.typing i:nth-child(2) { animation-delay: .15s; } .bubble.typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes tdot { 50% { opacity: .25; transform: translateY(-2px); } }
+.ask-peek { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; margin-top: 4px; padding: 8px; border-radius: 14px; background: var(--page); text-decoration: none; color: var(--ink); max-width: 92%; transition: background .2s; }
+.ask-peek:hover { background: #dfe7f3; }
+.ask-peek img { width: 96px; height: 60px; object-fit: cover; object-position: top; border-radius: 8px; display: block; }
+.ask-peek b { display: block; font-size: 14px; font-weight: 600; }
+.ask-peek span { font-size: 13px; color: var(--muted); }
+#work.work { border-top: 0; padding-top: 24px; }

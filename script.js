@@ -10,25 +10,45 @@ const answers = {
 const thread = document.getElementById("thread");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-document.querySelectorAll(".chips button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const q = document.createElement("p");
-    q.className = "bubble you";
-    q.textContent = btn.textContent;
-
-    const a = document.createElement("p");
-    a.className = "bubble me";
-    a.textContent = answers[btn.dataset.q];
-
-    // Keep the panel short: show only the latest question and answer.
-    thread.replaceChildren(q, a);
-    if (!reduceMotion) {
-      q.classList.add("enter");
-      a.classList.add("enter", "late");
-    }
-    document.querySelectorAll(".chips button").forEach((b) => b.setAttribute("aria-pressed", b === btn));
-  });
-});
+// Answers that link to a case study get a small preview card under them.
+const peeks = {
+  best: { href: "fancircle/", img: "assets/thumb-fancircle-wall.webp", title: "Fancircle case study", sub: "Fan app + artist app, 700+ screens" }
+};
+let typingTimer = 0;
+function ask(btn, auto) {
+  const key = btn.dataset.q;
+  const q = document.createElement("p");
+  q.className = "bubble you";
+  q.textContent = btn.textContent;
+  const a = document.createElement("p");
+  a.className = "bubble me";
+  a.textContent = answers[key];
+  const nodes = [q, a];
+  if (peeks[key]) {
+    const p = peeks[key], card = document.createElement("a");
+    card.className = "ask-peek"; card.href = p.href;
+    card.innerHTML = '<img alt="" src="' + p.img + '"><span><b></b><span></span></span>';
+    card.querySelector("b").textContent = p.title + " \u2192"; card.querySelector("span span").textContent = p.sub;
+    nodes.push(card);
+  }
+  document.querySelectorAll(".chips button").forEach((b) => b.setAttribute("aria-pressed", b === btn));
+  clearTimeout(typingTimer);
+  if (reduceMotion) { thread.replaceChildren(...nodes); return; }
+  // Show the question, a short typing indicator, then the answer.
+  const dots = document.createElement("p");
+  dots.className = "bubble me typing"; dots.setAttribute("aria-label", "Typing");
+  dots.innerHTML = "<i></i><i></i><i></i>";
+  q.classList.add("enter"); dots.classList.add("enter", "late");
+  thread.replaceChildren(q, dots);
+  typingTimer = setTimeout(() => {
+    nodes.slice(1).forEach((n) => n.classList.add("enter"));
+    thread.replaceChildren(...nodes);
+  }, auto ? 1100 : 650);
+}
+document.querySelectorAll(".chips button").forEach((btn) => btn.addEventListener("click", () => ask(btn)));
+// Open with the question recruiters ask first, already answered.
+const first = document.querySelector('.chips button[data-q="best"]');
+if (first) setTimeout(() => ask(first, true), reduceMotion ? 0 : 500);
 
 // Top lines image grows in place as the page scrolls.
 const band = document.querySelector(".hero-band");
