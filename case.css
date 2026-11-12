@@ -375,3 +375,14 @@ html{overflow-x:clip}
  .story-phones img{border-radius:34px;border:0;box-shadow:0 0 0 8px rgba(255,255,255,.5),0 50px 80px -30px rgba(90,60,0,.55)}
 }
 @media (prefers-reduced-motion:reduce){.story-phones figure,.story-steps li,.story-steps::after{transition:none!important}}
+
+/* Next case study: full-width image with the title and button laid over it */
+.next{display:grid;grid-template-columns:1fr!important;gap:0!important;padding-top:96px;padding-bottom:72px}
+.next>.next-img,.next>.next-text{grid-area:1/1}
+.next-img{position:relative;aspect-ratio:21/9;border-radius:28px;box-shadow:0 50px 100px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08)}
+.next-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,10,.92) 0%,rgba(8,8,10,.7) 38%,rgba(8,8,10,.1) 75%),linear-gradient(0deg,rgba(8,8,10,.6),transparent 50%)}
+.next-img img{object-position:top center}
+.next>.next-text,.dark-end .next>.next-text{align-self:end;padding:clamp(24px,4.5vw,64px);z-index:3}
+.next b{max-width:16ch;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.next .next-k{color:#c9c9d1}
+@media (max-width:899px){.next-img{aspect-ratio:4/5}.next-img::after{background:linear-gradient(0deg,rgba(8,8,10,.95) 0%,rgba(8,8,10,.75) 45%,rgba(8,8,10,.05) 80%)}.next b{font-size:32px}}

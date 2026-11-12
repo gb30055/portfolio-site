@@ -404,3 +404,11 @@ h1 em { background: none; }
 @keyframes xShine { 0%, 60% { left: -60%; } 100% { left: 130%; } }
 @media (max-width: 899px) { .x-holo .x-media { transform: none; } .x-holo { padding-bottom: 18px; } }
 @media (prefers-reduced-motion: reduce) { .x-aurora i, .xcard::before, .x-holo .x-media, .x-scan, .x-beam, .x-stats dt::before, .x-btn::after { animation: none !important; } .x-scan { display: none; } }
+/* Materialise: the screen builds from particles, then the real image fades in */
+.x-mat { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .6s; }
+.x-media.mat .x-mat { opacity: 1; transition: none; }
+.x-media.mat img, .x-media.mat video { opacity: 0; }
+.x-media img, .x-media video { transition: transform .6s cubic-bezier(.2,.7,.2,1), opacity .6s; }
+.x-media.mat .x-scan { animation-duration: 1.2s; }
+.x-media.mat::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(60% 80% at 50% 100%, color-mix(in srgb, var(--c2) 25%, transparent), transparent), #05060c; }
+.x-media.mat-done .x-mat { opacity: 0; }

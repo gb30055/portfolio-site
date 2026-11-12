@@ -92,3 +92,57 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     io.observe(card);
   });
 })();
+
+// Project cards: each screen materialises from glowing particles projected up from the beam
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll(".xcard .x-media").forEach(function (m) {
+    var el = m.querySelector("img, video"), src = el && (el.tagName === "VIDEO" ? el.getAttribute("poster") : el.currentSrc || el.src);
+    if (!src) return;
+    var card = m.closest(".xcard"), c2 = getComputedStyle(card).getPropertyValue("--c2").trim() || "#45E6FF";
+    var cv = document.createElement("canvas"); cv.className = "x-mat"; cv.setAttribute("aria-hidden", "true"); m.appendChild(cv);
+    var ctx = cv.getContext("2d"), pts = null, W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1), busy = false;
+    var tint = (function () { var d = document.createElement("canvas").getContext("2d"); d.fillStyle = c2; d.fillRect(0, 0, 1, 1); var p = d.getImageData(0, 0, 1, 1).data; return [p[0], p[1], p[2]]; })();
+    var im = new Image(); im.src = src; m.classList.add("mat"); im.onerror = function () { m.classList.remove("mat"); };
+    function build() {
+      W = m.clientWidth; H = m.clientHeight; if (!W || !H) return false;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var step = W < 500 ? 4 : 5, cols = Math.ceil(W / step), rows = Math.ceil(H / step);
+      var off = document.createElement("canvas"); off.width = cols; off.height = rows; var o = off.getContext("2d");
+      // object-fit: cover, matching the media's own crop
+      var ir = im.naturalWidth / im.naturalHeight, r = cols / rows, sw, sh, sx, sy, top = getComputedStyle(el).objectPosition.indexOf("top") > -1 || /^50% 0/.test(getComputedStyle(el).objectPosition);
+      if (ir > r) { sh = im.naturalHeight; sw = sh * r; sx = (im.naturalWidth - sw) / 2; sy = 0; } else { sw = im.naturalWidth; sh = sw / r; sx = 0; sy = top ? 0 : (im.naturalHeight - sh) / 2; }
+      o.drawImage(im, sx, sy, sw, sh, 0, 0, cols, rows);
+      var d = o.getImageData(0, 0, cols, rows).data; pts = [];
+      for (var y = 0; y < rows; y++) for (var x = 0; x < cols; x++) {
+        var i = (y * cols + x) * 4;
+        pts.push({ tx: x * step, ty: y * step, s: step, r: d[i], g: d[i + 1], b: d[i + 2],
+          sx: W * (.3 + Math.random() * .4), sy: H + 20 + Math.random() * 60,
+          dl: (1 - y / rows) * 700 + Math.random() * 500 });
+      }
+      return true;
+    }
+    function play() {
+      if (busy || !im.complete || !im.naturalWidth || !m.classList.contains("mat")) return;
+      if (!build()) return; busy = true;
+      var t0 = performance.now(), fly = 900, total = 2300;
+      function frame(t) {
+        var e = t - t0; ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < pts.length; i++) {
+          var p = pts[i], k = Math.min(1, Math.max(0, (e - p.dl) / fly));
+          if (k <= 0) continue;
+          var q = 1 - Math.pow(1 - k, 3), x = p.sx + (p.tx - p.sx) * q, y = p.sy + (p.ty - p.sy) * q - Math.sin(k * Math.PI) * 30;
+          var mix = 1 - q, rr = p.r + (tint[0] - p.r) * mix, gg = p.g + (tint[1] - p.g) * mix, bb = p.b + (tint[2] - p.b) * mix;
+          var sz = k < 1 ? Math.max(1.2, p.s * (.35 + .65 * q)) : p.s;
+          ctx.globalAlpha = .35 + .65 * q; ctx.fillStyle = "rgb(" + (rr | 0) + "," + (gg | 0) + "," + (bb | 0) + ")";
+          ctx.fillRect(x, y, sz, sz);
+        }
+        if (e < total) requestAnimationFrame(frame);
+        else { m.classList.remove("mat"); m.classList.add("mat-done"); setTimeout(function () { ctx.clearRect(0, 0, W, H); m.classList.remove("mat-done"); busy = false; }, 700); }
+      }
+      requestAnimationFrame(frame);
+    }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { if (im.complete) play(); else im.onload = play; } }); }, { threshold: .45 });
+    io.observe(m);
+  });
+})();
