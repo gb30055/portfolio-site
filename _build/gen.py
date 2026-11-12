@@ -27,8 +27,16 @@ def vid(name, label):
 
 def phones(*items, cls=""):
     # A row of phone screens: (file, alt, caption)
-    return f'<div class="phones {cls}">' + "".join(
-        f'<figure><img src="../assets/{f}" alt="{html.escape(a)}" loading="lazy"><figcaption>{c}</figcaption></figure>' for f, a, c in items) + '</div>'
+    def one(f, a, c):
+        img = f'<img src="../assets/{f}" alt="{html.escape(a)}" loading="lazy">'
+        if c.startswith("Before: "):
+            # Old version: greyed frame with a Before strip under it
+            c = c[8:9].upper() + c[9:]
+            return (f'<figure class="old"><div class="old-shot">{img}'
+                    '<p class="old-strip"><span>Before</span><span>Old version</span></p></div>'
+                    f'<figcaption>{c}</figcaption></figure>')
+        return f'<figure>{img}<figcaption>{c}</figcaption></figure>'
+    return f'<div class="phones {cls}">' + "".join(one(*i) for i in items) + '</div>'
 
 def quote(text=None, who=None, ask=""):
     if text:

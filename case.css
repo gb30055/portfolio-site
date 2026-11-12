@@ -180,7 +180,7 @@
 .navig8r .cs-body section.band figcaption{color:#6a4a36}
 .v2.cs .phones.desk{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1200px;gap:40px 28px}
 .cs .phones.desk img{border-radius:14px;aspect-ratio:16/10;object-fit:cover;object-position:top;box-shadow:0 20px 50px -25px rgba(40,20,0,.35)}
-@media (max-width:767px){.v2.cs .phones.desk{grid-auto-columns:86vw}}
+@media (max-width:767px){.v2.cs .phones.desk{grid-template-columns:none;grid-auto-columns:86vw}}
 .cs figure.wide img[src*="flow"]{background:#f6fafe;border-radius:14px}
 .v2 .cover-desk{position:relative;margin:8px 0 56px;padding:clamp(28px,5vw,72px) clamp(16px,6vw,96px) clamp(48px,7vw,110px);border-radius:var(--r-lg);background:radial-gradient(ellipse at 60% 70%,#3a2216 0,#15151a 70%)}
 .v2 .cover-desk img{display:block;width:78%;border-radius:12px;box-shadow:0 30px 70px -25px rgba(0,0,0,.7);aspect-ratio:16/10;object-fit:cover;object-position:top}
@@ -210,3 +210,13 @@
 .dark-stage .stage .cs-stats strong{white-space:nowrap;font-size:clamp(48px,6vw,80px)}
 @media (max-width:767px){.v2.cs .phones.desk{margin-left:-16px;margin-right:-16px}}
 .cs-body .avail ul.av-days{padding:0;margin:0}.cs-body .avail .av-days li{margin:0}
+
+/* Old (before) frames: greyed, flat, with a Before strip */
+.cs .phones figure.old .old-shot{position:relative;border-radius:14px;overflow:hidden;background:#1d1d20;outline:1px dashed rgba(0,0,0,.25);outline-offset:4px}
+.cs .phones figure.old img{border-radius:0;box-shadow:none;filter:grayscale(1) contrast(.92);opacity:.72;transition:filter .35s,opacity .35s;display:block;width:100%}
+.cs .phones figure.old:hover img,.cs .phones figure.old:focus-within img{filter:none;opacity:1}
+.cs .old-strip{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;margin:0;padding:10px 16px;background:#1d1d20;color:#fff;font-size:12px;line-height:1;letter-spacing:.14em;text-transform:uppercase}
+.cs .old-strip span:first-child{font-weight:600;display:flex;align-items:center;gap:8px}
+.cs .old-strip span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:#9a9aa0}
+.cs .old-strip span:last-child{color:#9a9aa0}
+@media (max-width:640px){.cs .old-strip{padding:8px 12px;font-size:11px}.cs .old-strip span:last-child{display:none}}
