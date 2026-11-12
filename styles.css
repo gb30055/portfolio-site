@@ -487,3 +487,28 @@ h1 em { background: none; }
 .r-badge img { width: 11px; height: 11px; display: block; }
 .r-mono.r-pair .r-badge img { width: 11px; height: 11px; border-radius: 0; }
 .roles .r-mono.r-fill:not(.r-dark):not(.r-sl) { background: #fff; }
+
+/* About v2: bento of soft tiles, same language as the cards */
+.ab-grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
+.ab-tile { margin: 0; padding: clamp(22px, 2.6vw, 36px); border-radius: 28px; background: rgba(255,255,255,.55); box-shadow: 0 30px 60px -45px rgba(40,30,60,.3); }
+.ab-k { margin: 0 0 14px; display: inline-flex; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.8); font-size: 13px; font-weight: 600; color: #3a3238; }
+.ab-photo { grid-row: span 2; position: relative; padding: 0; overflow: hidden; min-height: 420px; }
+.ab-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 22% 30%; }
+.ab-photo figcaption { position: absolute; left: 16px; bottom: 16px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.85); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-size: 13px; font-weight: 600; color: #1d1a20; }
+.ab-lead { grid-column: span 2; background: linear-gradient(135deg, #EEF2FB, #DCE6F7); }
+.ab-big { margin: 0; font: 600 clamp(24px, 2.6vw, 34px)/1.22 var(--sans); letter-spacing: -0.03em; color: var(--ink); max-width: 30ch; }
+.ab-how p:last-child, .ab-num p:last-child { margin: 0; font-size: 16px; line-height: 1.55; font-weight: 500; color: rgba(30,25,35,.7); }
+.ab-n { margin: 0 0 10px; font: 600 clamp(44px, 4.4vw, 60px)/1 var(--sans); letter-spacing: -0.04em; color: var(--ink); }
+.ab-ql { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center; background: #0d0d0f; color: #fff; text-decoration: none; transition: transform .3s; }
+.ab-ql:hover { transform: translateY(-3px); }
+.ab-ql img { width: 56px; height: auto; display: block; }
+.ab-ql b { display: block; font: 600 clamp(20px, 2vw, 26px)/1.2 var(--sans); letter-spacing: -0.02em; }
+.ab-ql > span > span { display: block; margin-top: 4px; font-size: 15px; font-weight: 500; color: #a9a9b3; }
+.ab-go { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #fff; color: #111; font-size: 14px; font-weight: 600; white-space: nowrap; }
+@media (max-width: 899px) {
+  .ab-grid { grid-template-columns: 1fr; }
+  .ab-photo { grid-row: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  .ab-lead { grid-column: auto; }
+  .ab-ql { grid-template-columns: auto 1fr; }
+  .ab-go { grid-column: 1 / -1; justify-self: start; }
+}
