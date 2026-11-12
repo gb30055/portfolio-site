@@ -386,3 +386,5 @@ html{overflow-x:clip}
 .next b{max-width:16ch;text-shadow:0 2px 30px rgba(0,0,0,.5)}
 .next .next-k{color:#c9c9d1}
 @media (max-width:899px){.next-img{aspect-ratio:4/5}.next-img::after{background:linear-gradient(0deg,rgba(8,8,10,.95) 0%,rgba(8,8,10,.75) 45%,rgba(8,8,10,.05) 80%)}.next b{font-size:32px}}
+/* keep the rail line under the step numbers */
+@media (min-width:900px){.story-steps::before,.story-steps::after{z-index:0}.cs-body section.band .story-steps li{z-index:1}}
