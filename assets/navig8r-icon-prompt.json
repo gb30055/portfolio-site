@@ -1,0 +1,32 @@
+{
+  "style": {
+    "type": "3D icon",
+    "render": "soft clay-like 3D, smooth rounded forms, subtle subsurface glow",
+    "material": "matte plastic with a gentle satin sheen",
+    "lighting": "soft studio light from the top left, warm highlights, soft contact shadow below",
+    "camera": "front view, slightly from above, centred, object fills about 80% of the frame",
+    "palette": {
+      "main": "warm amber #F2A93B",
+      "accent": "cobalt blue #3E63DD",
+      "dark": "charcoal #2B2B2E"
+    },
+    "background": "transparent",
+    "details": "no text, no outlines, no extra props, minimal and friendly"
+  },
+  "output": {
+    "size": "1024x1024",
+    "format": "PNG with transparency"
+  },
+  "icons": [
+    {
+      "name": "Navig8r",
+      "subject": "a glowing light bulb with short rounded light rays around it",
+      "uses": "amber glass, cobalt blue base"
+    },
+    {
+      "name": "Executive Mentor",
+      "subject": "a trophy cup with two handles on a stepped base with a small plaque",
+      "uses": "amber cup, charcoal base, amber plaque"
+    }
+  ]
+}
