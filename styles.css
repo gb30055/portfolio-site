@@ -480,3 +480,9 @@ h1 em { background: none; }
 .r-mono.r-dark { background: #111; box-shadow: none; }
 .r-mono.r-dark img { width: 24px; height: 24px; }
 .roles li[data-tint="scandlearn"] .r-mono.r-sl { background: #0E1B3D; }
+.r-mono.r-tk img { width: 18px; height: 18px; }
+.r-mono.r-pair { position: relative; overflow: visible; background: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+.r-mono.r-pair > img { border-radius: 14px; }
+.r-badge { position: absolute; right: -6px; bottom: -6px; width: 24px; height: 24px; border-radius: 8px; background: #111; display: grid; place-items: center; box-shadow: 0 0 0 2px #fff; }
+.r-badge img { width: 11px; height: 11px; display: block; }
+.r-mono.r-pair .r-badge img { width: 11px; height: 11px; border-radius: 0; }
