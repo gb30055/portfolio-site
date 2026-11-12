@@ -33,17 +33,35 @@ function ask(btn, auto) {
   }
   document.querySelectorAll(".chips button").forEach((b) => b.setAttribute("aria-pressed", b === btn));
   clearTimeout(typingTimer);
-  if (reduceMotion) { thread.replaceChildren(...nodes); return; }
-  // Show the question, a short typing indicator, then the answer.
+  const reply = fromMe(nodes.slice(1));
+  if (reduceMotion) { thread.replaceChildren(q, reply); return; }
+  // Show the question, a short typing indicator, then the answer. The panel grows or shrinks smoothly.
   const dots = document.createElement("p");
   dots.className = "bubble me typing"; dots.setAttribute("aria-label", "Typing");
   dots.innerHTML = "<i></i><i></i><i></i>";
-  q.classList.add("enter"); dots.classList.add("enter", "late");
-  thread.replaceChildren(q, dots);
+  const typing = fromMe([dots]);
+  q.classList.add("enter"); typing.classList.add("enter", "late");
+  resize(() => thread.replaceChildren(q, typing));
   typingTimer = setTimeout(() => {
-    nodes.slice(1).forEach((n) => n.classList.add("enter"));
-    thread.replaceChildren(...nodes);
+    reply.classList.add("enter");
+    resize(() => thread.replaceChildren(q, reply));
   }, auto ? 1100 : 650);
+}
+// A reply from Genc: the round avatar next to the bubbles.
+function fromMe(children) {
+  const row = document.createElement("div"); row.className = "from-me";
+  const av = document.createElement("img"); av.className = "me-av"; av.src = "assets/genc-avatar.webp"; av.alt = ""; av.width = 32; av.height = 32;
+  const col = document.createElement("div"); children.forEach((c) => col.appendChild(c));
+  row.append(av, col); return row;
+}
+// Animate the thread's height from its old size to its new one.
+function resize(change) {
+  const from = thread.offsetHeight; change();
+  const to = thread.offsetHeight; if (from === to) return;
+  thread.style.height = from + "px"; thread.style.overflow = "hidden";
+  requestAnimationFrame(() => { thread.style.transition = "height .45s cubic-bezier(.2,.7,.2,1)"; thread.style.height = to + "px"; });
+  const done = () => { thread.style.height = ""; thread.style.overflow = ""; thread.style.transition = ""; thread.removeEventListener("transitionend", done); };
+  thread.addEventListener("transitionend", done);
 }
 document.querySelectorAll(".chips button").forEach((btn) => btn.addEventListener("click", () => ask(btn)));
 // Open with the question recruiters ask first, already answered.
