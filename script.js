@@ -69,3 +69,20 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.querySelectorAll("video.loop").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
 }
 
+
+// Live clock in the hero: "Working remotely - 3:11 PM CET", plus the visitor's time when it differs.
+(function () {
+  const el = document.getElementById("clock"); if (!el) return;
+  const TZ = "Europe/Belgrade"; // same zone as Prishtina
+  const me = el.querySelector("[data-me]"), youWrap = el.querySelector(".ck-you"), you = el.querySelector("[data-you]");
+  const fmt = (tz) => new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: tz });
+  const myTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  function tick() {
+    const d = new Date();
+    const zone = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, timeZoneName: "short" }).formatToParts(d).find((p) => p.type === "timeZoneName");
+    me.textContent = fmt(TZ).format(d) + " " + (zone ? zone.value : "CET");
+    const mine = fmt(TZ).format(d), theirs = myTZ ? fmt(myTZ).format(d) : mine;
+    if (theirs !== mine) { you.textContent = theirs; youWrap.hidden = false; } else youWrap.hidden = true;
+  }
+  tick(); setInterval(tick, 15000);
+})();

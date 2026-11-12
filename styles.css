@@ -359,3 +359,10 @@ h1 em { background: none; }
 .ask-peek b { display: block; font-size: 14px; font-weight: 600; }
 .ask-peek span { font-size: 13px; color: var(--muted); }
 #work.work { border-top: 0; padding-top: 24px; }
+
+/* Live clock: "Working remotely - 3:11 PM CET · 9:11 AM your time" */
+.clock { display: flex; flex-wrap: wrap; align-items: center; gap: 0 6px; }
+.clock b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ck-dot { width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background: #1fa45a; box-shadow: 0 0 0 3px rgba(31,164,90,.18); }
+.ck-sep { opacity: .5; }
+.ck-you { font-variant-numeric: tabular-nums; }
