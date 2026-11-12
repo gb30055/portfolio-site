@@ -358,3 +358,49 @@ h1 em { background: none; }
 @media (max-width: 899px) { .xcard { display: flex; flex-direction: column; gap: 0; } .x-text { display: contents; } .x-side { order: 1; margin: 4px 0 24px; } .x-btn { order: 2; align-self: flex-start; } .x-desc { margin-bottom: 20px; } }
 @media (min-width: 900px) { .xcard { grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: stretch; } .x-text { padding: 8px 0; } }
 @media (prefers-reduced-motion: reduce) { .x-grid::after { animation: none; display: none; } .x-media img, .x-media video, .x-hud, .x-btn i { transition: none; } }
+
+/* Project cards v3: living aurora, glowing dust, holographic screens, edge light */
+.xcard { background: linear-gradient(160deg, #0A0C1A 0%, #04050B 100%); }
+.x-aurora { position: absolute; inset: -20%; z-index: -2; pointer-events: none; filter: blur(60px) saturate(1.4); opacity: .9; }
+.x-aurora i { position: absolute; border-radius: 50%; mix-blend-mode: screen; animation: xDrift 22s ease-in-out infinite alternate; }
+.x-aurora i:nth-child(1) { width: 55%; height: 60%; right: 0; top: 0; background: radial-gradient(closest-side, color-mix(in srgb, var(--c1) 85%, transparent), transparent); }
+.x-aurora i:nth-child(2) { width: 50%; height: 55%; left: 0; bottom: 0; background: radial-gradient(closest-side, color-mix(in srgb, var(--c2) 55%, transparent), transparent); animation-duration: 28s; animation-delay: -9s; }
+.x-aurora i:nth-child(3) { width: 40%; height: 45%; left: 35%; top: 30%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c3) 40%, transparent), transparent); animation-duration: 18s; animation-delay: -4s; }
+@keyframes xDrift { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(-12%, 8%) scale(1.15); } 100% { transform: translate(8%, -10%) scale(.9); } }
+.x-dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+/* edge light that travels around the panel */
+@property --xa { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.xcard::before { padding: 1.5px; background: conic-gradient(from var(--xa), transparent 0 62%, color-mix(in srgb, var(--c2) 90%, #fff) 72%, #fff 75%, color-mix(in srgb, var(--c1) 90%, #fff) 79%, transparent 88%), linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); animation: xEdge 7s linear infinite; }
+@keyframes xEdge { to { --xa: 360deg; } }
+.xcard h3 { background: linear-gradient(100deg, #fff 30%, color-mix(in srgb, var(--c3) 80%, #fff) 70%, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.xcard h3 a { color: transparent; }
+/* holographic screen */
+.x-holo { position: relative; perspective: 1400px; padding-bottom: 26px; }
+.x-holo .x-media { transform: rotateY(-9deg) rotateX(5deg); transform-origin: 30% 50%; transition: transform .9s cubic-bezier(.2,.7,.2,1), box-shadow .9s;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--c3) 45%, transparent), 0 0 40px -6px color-mix(in srgb, var(--c2) 55%, transparent), 0 0 120px -20px color-mix(in srgb, var(--c1) 80%, transparent), 0 40px 60px -30px #000;
+  animation: xHover 7s ease-in-out infinite; }
+.xcard:hover .x-holo .x-media { transform: rotateY(0) rotateX(0) translateY(-6px); animation-play-state: paused; }
+@keyframes xHover { 50% { translate: 0 -8px; } }
+.x-media::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: screen;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.05) 0 1px, transparent 1px 4px), linear-gradient(120deg, color-mix(in srgb, var(--c2) 22%, transparent), transparent 40%, transparent 60%, color-mix(in srgb, var(--c1) 22%, transparent)); }
+.x-scan { position: absolute; left: 0; right: 0; top: -40%; height: 40%; z-index: 2; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--c2) 35%, transparent) 85%, rgba(255,255,255,.7) 99%, transparent); animation: xSweep 4.5s cubic-bezier(.5,0,.5,1) infinite; }
+@keyframes xSweep { 0% { top: -40%; } 70%, 100% { top: 110%; } }
+.x-beam { position: absolute; left: 12%; right: 12%; bottom: 0; height: 60px; pointer-events: none; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c2) 75%, transparent), transparent); filter: blur(12px); animation: xPulse 3.5s ease-in-out infinite; }
+.x-beam::before { content: ""; position: absolute; left: 20%; right: 20%; bottom: 50%; height: 140px; background: linear-gradient(0deg, color-mix(in srgb, var(--c2) 35%, transparent), transparent); clip-path: polygon(30% 100%, 70% 100%, 100% 0, 0 0); filter: blur(6px); }
+@keyframes xPulse { 50% { opacity: .55; transform: scaleX(.85); } }
+.x-hud { z-index: 3; }
+/* holographic readouts */
+.x-stats { margin-top: 8px; }
+.x-stats div { position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c3) 22%, transparent), 0 0 30px -12px color-mix(in srgb, var(--c2) 60%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.x-stats div::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--c1), var(--c2)); box-shadow: 0 0 12px var(--c2); transform-origin: left; transform: scaleX(0); transition: transform 1.6s cubic-bezier(.2,.7,.2,1) .2s; }
+.xcard.lit .x-stats div::after { transform: scaleX(1); }
+.x-stats dt::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--c2); box-shadow: 0 0 10px var(--c2); vertical-align: 1px; animation: xBlink 2.4s ease-in-out infinite; }
+@keyframes xBlink { 50% { opacity: .25; } }
+.x-stats dd { color: #fff; text-shadow: 0 0 18px color-mix(in srgb, var(--c2) 70%, transparent), 0 0 40px color-mix(in srgb, var(--c1) 70%, transparent); font-variant-numeric: tabular-nums; }
+.x-btn { position: relative; overflow: hidden; }
+.x-btn::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent); transform: skewX(-20deg); animation: xShine 4s ease-in-out infinite; }
+@keyframes xShine { 0%, 60% { left: -60%; } 100% { left: 130%; } }
+@media (max-width: 899px) { .x-holo .x-media { transform: none; } .x-holo { padding-bottom: 18px; } }
+@media (prefers-reduced-motion: reduce) { .x-aurora i, .xcard::before, .x-holo .x-media, .x-scan, .x-beam, .x-stats dt::before, .x-btn::after { animation: none !important; } .x-scan { display: none; } }

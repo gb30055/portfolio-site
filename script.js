@@ -48,3 +48,47 @@ if (band && !reduceMotion) {
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.querySelectorAll("video.loop").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
 }
+
+// Project cards: glowing dust, and stats that count up when a card comes into view
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cards = [].slice.call(document.querySelectorAll(".xcard"));
+  if (!cards.length) return;
+  function countUp(dd) {
+    var txt = dd.textContent, parts = txt.split(/(\d+)/), t0 = null, dur = 1400;
+    if (reduce || txt.indexOf("→") > -1) return;
+    function step(t) {
+      if (!t0) t0 = t; var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      dd.textContent = parts.map(function (p) { return /^\d+$/.test(p) ? String(Math.round(+p * e)) : p; }).join("");
+      if (k < 1) requestAnimationFrame(step); else dd.textContent = txt;
+    }
+    requestAnimationFrame(step);
+  }
+  cards.forEach(function (card) {
+    var cv = card.querySelector(".x-dust"), ctx = cv && cv.getContext("2d"), cs = getComputedStyle(card);
+    var cols = [cs.getPropertyValue("--c2").trim() || "#45E6FF", cs.getPropertyValue("--c3").trim() || "#fff", "#ffffff"];
+    var dots = [], W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1), on = false, raf = 0;
+    function size() { W = card.clientWidth; H = card.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function seed() { dots = []; var n = Math.round(W * H / 9000); for (var i = 0; i < n; i++) dots.push({ x: Math.random() * W, y: Math.random() * H, r: .6 + Math.random() * 1.8, v: .15 + Math.random() * .45, p: Math.random() * 6.3, c: cols[i % 3] }); }
+    function draw(t) {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i]; d.y -= d.v; d.x += Math.sin(t / 1800 + d.p) * .25; if (d.y < -6) { d.y = H + 6; d.x = Math.random() * W; }
+        var a = .35 + .45 * Math.sin(t / 700 + d.p);
+        ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = d.c; ctx.shadowColor = d.c; ctx.shadowBlur = 8;
+        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 6.283); ctx.fill();
+      }
+      if (on) raf = requestAnimationFrame(draw);
+    }
+    if (ctx && !reduce) { size(); seed(); window.addEventListener("resize", function () { size(); seed(); }); }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting && !card.classList.contains("lit")) { card.classList.add("lit"); card.querySelectorAll(".x-stats dd").forEach(countUp); }
+        if (!ctx || reduce) return;
+        if (e.isIntersecting && !on) { on = true; raf = requestAnimationFrame(draw); }
+        else if (!e.isIntersecting && on) { on = false; cancelAnimationFrame(raf); }
+      });
+    }, { threshold: .15 });
+    io.observe(card);
+  });
+})();
