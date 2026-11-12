@@ -473,3 +473,4 @@ h1 em { background: none; }
   .r-case { justify-self: start; min-height: 36px; margin-top: 4px; }
   .r-none { display: none; }
 }
+.r-mono.has-logo img { width: 28px; height: 28px; display: block; }
