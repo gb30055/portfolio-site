@@ -21,12 +21,22 @@ WAVENOTE = ('<div class="wavenote" data-len="141">'
   '<div class="wn-row"><input type="text" maxlength="120" placeholder="Write your note…" aria-label="Your note"><button type="submit" class="wn-send" aria-label="Post note"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M7.00001 9.00012L14 2.00012M7.08506 9.21883L8.83714 13.7242C8.99148 14.1211 9.06866 14.3195 9.17986 14.3774C9.27626 14.4277 9.39109 14.4277 9.48755 14.3776C9.59882 14.3198 9.67623 14.1215 9.83105 13.7247L14.2246 2.46625C14.3644 2.10813 14.4342 1.92907 14.396 1.81465C14.3628 1.71528 14.2848 1.6373 14.1855 1.60411C14.0711 1.56588 13.892 1.63576 13.5339 1.77552L2.27538 6.16908C1.87866 6.32389 1.6803 6.4013 1.6225 6.51257C1.57239 6.60903 1.57245 6.72386 1.62268 6.82026C1.68062 6.93146 1.87906 7.00864 2.27596 7.16299L6.7813 8.91506C6.86186 8.94639 6.90215 8.96206 6.93607 8.98625C6.96613 9.0077 6.99242 9.03399 7.01387 9.06406C7.03806 9.09798 7.05373 9.13826 7.08506 9.21883Z" stroke-width="1.072" stroke-linecap="round" stroke-linejoin="round" stroke="#0A0A0A"/></svg></button></div></form>'
   '<ol class="wn-list"></ol></div>')
 
+V2_FOOTER = ('<footer class="contact close">'
+  '<div class="close-in"><p class="close-k">Hiring a product designer?</p><h2>Let\'s talk.</h2>'
+  '<p class="close-sub">Open to remote roles in EU and US time zones.</p>'
+  '<div class="close-ctas"><a class="cta-y" href="mailto:gencberisha3@gmail.com">Email me</a>'
+  '<button type="button" class="cta-o" data-copy="gencberisha3@gmail.com">Copy email</button>'
+  '<a class="cta-o" href="../genc-berisha-cv.pdf">Download CV</a><a class="cta-o" href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a></div>'
+  '<p class="fine">© 2026 Genc Berisha · The Qualia Lab</p></div>'
+  '<div class="close-lines" aria-hidden="true"></div></footer>')
+
 V2_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
   + "".join(f'<a href="#{i}">{t}</a>' for i, t in [("problem","Problem"),("two-apps","Two apps"),("songmatch","SongMatch"),("artists","For artists"),("creative-room","Creative Room"),("outcome","Outcome")])
   + '</div></nav>')
 
 PAGES["fancircle"] = dict(
-  cls="dark-stage scroll-story v2",
+  cls="dark-stage scroll-story v2 dark-end",
+  footer=V2_FOOTER,
   title="Fancircle", tag="How do new artists find their first true fans?",
   intro="A loyalty-based social app for music, with a fan app and an artist app. I helped shape the product from the idea stage and led design to v1.0.",
   facts=[("Role","Head of Design"),("My part","Co-shaped the product with the founder. Designed both apps end to end, plus the prototypes and pitch decks."),("Team","Founder, COO, PM, 2 to 5 developers, QA"),("Timeline","2023 to 2025, iOS and Android")],
@@ -79,5 +89,5 @@ PAGES["fancircle"] = dict(
         WAVENOTE, cls="band", id="creative-room"),
     sec("Outcome",bigstat("50+","artists committed before launch","Won with the app prototypes and pitch decks I designed. v1.0 was designed and built for iOS and Android, and the brand got a registered EU trademark."),
         "The product did not take off. The company ran out of money before it found its users.", id="outcome"),
-    sec("What I'd do differently","Our scope grew faster than the team could build, and the core loop was never tested on its own. Today I'd push for a tight MVP around that one loop, agree on a single success metric, and put it in front of real fans first. Saying no to features is part of the job."),
+    sec("What I'd do differently",'<p class="lesson-big">Saying no to features is part of the job.</p>',"Our scope grew faster than the team could build, and the core loop was never tested on its own. Today I'd push for a tight MVP around that one loop, agree on a single success metric, and put it in front of real fans first.", cls="lesson"),
   ], next="career-navig8r")

@@ -60,3 +60,12 @@
   form.addEventListener('submit',function(e){e.preventDefault();if(!cur)return;var t=input.value.trim()||'This part could be tighter.';notes.push({a:cur.a,b:cur.b,who:'You',name:'You',text:t,mine:true});input.value='';cur=null;show();render();hint.textContent='Pinned. Try another part'});
   render();
 })();
+// Closing footer: copy email, and the lines settle as you arrive
+(function(){
+  var b=document.querySelector('.close [data-copy]');
+  if(b)b.addEventListener('click',function(){var t=b.dataset.copy;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var i=document.createElement('input');i.value=t;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove()}).finally(function(){b.textContent='Copied';b.classList.add('done');setTimeout(function(){b.textContent='Copy email';b.classList.remove('done')},1800)})});
+  var l=document.querySelector('.close-lines');if(!l||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var f=l.parentNode,tk=false;
+  function u(){var r=f.getBoundingClientRect(),p=Math.max(0,Math.min(1,(innerHeight-r.top)/r.height));l.style.setProperty('--settle',(1.8-.8*p).toFixed(3));tk=false}
+  addEventListener('scroll',function(){if(!tk){tk=true;requestAnimationFrame(u)}},{passive:true});u();
+})();

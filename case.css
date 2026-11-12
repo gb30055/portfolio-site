@@ -133,3 +133,25 @@
 .wavenote::before{z-index:-2}
 .wavenote::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:#fff}
 .wn-send{display:grid;place-items:center}
+
+/* Ending: the lesson as a statement, then one dark close (next panel + footer) with the lines rising from the bottom */
+.cs-body section.lesson{padding-top:24px}
+.cs-body section.lesson h2{font-size:15px;font-weight:500;letter-spacing:0;color:var(--muted);margin-bottom:16px}
+.cs-body .lesson-big{font:500 clamp(36px,5vw,64px)/1.08 var(--sans);letter-spacing:-.04em;color:var(--ink);max-width:16ch;margin:0 0 24px}
+.dark-end .next{margin-bottom:0}
+.dark-end .next::after{content:"";position:absolute;left:max(16px,calc(50vw - var(--max)/2));right:max(16px,calc(50vw - var(--max)/2));bottom:0;height:1px;background:rgba(255,255,255,.1)}
+.close{position:relative;overflow:hidden;background:#0d0d0f;color:#fff;border:0;padding:120px 0 0;margin:0}
+.close-in{position:relative;z-index:1;width:min(100% - 32px,var(--max));margin:0 auto;text-align:center;display:grid;justify-items:center}
+.close-k{color:#FFDC5C;font-size:16px;font-weight:500;margin:0 0 12px}
+.close h2{color:#fff;font:500 clamp(56px,10vw,128px)/1 var(--sans);letter-spacing:-.05em;margin:0}
+.close-sub{color:#a9a9b3;font-size:17px;margin:20px 0 36px}
+.close-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.close-ctas a,.close-ctas button{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;font:500 16px/1 var(--sans);text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.cta-y{background:#FFDC5C;color:#111;border:0}
+.cta-y:hover{transform:translateY(-2px)}
+.cta-o{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.22)}
+.cta-o:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.cta-o.done{border-color:#FFDC5C;color:#FFDC5C}
+.close .fine{color:#6e6e78;margin:96px 0 32px}
+.close-lines{position:absolute;left:0;right:0;bottom:0;height:min(42vw,420px);background:url("../assets/lines-dark.webp") center bottom/cover no-repeat;mix-blend-mode:screen;opacity:.9;-webkit-mask-image:linear-gradient(transparent,#000 55%);mask-image:linear-gradient(transparent,#000 55%);transform-origin:50% 100%;transform:scaleY(var(--settle,1));pointer-events:none}
+@media (max-width:640px){.close{padding-top:88px}.close-ctas a,.close-ctas button{flex:1 1 calc(50% - 10px);justify-content:center}.close .fine{margin-top:72px}}

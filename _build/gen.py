@@ -151,12 +151,18 @@ PAGES = {
 }
 
 TPL = open(os.path.join(ROOT, "_build", "case.tpl.html")).read()
+OLD_FOOTER = """<footer class="contact wrap">
+  <h2>Let's talk.</h2>
+  <a class="mail" href="mailto:gencberisha3@gmail.com">gencberisha3@gmail.com</a>
+  <p class="links"><a href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a><a href="../genc-berisha-cv.pdf">Download CV</a></p>
+  <p class="fine">© 2026 Genc Berisha.</p>
+</footer>"""
 exec(open(os.path.join(ROOT, "_build", "fancircle_v2.py")).read())
 NEXT_IMG = {"fancircle": "thumb-fancircle.webp", "career-navig8r": "navig8r-home-feed.webp", "scandlearn": "thumb-scandlearn.webp"}
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
     hero = p["hero"] if isinstance(p["hero"], str) else fig(p["hero"][0], p["hero"][1], wide=True)
-    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
+    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{FOOTER}}", p.get("footer", OLD_FOOTER)).replace("{{TITLE}}", p["title"]).replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
        .replace("{{FACTS}}", "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in p["facts"]))
        .replace("{{STATS}}", "".join(f"<li><strong>{n}</strong><span>{t}</span></li>" for n, t in p["stats"]))
        .replace("{{HERO}}", hero)
