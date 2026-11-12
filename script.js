@@ -72,13 +72,19 @@ function fromMe(children) {
   row.append(av, col); return row;
 }
 // Animate the thread's height from its old size to its new one.
+// Always measure the natural height (no inline height left over), and always clean up, even if transitionend never fires.
+let resizeTimer = 0;
 function resize(change) {
-  const from = thread.offsetHeight; change();
-  const to = thread.offsetHeight; if (from === to) return;
-  thread.style.height = from + "px"; thread.style.overflow = "hidden";
-  requestAnimationFrame(() => { thread.style.transition = "height .45s cubic-bezier(.2,.7,.2,1)"; thread.style.height = to + "px"; });
-  const done = () => { thread.style.height = ""; thread.style.overflow = ""; thread.style.transition = ""; thread.removeEventListener("transitionend", done); };
-  thread.addEventListener("transitionend", done);
+  const from = thread.getBoundingClientRect().height;
+  clearTimeout(resizeTimer);
+  thread.style.transition = ""; thread.style.height = ""; thread.style.overflow = "";
+  change();
+  const to = thread.getBoundingClientRect().height;
+  if (Math.abs(from - to) < 1) return;
+  thread.style.overflow = "hidden"; thread.style.height = from + "px";
+  thread.offsetHeight; // commit the start height
+  thread.style.transition = "height .45s cubic-bezier(.2,.7,.2,1)"; thread.style.height = to + "px";
+  resizeTimer = setTimeout(() => { thread.style.transition = ""; thread.style.height = ""; thread.style.overflow = ""; }, 500);
 }
 // Open with the question recruiters ask first, already answered.
 const first = document.querySelector('.chips button[data-q="best"]');
