@@ -375,3 +375,9 @@ h1 em { background: none; }
 .from-me .bubble, .from-me .ask-peek { max-width: 100%; }
 .me-av { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 2px 6px rgba(0,0,0,.12); }
 .from-me .bubble.typing { align-self: flex-start; }
+/* Two suggested follow-ups under the latest answer */
+.follow { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: 6px; }
+.follow button { font: 600 13px/1 var(--sans); color: var(--ink); background: rgba(255,255,255,.7); border: 1px solid rgba(0,0,0,.12); border-radius: 999px; min-height: 36px; padding: 0 14px; cursor: pointer; transition: background .15s, border-color .15s; }
+.follow button:hover { background: #fff; border-color: var(--ink); }
+.follow button:active { transform: scale(.98); }
+.chips[hidden] { display: none; }

@@ -14,12 +14,29 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const peeks = {
   best: { href: "fancircle/", img: "assets/thumb-fancircle-wall.webp", title: "Fancircle case study", sub: "Fan app + artist app, 700+ screens" }
 };
+// The questions (from the no-JS chip list) and the two follow-ups offered after each answer.
+const chips = document.querySelector(".chips");
+const labels = {};
+document.querySelectorAll(".chips button").forEach((b) => { labels[b.dataset.q] = b.textContent; });
+if (chips) chips.hidden = true;
+const next = { best: ["how", "who"], who: ["best", "when"], how: ["build", "best"], build: ["how", "when"], when: ["best", "who"] };
+function followUps(key) {
+  const row = document.createElement("div");
+  row.className = "follow"; row.setAttribute("role", "group"); row.setAttribute("aria-label", "Ask next");
+  (next[key] || []).forEach((k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.dataset.q = k; b.textContent = labels[k];
+    b.addEventListener("click", () => ask(b));
+    row.appendChild(b);
+  });
+  return row;
+}
 let typingTimer = 0;
 function ask(btn, auto) {
   const key = btn.dataset.q;
   const q = document.createElement("p");
   q.className = "bubble you";
-  q.textContent = btn.textContent;
+  q.textContent = labels[key] || btn.textContent;
   const a = document.createElement("p");
   a.className = "bubble me";
   a.textContent = answers[key];
@@ -31,10 +48,10 @@ function ask(btn, auto) {
     card.querySelector("b").textContent = p.title + " \u2192"; card.querySelector("span span").textContent = p.sub;
     nodes.push(card);
   }
-  document.querySelectorAll(".chips button").forEach((b) => b.setAttribute("aria-pressed", b === btn));
   clearTimeout(typingTimer);
   const reply = fromMe(nodes.slice(1));
-  if (reduceMotion) { thread.replaceChildren(q, reply); return; }
+  const follow = followUps(key);
+  if (reduceMotion) { thread.replaceChildren(q, reply, follow); return; }
   // Show the question, a short typing indicator, then the answer. The panel grows or shrinks smoothly.
   const dots = document.createElement("p");
   dots.className = "bubble me typing"; dots.setAttribute("aria-label", "Typing");
@@ -43,8 +60,8 @@ function ask(btn, auto) {
   q.classList.add("enter"); typing.classList.add("enter", "late");
   resize(() => thread.replaceChildren(q, typing));
   typingTimer = setTimeout(() => {
-    reply.classList.add("enter");
-    resize(() => thread.replaceChildren(q, reply));
+    reply.classList.add("enter"); follow.classList.add("enter", "late");
+    resize(() => thread.replaceChildren(q, reply, follow));
   }, auto ? 1100 : 650);
 }
 // A reply from Genc: the round avatar next to the bubbles.
@@ -63,7 +80,6 @@ function resize(change) {
   const done = () => { thread.style.height = ""; thread.style.overflow = ""; thread.style.transition = ""; thread.removeEventListener("transitionend", done); };
   thread.addEventListener("transitionend", done);
 }
-document.querySelectorAll(".chips button").forEach((btn) => btn.addEventListener("click", () => ask(btn)));
 // Open with the question recruiters ask first, already answered.
 const first = document.querySelector('.chips button[data-q="best"]');
 if (first) setTimeout(() => ask(first, true), reduceMotion ? 0 : 500);
