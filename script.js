@@ -146,3 +146,59 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     io.observe(m);
   });
 })();
+
+// Project cards: WebGL liquid glass. A slow lens drifts over each screen and splits light into
+// Goethe's edge colours (warm inside, cool outside, like The Qualia Lab mark). Scrolling makes it ripple.
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var VS = "attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}";
+  var FS = [
+    "precision mediump float;varying vec2 v;uniform sampler2D T;uniform float t,vel,ar;uniform vec2 sc,of;",
+    "vec4 tx(vec2 u){u=clamp(u,0.001,.999);return texture2D(T,of+vec2(u.x,1.-u.y)*sc);}",
+    "void main(){vec2 u=v;",
+    " vec2 fl=vec2(sin(u.y*7.+t*.8)+.5*sin(u.x*5.-t*.6),cos(u.x*6.+t*.7)+.5*cos(u.y*4.+t*.5));",
+    " vec2 c=vec2(.5+.33*sin(t*.21),.5+.28*cos(t*.29+1.));vec2 q=(u-c)*vec2(ar,1.);float r=length(q);float R=.24;",
+    " float lens=smoothstep(R,0.,r);vec2 dir=normalize(q+1e-4)/vec2(ar,1.);",
+    " vec2 d=fl*(.0012+vel*.025)-(u-c)*lens*.22;float k=.0012+lens*.010+vel*.018;",
+    " vec3 col=vec3(tx(u+d+dir*k).r,tx(u+d).g,tx(u+d-dir*k).b);",
+    " float e=(r-R)/.05;float ring=exp(-e*e*2.);",
+    " vec3 sp=e<0.?mix(vec3(1.,.11,.11),vec3(1.,.9,.32),clamp(e+1.,0.,1.)):mix(vec3(0.,1.,1.),mix(vec3(.55,0.,1.),vec3(0.,0.,1.),clamp(e-1.,0.,1.)),clamp(e,0.,1.));",
+    " col=mix(col,sp,ring*.55);",
+    " float hl=smoothstep(.16,0.,length((u-c-vec2(-.07,-.09))*vec2(ar,1.)));col+=hl*hl*.35*lens;",
+    " col+=lens*.04;gl_FragColor=vec4(col,1.);}"
+  ].join("\n");
+  var vel = 0, lastY = window.scrollY;
+  window.addEventListener("scroll", function () { var y = window.scrollY; vel = Math.min(1, vel + Math.abs(y - lastY) / 600); lastY = y; }, { passive: true });
+  document.querySelectorAll(".xcard .x-media").forEach(function (m) {
+    var el = m.querySelector("img, video"); if (!el) return;
+    var cv = document.createElement("canvas"); cv.className = "x-gl"; cv.setAttribute("aria-hidden", "true");
+    var gl = cv.getContext("webgl", { premultipliedAlpha: false, antialias: false }); if (!gl) return;
+    function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
+    var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS); if (!vs || !fs) return;
+    var pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr); if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+    gl.useProgram(pr);
+    var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    var lp = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(lp); gl.vertexAttribPointer(lp, 2, gl.FLOAT, false, 0, 0);
+    var U = {}; ["t", "vel", "ar", "sc", "of"].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
+    var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    var isVid = el.tagName === "VIDEO", src = isVid ? el : new Image(), ready = false, on = false, raf = 0, t0 = performance.now(), top = true;
+    if (!isVid) { src.src = el.currentSrc || el.src; src.onload = function () { up(); ready = true; m.classList.add("gl-on"); }; top = !/photo/.test(el.className); }
+    else { el.addEventListener("loadeddata", function () { ready = true; m.classList.add("gl-on"); }); if (el.readyState >= 2) { ready = true; m.classList.add("gl-on"); } }
+    function up() { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src); } catch (e) { ready = false; m.classList.remove("gl-on"); } }
+    m.appendChild(cv);
+    function size() { var d = Math.min(1.5, window.devicePixelRatio || 1); cv.width = Math.round(m.clientWidth * d); cv.height = Math.round(m.clientHeight * d); gl.viewport(0, 0, cv.width, cv.height); }
+    size(); window.addEventListener("resize", size);
+    function frame(now) {
+      if (!on) return; raf = requestAnimationFrame(frame); if (!ready) return;
+      if (isVid) up();
+      var iw = isVid ? el.videoWidth : src.naturalWidth, ih = isVid ? el.videoHeight : src.naturalHeight; if (!iw) return;
+      var ar = cv.width / cv.height, ir = iw / ih, sx = 1, sy = 1, ox = 0, oy = 0;
+      if (ir > ar) { sx = ar / ir; ox = (1 - sx) / 2; } else { sy = ir / ar; oy = top ? 0 : (1 - sy) / 2; }
+      vel *= .94;
+      gl.uniform1f(U.t, (now - t0) / 1000); gl.uniform1f(U.vel, vel); gl.uniform1f(U.ar, ar); gl.uniform2f(U.sc, sx, sy); gl.uniform2f(U.of, ox, oy);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && !on) { on = true; raf = requestAnimationFrame(frame); } else if (!e.isIntersecting && on) { on = false; cancelAnimationFrame(raf); } }); }).observe(m);
+  });
+})();

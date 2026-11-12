@@ -412,3 +412,6 @@ h1 em { background: none; }
 .x-media.mat .x-scan { animation-duration: 1.2s; }
 .x-media.mat::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(60% 80% at 50% 100%, color-mix(in srgb, var(--c2) 25%, transparent), transparent), #05060c; }
 .x-media.mat-done .x-mat { opacity: 0; }
+/* WebGL liquid glass over each screen (falls back to the plain image) */
+.x-gl { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .8s; }
+.x-media.gl-on:not(.mat) .x-gl { opacity: 1; }
