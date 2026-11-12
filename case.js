@@ -158,3 +158,10 @@
     x0 = null;
   });
 })();
+
+/* Stretch the end glass behind the Next case study panel too */
+(function(){
+  var n=document.querySelector('.dark-end .next'),c=document.querySelector('.dark-end .close');if(!n||!c)return;
+  function s(){c.style.setProperty('--nh',n.offsetHeight+'px')}
+  s();addEventListener('resize',s);addEventListener('load',s);
+})();

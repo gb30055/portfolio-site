@@ -291,3 +291,10 @@ html.lb-on{overflow:hidden}
 .tier b{display:block;font-size:19px;font-weight:600;margin-bottom:4px}
 .tier span{display:block;font-size:15px;line-height:1.45;color:#55555c}
 @media (max-width:640px){.tier-row{grid-template-columns:1fr}.tier img{width:80px;height:80px;flex-basis:80px}}
+/* One dark end: Next case study and Let's talk share the glass background */
+.dark-end .next::after{display:none}
+.dark-end .next>*{position:relative;z-index:2}
+.dark-end .close{overflow:visible;padding-top:40px}
+.dark-end .close-in{z-index:2}
+.dark-end .close-lines{top:calc(-1 * var(--nh,0px));z-index:1;background-image:url("../assets/glass-end.webp")}
+@media (max-width:640px){.dark-end .close{padding-top:24px}.dark-end .close-lines{background-image:url("../assets/glass-end-m.webp")}}
