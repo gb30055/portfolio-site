@@ -32,8 +32,8 @@ PAGES["career-navig8r"] = dict(
   cls="dark-stage v2 dark-end navig8r",
   footer=V2_FOOTER,
   title="Career Navig8r", tag="How do we get more mentors to finish their profile?",
-  intro="A mentoring platform where people learn from those who already succeeded in the job they want. I was the only designer, on onboarding and the core product.",
-  facts=[("Role","Product Designer, sole designer"),("My part","Took over from a previous designer. Redesigned mentor onboarding, and designed the feed, posting, search and mentor cards."),("Team","Founder and developers"),("Timeline","2025 to 2026, web")],
+  intro="A mentoring platform where people learn from those who already succeeded in the job they want. I led design on onboarding and the core product.",
+  facts=[("Role","Product Designer, design lead"),("My part","Took over from a previous designer. Redesigned mentor onboarding and search, and guided a junior designer on the cards, posts and comments."),("Team","Founder, developers and a junior designer"),("Timeline","2025 to 2026, web")],
   stats=[("13 → 6","minutes to finish setup, timed in team walkthroughs"),("30 → 8","controls before a mentor picks a day"),("5","focused steps instead of 4 crowded ones")],
   hero=CN_HERO, summary=CN_SUMMARY, chapters=CN_CHAPTERS,
   body=[
@@ -70,10 +70,10 @@ PAGES["career-navig8r"] = dict(
              ("cn2-exec-experience.webp","Tell us about your experience: years of mentoring, previous career field, and an introduction.","After: their experience, in their words"),
              ("cn2-b_plans.webp","The old plans page: Lite, Standard, Professional and Enterprise in one grid.","Before: four offers in one grid"),
              ("cn2-exec-specialism.webp","Mentoring Specialism: pick up to six areas, with suggestions, plus psychometric tools.","After: up to six specialisms, picked from suggestions")), id="executive"),
-    sec("Beyond setup","Setup only matters if mentees find the mentors. I also designed search and the mentor directory, and tested how much a mentor card can hold before it gets hard to scan.",
+    sec("Beyond setup","Setup only matters if mentees find the mentors. I designed search and the mentor directory. A junior designer built the mentor cards, posts, comments and other components, with me setting the direction and reviewing each round. Together we tested how much a mentor card can hold before it gets hard to scan.",
         desk(("cn2-search.webp","Search overlay with filters for Navig8rs, Executive Mentors, Questions and Career updates, plus popular and recent searches.","Search suggests before you type"),
              ("cn2-public.webp","Connect with a Navig8r: directory with sector, job field and level filters, active filter chips and mentor cards.","The directory splits Navig8rs from Executive Mentors")),
-        fig("cn-cards.webp","Mentor card variants, from a full card with levels and skills to a compact one with name, rating and price.","Card variants I tested, from full detail to compact"), id="beyond"),
+        fig("cn-cards.webp","Mentor card variants, from a full card with levels and skills to a compact one with name, rating and price.","Card variants we tested, from full detail to compact"), id="beyond"),
     sec("Outcome",bigstat("13 → 6","minutes to finish setup","Timed in team walkthroughs of the old flow and the new design. Most of the time saved came from fewer fields per step, and from not filling in time pickers for days a mentor doesn't work. It's an estimate from walkthroughs, not usage data."), id="outcome"),
     sec("What I'd do differently",'<p class="lesson-big">Measure the drop-off before you fix it.</p>',"The time savings come from walkthroughs, not usage data. Next time I'd add step-by-step completion tracking from day one, to see where mentors really drop off.", cls="lesson"),
   ], next="scandlearn")
