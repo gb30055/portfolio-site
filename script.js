@@ -43,3 +43,8 @@ if (band && !reduceMotion) {
   window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(grow); } }, { passive: true });
   grow();
 }
+
+// Looping card videos: stay on the poster frame for people who prefer reduced motion.
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.querySelectorAll("video.loop").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
+}
