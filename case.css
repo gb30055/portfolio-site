@@ -122,3 +122,4 @@
 @media (max-width:600px){.wavenote{padding:18px 14px 10px;border-radius:22px}.wn-wave{height:96px}.wn-bars{gap:1px}.wn-pin{max-width:150px}}
 .wn-row input:focus{outline:none;border-color:#111}
 .wn-pin{transition:bottom .25s}
+.wn-list li{padding:12px 12px 12px 14px;border-radius:12px}
