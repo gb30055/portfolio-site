@@ -315,24 +315,26 @@ h1 em { background: none; }
 .pcard[data-tint="scandlearn"] { --a: #E3EEF8; --b: #C8DDF2; }
 .pcard:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -35px rgba(40,30,60,.35); }
 .p-text { display: flex; flex-direction: column; align-items: flex-start; }
-.p-meta { margin: 0 0 14px; font-size: 14px; color: rgba(30,25,35,.6); }
-.pcard h3 { margin: 0 0 16px; font: 500 clamp(26px, 3vw, 38px)/1.12 var(--sans); letter-spacing: -0.03em; color: #1d1a20; max-width: 18ch; }
+.p-meta { display: inline-flex; margin: 0 0 18px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.6); font-size: 13px; font-weight: 600; color: #3a3238; }
+.pcard h3 { margin: 0 0 14px; font: 600 clamp(28px, 3.2vw, 42px)/1.1 var(--sans); letter-spacing: -0.035em; color: #1d1a20; max-width: 17ch; }
 .pcard h3 a { color: inherit; text-decoration: none; }
 .pcard h3 a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
-.p-desc { margin: 0 0 28px; font-size: 17px; line-height: 1.55; color: rgba(30,25,35,.62); max-width: 36ch; }
-.p-btn { margin-top: auto; display: inline-block; padding: 15px 26px; border-radius: 999px; background: #1F1A1D; color: #fff; font-size: 16px; font-weight: 500; text-decoration: none; box-shadow: 0 8px 20px -10px rgba(0,0,0,.5); }
+.p-desc { margin: 0 0 28px; font-size: 17px; line-height: 1.5; font-weight: 500; color: rgba(30,25,35,.7); max-width: 36ch; }
+.p-btn { margin-top: auto; display: inline-block; padding: 15px 26px; border-radius: 999px; background: #1F1A1D; color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 8px 20px -10px rgba(0,0,0,.5); }
 .pcard:hover .p-btn { background: #000; }
 .pcard:focus-within { outline: 2px solid #1F1A1D; outline-offset: 4px; }
 .pcard h3 a:focus-visible { outline: none; }
-.p-media { border-radius: 16px; overflow: hidden; background: rgba(255,255,255,.4); }
-.p-media img, .p-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.p-side { display: flex; }
+.p-media { flex: 1; border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.5); box-shadow: 0 30px 60px -30px rgba(40,30,60,.35), 0 0 0 6px rgba(255,255,255,.45); }
+.p-media img, .p-media video { display: block; width: 100%; height: 100%; min-height: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
 .p-media img.photo { object-position: center; }
 .pcard:hover .p-media img, .pcard:hover .p-media video { transform: scale(1.025); }
-.p-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0 0; }
-.p-stats dt { font-size: 15px; color: rgba(30,25,35,.7); margin-bottom: 8px; }
-.p-stats dd { margin: 0; font: 400 clamp(36px, 4vw, 56px)/1 var(--sans); letter-spacing: -0.04em; color: #2a2528; white-space: nowrap; }
-@media (min-width: 900px) { .pcard { grid-template-columns: 1fr 1.15fr; gap: 64px; } .p-text { padding-top: 8px; } }
-@media (max-width: 899px) { .pcard { display: flex; flex-direction: column; gap: 0; } .p-text { display: contents; } .p-side { order: 1; margin: 0 0 24px; } .p-btn { order: 2; align-self: flex-start; } .p-stats div { display: flex; flex-direction: column; justify-content: space-between; } .p-desc { margin-bottom: 20px; } }
+.p-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 440px; margin: 0 0 28px; }
+.p-stats div { padding: 18px 20px; border-radius: 18px; background: rgba(255,255,255,.55); }
+.p-stats dt { font-size: 14px; font-weight: 500; color: rgba(30,25,35,.66); margin-bottom: 10px; }
+.p-stats dd { margin: 0; font: 600 clamp(32px, 3.4vw, 46px)/1 var(--sans); letter-spacing: -0.04em; color: #1d1a20; white-space: nowrap; }
+@media (min-width: 900px) { .pcard { grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: stretch; } .p-text { padding: 4px 0; } }
+@media (max-width: 899px) { .pcard { display: flex; flex-direction: column; gap: 0; } .p-text { display: contents; } .p-side { order: 1; margin: 0 0 24px; } .p-btn { order: 2; align-self: flex-start; } .p-stats { order: 1; } .p-stats div { display: flex; flex-direction: column; justify-content: space-between; } .p-desc { margin-bottom: 20px; } .p-meta { border-radius: 14px; } .p-stats dt { font-size: 13px; } .p-media img, .p-media video { height: auto; } }
 @media (prefers-reduced-motion: reduce) { .pcard, .p-media img, .p-media video { transition: none; } }
 
 /* Hero v2 (2026-11-12): faster to scan for recruiters */
