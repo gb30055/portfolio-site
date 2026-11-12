@@ -308,11 +308,11 @@ h1 em { background: none; }
 .logo-text small{font-size:12px;color:var(--muted)}
 
 /* Project cards: soft pastel panels (after Genc's reference), one tint per project */
-.pcard { --a: #EEE6FB; --b: #DCCDF6; position: relative; display: grid; gap: 28px; margin: 0 0 32px; padding: clamp(24px, 4vw, 60px); border-radius: 32px;
-  background: radial-gradient(70% 90% at 85% 15%, var(--b), transparent 70%), linear-gradient(120deg, var(--a), color-mix(in srgb, var(--a) 70%, var(--b)));
+.pcard { --a: #FCF0BE; --b: #FBDD6E; --g: rgba(255,160,40,.28); position: relative; display: grid; gap: 28px; margin: 0 0 32px; padding: clamp(24px, 4vw, 60px); border-radius: 32px;
+  background: radial-gradient(45% 60% at 88% 20%, var(--g), transparent 100%), radial-gradient(50% 70% at 8% 90%, rgba(255,255,255,.55), transparent 100%), linear-gradient(135deg, var(--a), var(--b));
   transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s; }
-.pcard[data-tint="navig8r"] { --a: #F8E6D6; --b: #F1D1B6; }
-.pcard[data-tint="scandlearn"] { --a: #E3EEF8; --b: #C8DDF2; }
+.pcard[data-tint="navig8r"] { --a: #FBECE3; --b: #F8D9C7; --g: rgba(238,112,84,.24); }
+.pcard[data-tint="scandlearn"] { --a: #E6EEFF; --b: #C9D8FF; --g: rgba(40,90,255,.18); }
 .pcard:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -35px rgba(40,30,60,.35); }
 .p-text { display: flex; flex-direction: column; align-items: flex-start; }
 .p-meta { display: inline-flex; margin: 0 0 18px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.6); font-size: 13px; font-weight: 600; color: #3a3238; }
