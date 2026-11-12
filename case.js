@@ -1,3 +1,5 @@
+// Copy the email address from any [data-copy] button (footer, nav, hero)
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=b.dataset.copy,tip=b.querySelector('.cta-tip');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var i=document.createElement('input');i.value=t;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove()}).finally(function(){b.classList.add('done');if(tip)tip.textContent='Email copied';clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('done');if(tip)tip.textContent=''},1800)})})});
 // Case study extras: rise-in motion, and the scroll story on pages with body.scroll-story
 (function(){
   var v=document.body.className;
@@ -66,8 +68,6 @@
 })();
 // Closing footer: copy email, and the lines settle as you arrive
 (function(){
-  var b=document.querySelector('.close [data-copy]');
-  if(b)b.addEventListener('click',function(){var t=b.dataset.copy,tip=b.querySelector('.cta-tip');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var i=document.createElement('input');i.value=t;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove()}).finally(function(){b.classList.add('done');if(tip)tip.textContent='Email copied';clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('done');if(tip)tip.textContent=''},1800)})});
   var l=document.querySelector('.close-lines');if(!l)return;
   if(!('IntersectionObserver' in window)){l.classList.add('on');return}
   var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classList.add('on');io.disconnect()}},{threshold:.2});io.observe(l.parentNode);

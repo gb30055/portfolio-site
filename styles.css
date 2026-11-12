@@ -381,3 +381,61 @@ h1 em { background: none; }
 .follow button:hover { background: #fff; border-color: var(--ink); }
 .follow button:active { transform: scale(.98); }
 .chips[hidden] { display: none; }
+
+/* Dark closing footer, shared by every page (copied from case.css; asset paths relative to this file) */
+/* Ending: the lesson as a statement, then one dark close (next panel + footer) with the lines rising from the bottom */
+.cs-body section.lesson{padding-top:24px}
+.cs-body section.lesson h2{font-size:15px;font-weight:500;letter-spacing:0;color:var(--muted);margin-bottom:16px}
+.cs-body .lesson-big{font:500 clamp(36px,5vw,64px)/1.08 var(--sans);letter-spacing:-.04em;color:var(--ink);max-width:16ch;margin:0 0 24px}
+.dark-end .next{margin-bottom:0}
+.dark-end .next::after{content:"";position:absolute;left:max(16px,calc(50vw - var(--max)/2));right:max(16px,calc(50vw - var(--max)/2));bottom:0;height:1px;background:rgba(255,255,255,.1)}
+.close{position:relative;overflow:hidden;background:#0d0d0f;color:#fff;border:0;padding:120px 0 0;margin:0}
+.close-in{position:relative;z-index:1;width:min(100% - 32px,var(--max));margin:0 auto;text-align:center;display:grid;justify-items:center}
+.close-k{color:#FFDC5C;font-size:16px;font-weight:500;margin:0 0 12px}
+.close h2{color:#fff;font:500 clamp(56px,10vw,128px)/1 var(--sans);letter-spacing:-.05em;margin:0}
+.close-sub{color:#a9a9b3;font-size:17px;margin:20px 0 36px}
+.close-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.close-ctas a,.close-ctas button{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;font:500 16px/1 var(--sans);text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.cta-y{background:#FFDC5C;color:#111;border:0}
+.cta-y:hover{transform:translateY(-2px)}
+.cta-o{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.22)}
+.cta-o:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.cta-o.done{border-color:#FFDC5C;color:#FFDC5C}
+.close .fine{color:#6e6e78;margin:96px 0 32px}
+@media (max-width:640px){.close{padding-top:88px}.close-ctas a,.close-ctas button{flex:1 1 calc(50% - 10px);justify-content:center}.close .fine{margin-top:72px}}
+/* Footer v2: crisp liquid-glass render, refracted on all four edges (hero/render_glass_footer.py) */
+.close-lines{inset:0;height:auto;background:url("assets/glass-footer.webp") center/cover no-repeat;mix-blend-mode:normal;opacity:0;-webkit-mask-image:none;mask-image:none;transform:none;transition:opacity 1.2s ease}
+.close-lines.on{opacity:1}
+@media (max-width:640px){.close-lines{background-image:url("assets/glass-footer-m.webp")}}
+/* Email me + copy icon as one split button */
+.cta-split{display:inline-flex;align-items:stretch;border-radius:999px;background:#FFDC5C;transition:transform .2s}
+.cta-split:hover{transform:translateY(-2px)}
+.close-ctas .cta-split .cta-y{background:none;border-radius:999px 0 0 999px;padding:0 18px 0 22px}
+.cta-split .cta-y:hover{transform:none}
+.close-ctas .cta-copy{position:relative;display:inline-grid;place-items:center;min-height:48px;width:52px;padding:0;border:0;border-left:1px solid rgba(0,0,0,.18);border-radius:0 999px 999px 0;background:none;color:#111;cursor:pointer}
+.cta-copy:hover{background:rgba(0,0,0,.07)}
+.cta-copy .i-ok{display:none}
+.cta-copy.done .i-copy{display:none}.cta-copy.done .i-ok{display:block}
+.cta-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#111;font:500 13px/1 var(--sans);padding:7px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+.cta-copy.done .cta-tip{opacity:1}
+@media (max-width:640px){.close-ctas .cta-split{flex:1 1 100%}.close-ctas .cta-split .cta-y{flex:1;justify-content:center}}
+@media (max-width:640px){.close-ctas .cta-split .cta-copy{flex:0 0 56px}}
+.close-lines { position: absolute; pointer-events: none; }
+/* Email me + copy icon, as one split button (nav and hero) */
+.msplit { position: relative; display: inline-flex; align-items: stretch; border-radius: 999px; background: var(--ink); color: var(--surface); }
+.top nav .msplit .nav-cta, .hero-split .h-cta.dark { background: none; border: 0; border-radius: 999px 0 0 999px; }
+.top nav .msplit .nav-cta { padding-right: 12px; }
+.hero-split .h-cta.dark { padding-right: 18px; }
+.m-copy { position: relative; display: inline-grid; place-items: center; width: 40px; padding: 0; border: 0; border-left: 1px solid rgba(255,255,255,.22); border-radius: 0 999px 999px 0; background: none; color: inherit; cursor: pointer; transition: background .2s; }
+.hero-split .m-copy { width: 48px; }
+.m-copy:hover { background: rgba(255,255,255,.12); }
+.m-copy .i-ok, .m-copy.done .i-copy { display: none; }
+.m-copy.done .i-ok { display: block; }
+.m-copy .cta-tip { position: absolute; top: calc(100% + 10px); bottom: auto; left: auto; right: 0; transform: none; height: auto; white-space: nowrap; background: var(--ink); color: #fff; font: 500 13px/1 var(--sans); padding: 7px 10px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.m-copy.done .cta-tip { opacity: 1; }
+.dark-stage .top .msplit { background: #FFDC5C; color: #111; }
+.dark-stage .top .msplit .nav-cta { background: none; }
+.dark-stage .top .m-copy { border-left-color: rgba(0,0,0,.18); }
+.dark-stage .top .m-copy:hover { background: rgba(0,0,0,.07); }
+.dark-stage .top .m-copy .cta-tip { background: #fff; color: #111; }
+.dark-stage .top.top { clip-path: inset(0 -100vmax -56px); } /* room for the "Email copied" tip */

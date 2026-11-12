@@ -180,7 +180,7 @@ NEXT_IMG = {"fancircle": "thumb-fancircle.webp", "career-navig8r": "navig8r-home
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
     hero = p["hero"] if isinstance(p["hero"], str) else fig(p["hero"][0], p["hero"][1], wide=True)
-    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{FOOTER}}", p.get("footer", OLD_FOOTER)).replace("{{TITLE}}", p["title"]).replace("{{DESC}}", p["tag"] if p["tag"][-1:] in "?.!" else p["tag"] + ".").replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
+    out = (TPL.replace("{{CLS}}", p.get("cls", "")).replace("{{HEAD}}", p.get("head", "")).replace("{{SUMMARY}}", p.get("summary", "")).replace("{{CHAPTERS}}", p.get("chapters", "")).replace("{{FOOTER}}", p.get("footer", V2_FOOTER)).replace("{{TITLE}}", p["title"]).replace("{{DESC}}", p["tag"] if p["tag"][-1:] in "?.!" else p["tag"] + ".").replace("{{TAG}}", p["tag"]).replace("{{INTRO}}", p["intro"])
        .replace("{{FACTS}}", "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in p["facts"]))
        .replace("{{STATS}}", "".join(f"<li><strong>{n}</strong><span>{t}</span></li>" for n, t in p["stats"]))
        .replace("{{HERO}}", hero)
