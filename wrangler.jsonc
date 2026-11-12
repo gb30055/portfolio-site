@@ -1,7 +1,0 @@
-{
-  // Static site served as Workers static assets. Branch (preview) builds run
-  // `wrangler versions upload`, which needs this config to find the assets.
-  "name": "portfolio-site",
-  "compatibility_date": "2025-10-01",
-  "assets": { "directory": "." }
-}
