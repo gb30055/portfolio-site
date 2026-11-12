@@ -155,3 +155,7 @@
 .close .fine{color:#6e6e78;margin:96px 0 32px}
 .close-lines{position:absolute;left:0;right:0;bottom:0;height:min(42vw,420px);background:url("../assets/lines-dark.webp") center bottom/cover no-repeat;mix-blend-mode:screen;opacity:.9;-webkit-mask-image:linear-gradient(transparent,#000 55%);mask-image:linear-gradient(transparent,#000 55%);transform-origin:50% 100%;transform:scaleY(var(--settle,1));pointer-events:none}
 @media (max-width:640px){.close{padding-top:88px}.close-ctas a,.close-ctas button{flex:1 1 calc(50% - 10px);justify-content:center}.close .fine{margin-top:72px}}
+/* Footer v2: crisp liquid-glass render, refracted on all four edges (hero/render_glass_footer.py) */
+.close-lines{inset:0;height:auto;background:url("../assets/glass-footer.webp") center/cover no-repeat;mix-blend-mode:normal;opacity:0;-webkit-mask-image:none;mask-image:none;transform:none;transition:opacity 1.2s ease}
+.close-lines.on{opacity:1}
+@media (max-width:640px){.close-lines{background-image:url("../assets/glass-footer-m.webp")}}
