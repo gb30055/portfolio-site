@@ -112,8 +112,18 @@
       else if(b.classList.contains('av-apply')){
         var to=lis.filter(function(o){return o!==li&&o.querySelector('.av-sw').checked});
         if(!to.length){say('<b>Please select more days to apply this timeslot</b><span>Switch on other days first, then apply.</span>',true);return}
-        var list=slots(li);to.forEach(function(o){fill(o,list);o.classList.remove('flash');void o.offsetWidth;o.classList.add('flash')});upd();
-        say('<b>Applied to '+to.map(function(o){return o.dataset.day}).join(', ')+'</b>')}
+        // Copy only this slot; skip days where it would overlap an existing one
+        var s=iv(r),lbl=H[s[0]]+' to '+H[s[1]],done=[],has=[],clash=[];
+        to.forEach(function(o){var ex=slots(o);
+          if(ex.some(function(x){return x[0]===s[0]&&x[1]===s[1]})){has.push(o.dataset.day);return}
+          if(ex.some(function(x){return x[0]<s[1]&&x[1]>s[0]})){clash.push(o.dataset.day);return}
+          o.querySelector('.av-slots').appendChild(row(o.dataset.day,s[0],s[1]));sortRows(o);done.push(o.dataset.day);
+          o.classList.remove('flash');void o.offsetWidth;o.classList.add('flash')});
+        upd();
+        var msg=done.length?'<b>Applied '+lbl+' to '+done.join(', ')+'</b>':'<b>Nothing to apply</b>';
+        if(has.length)msg+='<span>Already set on '+has.join(', ')+'.</span>';
+        if(clash.length)msg+='<span>Skipped '+clash.join(', ')+': it overlaps a slot there.</span>';
+        say(msg,!done.length)}
     });
   });upd();
 })();
