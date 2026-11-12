@@ -266,7 +266,6 @@ html.lb-on{overflow:hidden}
 .av-ib svg{width:18px;height:18px}
 .av-ib:hover{background:#f4f4f6;color:#1b1b1f}
 .av-plus{margin-left:auto}
-.av-apply{color:#E8763A;background:#FDEEE6}.av-apply:hover{background:#FADCCB;color:#C9551D}
 .av-tip{position:absolute;top:calc(100% + 6px);right:-6px;z-index:3;width:max-content;max-width:150px;padding:6px 9px;border-radius:7px;background:#1f2228;color:#fff;font-size:12px;line-height:1.3;text-align:left;opacity:0;transform:translateY(-3px);transition:.15s;pointer-events:none}
 .av-apply:hover .av-tip,.av-apply:focus-visible .av-tip{opacity:1;transform:none}
 .av-days li.flash{animation:av-flash 1s ease}
@@ -278,3 +277,8 @@ html.lb-on{overflow:hidden}
 .av-toast b{color:#1b1b1f;font-weight:600}
 .av-toast[hidden]{display:none}
 @media (max-width:480px){.avail{padding:20px 14px}.av-days li{padding:0 10px}.av-l{display:none}.av-slot select{padding:9px 22px 9px 8px;font-size:13px;background-position:right 7px center}.av-slot{gap:4px}.av-ib{width:30px;flex-basis:30px}}
+.av-head-r{display:flex;align-items:center;gap:8px}
+.av-reset{border:1px solid #e6e6ea;background:#fff;color:#55555c;font:500 13px/1 inherit;padding:7px 12px;border-radius:999px;cursor:pointer}
+.av-reset:hover{color:#1b1b1f;border-color:#c9c9cf}
+.av-reset:disabled{opacity:.4;cursor:default}
+.av-reset:focus-visible{outline:2px solid #111;outline-offset:2px}

@@ -71,7 +71,8 @@
 // Career Navig8r availability demo: slots per day, add/remove, apply to selected days
 (function(){
   var a=document.querySelector('.avail');if(!a)return;
-  var lis=[].slice.call(a.querySelectorAll('.av-days li')),n=a.querySelector('.av-n'),toast=a.querySelector('.av-toast'),tt;
+  var lis=[].slice.call(a.querySelectorAll('.av-days li')),n=a.querySelector('.av-n'),toast=a.querySelector('.av-toast'),rs=a.querySelector('.av-reset'),tt;
+  rs.addEventListener('click',function(){lis.forEach(function(li){li.querySelector('.av-sw').checked=false;li.querySelector('.av-slots').innerHTML=''});toast.hidden=true;upd()});
   var H=[];for(var h=6;h<=22;h++)H.push((h<10?'0':'')+h+':00');
   var ic={add:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
     copy:'<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="7" width="10" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 4.5h7.5A2 2 0 0 1 16.5 6.5V13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
@@ -84,7 +85,7 @@
     '<button type="button" class="av-ib av-del" aria-label="Remove this time slot">'+ic.del+'</button>';return d}
   function slots(li){return [].slice.call(li.querySelectorAll('.av-slot')).map(function(r){var s=r.querySelectorAll('select');return [s[0].value,s[1].value]})}
   function say(msg,bad){clearTimeout(tt);toast.innerHTML=msg;toast.className='av-toast'+(bad?' bad':'');toast.hidden=false;tt=setTimeout(function(){toast.hidden=true},4200)}
-  function upd(){var c=1;lis.forEach(function(li){var on=li.querySelector('.av-sw').checked;li.classList.toggle('on',on);li.querySelector('.av-slots').hidden=!on;c+=1+(on?li.querySelectorAll('.av-slot').length*5:0)});n.textContent=c}
+  function upd(){var c=1;lis.forEach(function(li){var on=li.querySelector('.av-sw').checked;li.classList.toggle('on',on);li.querySelector('.av-slots').hidden=!on;c+=1+(on?li.querySelectorAll('.av-slot').length*5:0)});n.textContent=c;rs.disabled=c===8&&!a.querySelector('.av-slot')}
   function fill(li,list){var box=li.querySelector('.av-slots');box.innerHTML='';list.forEach(function(s){box.appendChild(row(li.dataset.day,s[0],s[1]))})}
   lis.forEach(function(li){
     var sw=li.querySelector('.av-sw'),box=li.querySelector('.av-slots');

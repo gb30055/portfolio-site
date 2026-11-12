@@ -20,7 +20,7 @@ CN_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
 DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
 AVAIL = ('<div class="avail">'
   '<div class="av-toast" role="status" aria-live="polite" hidden></div>'
-  '<div class="av-head"><span class="av-title">Set your availability</span><span class="wn-try">Interactive</span></div>'
+  '<div class="av-head"><span class="av-title">Set your availability</span><span class="av-head-r"><button type="button" class="av-reset" disabled>Reset</button><span class="wn-try">Interactive</span></span></div>'
   '<p class="av-zone">Time zone <b>Europe, London</b></p>'
   '<ul class="av-days">' + "".join(
     f'<li data-day="{d}"><label class="av-row"><span>{d}</span><input type="checkbox" class="av-sw" aria-label="Available on {d}"></label>'
