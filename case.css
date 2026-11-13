@@ -390,3 +390,17 @@ html{overflow-x:clip}
 @media (min-width:900px){.story-steps::before,.story-steps::after{z-index:0}.cs-body section.band .story-steps li{z-index:1}}
 /* No hard edges anywhere: fade every coloured section's glows to nothing at the top and bottom */
 .cs-body section.band::before,.cs-body section.warm::before{-webkit-mask:linear-gradient(180deg,transparent 0,#000 240px,#000 calc(100% - 240px),transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 240px,#000 calc(100% - 240px),transparent 100%)}
+/* Moving blurred blobs behind coloured sections (Genc 2026-11-13). Sections with an interactive demo keep the still gradient. */
+.cs-body section.band:not(:has(.wavenote,.avail,button,input))::before{background:linear-gradient(180deg,var(--page) 0,var(--b1) 130px,var(--b2) 340px,var(--b2) calc(100% - 340px),var(--b1) calc(100% - 130px),var(--page) 100%)}
+.cs-body section.band:not(:has(.wavenote,.avail,button,input))::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);pointer-events:none;
+  background:radial-gradient(closest-side,var(--g1),transparent),radial-gradient(closest-side,var(--g2),transparent),radial-gradient(closest-side,var(--g1),transparent),radial-gradient(closest-side,var(--g2),transparent);
+  background-repeat:no-repeat;background-size:55vw 720px,60vw 760px,48vw 640px,40vw 560px;
+  background-position:85% 20%,5% 70%,70% 95%,30% 10%;
+  -webkit-mask:linear-gradient(180deg,transparent 0,#000 240px,#000 calc(100% - 240px),transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 240px,#000 calc(100% - 240px),transparent 100%);
+  animation:blobs 28s ease-in-out infinite alternate}
+@keyframes blobs{
+  0%{background-position:85% 20%,5% 70%,70% 95%,30% 10%}
+  33%{background-position:60% 45%,25% 40%,95% 70%,10% 35%}
+  66%{background-position:95% 65%,0% 15%,45% 85%,40% 60%}
+  100%{background-position:70% 10%,20% 90%,80% 50%,15% 25%}}
+@media (prefers-reduced-motion:reduce){.cs-body section.band::after{animation:none}}
