@@ -512,17 +512,8 @@ h1 em { background: none; }
   .ab-ql { grid-template-columns: auto 1fr; }
   .ab-go { grid-column: 1 / -1; justify-self: start; }
 }
-/* Project cards: slowly moving blurred blobs instead of a fixed gradient */
-.pcard { isolation: isolate; overflow: hidden; background: linear-gradient(135deg, var(--a), var(--b)); }
-.pcard::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(closest-side, var(--g), transparent), radial-gradient(closest-side, rgba(255,255,255,.6), transparent), radial-gradient(closest-side, var(--g), transparent);
-  background-repeat: no-repeat; background-size: 60% 90%, 55% 80%, 45% 70%; background-position: 95% 10%, 5% 95%, 50% 50%;
-  animation: cardblobs 24s ease-in-out infinite alternate; }
-.pcard[data-tint="navig8r"]::before { animation-delay: -8s; }
-.pcard[data-tint="scandlearn"]::before { animation-delay: -16s; }
-@keyframes cardblobs {
-  0% { background-position: 95% 10%, 5% 95%, 50% 50%; }
-  33% { background-position: 60% 40%, 30% 60%, 85% 90%; }
-  66% { background-position: 80% 85%, 0% 20%, 20% 70%; }
-  100% { background-position: 100% 30%, 40% 100%, 65% 0%; } }
-@media (prefers-reduced-motion: reduce) { .pcard::before { animation: none; } }
+/* Project cards: same soft white panel as the Experience and About tiles (Genc 2026-11-13) */
+.pcard, .pcard[data-tint] { background: rgba(255,255,255,.5); box-shadow: 0 30px 60px -40px rgba(40,30,60,.25); }
+.pcard:hover { box-shadow: 0 30px 60px -32px rgba(40,30,60,.35); }
+.pcard .p-meta, .pcard .p-stats div { background: var(--page); }
+.pcard .p-media { box-shadow: 0 30px 60px -30px rgba(40,30,60,.3), 0 0 0 6px rgba(255,255,255,.8); }

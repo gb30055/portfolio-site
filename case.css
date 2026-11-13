@@ -404,3 +404,6 @@ html{overflow-x:clip}
   66%{background-position:95% 65%,0% 15%,45% 85%,40% 60%}
   100%{background-position:70% 10%,20% 90%,80% 50%,15% 25%}}
 @media (prefers-reduced-motion:reduce){.cs-body section.band::after{animation:none}}
+.cs-body section.band:not(:has(.wavenote,.avail,button,input)){--g1:rgba(255,150,30,.5);--g2:rgba(255,255,255,.7)}
+.navig8r .cs-body section.band:not(:has(.wavenote,.avail,button,input)){--g1:rgba(238,112,84,.38);--g2:rgba(255,255,255,.65)}
+.cs-body section.band:not(:has(.wavenote,.avail,button,input))::after{animation-duration:22s}
