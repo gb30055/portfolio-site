@@ -407,3 +407,30 @@ html{overflow-x:clip}
 .cs-body section.band:not(:has(.wavenote,.avail,button,input)){--g1:rgba(255,150,30,.5);--g2:rgba(255,255,255,.7)}
 .navig8r .cs-body section.band:not(:has(.wavenote,.avail,button,input)){--g1:rgba(238,112,84,.38);--g2:rgba(255,255,255,.65)}
 .cs-body section.band:not(:has(.wavenote,.avail,button,input))::after{animation-duration:22s}
+
+/* Frosted glows v2 (Genc 2026-11-13): big soft colour fields that drift and bleed into each other, with a fine frost grain. Built by case.js inside .band sections without an interactive demo. */
+.cs-body section.band.has-glow::after{content:none}
+.cs-body section.band.has-glow::before{background:linear-gradient(180deg,var(--page) 0,var(--f0) 220px,var(--f0) calc(100% - 220px),var(--page) 100%)}
+.glow{position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);overflow:hidden;pointer-events:none;
+  -webkit-mask:linear-gradient(180deg,transparent 0,#000 260px,#000 calc(100% - 260px),transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 260px,#000 calc(100% - 260px),transparent 100%)}
+.glow i{position:absolute;width:var(--s);aspect-ratio:1;left:var(--x);top:var(--y);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);border-radius:50%;
+  background:radial-gradient(closest-side,var(--c) 0%,var(--c) 30%,transparent 100%);opacity:.95;will-change:transform;
+  animation:glowdrift var(--d) ease-in-out infinite alternate;animation-delay:var(--dl)}
+.glow::after{content:"";position:absolute;inset:0;opacity:.22;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.glow b{position:absolute;inset:0;background:radial-gradient(60% 50% at 20% 75%,rgba(255,255,255,.75),transparent 70%);animation:glowsheen 18s ease-in-out infinite alternate}
+@keyframes glowdrift{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(var(--mx),calc(var(--my) * -1)) scale(1.15)}
+  100%{transform:translate(calc(var(--mx) * -.6),var(--my)) scale(.92)}}
+@keyframes glowsheen{to{transform:translate(35%,-25%)}}
+@media (prefers-reduced-motion:reduce){.glow i,.glow b{animation:none}}
+/* palettes from each project's colours */
+.cs-body section.band{--f0:#FCEFC4;--c1:#FFE066;--c2:#FFB547;--c3:#FFD3A1;--c4:#FF9F7A;--c5:#FFF3C9}
+.navig8r .cs-body section.band{--f0:#FBE6DA;--c1:#F7A48A;--c2:#FFC6A5;--c3:#F9CF8C;--c4:#F290A2;--c5:#FFE9DF}
+.cs-body section.band{--f0:#FFF6DC;--c1:#FFD84A;--c2:#FFA94D;--c3:#FFE9B0;--c4:#FF8F7A;--c5:#FFFFFF}
+.navig8r .cs-body section.band{--f0:#FFEDE4;--c1:#F59478;--c2:#FFC29C;--c3:#F7C873;--c4:#EE7F9C;--c5:#FFFFFF}
+.glow i{opacity:.85}
+.glow::after{mix-blend-mode:normal;opacity:.07;filter:grayscale(1) contrast(1.4)}
+.glow b{inset:-40%;background:radial-gradient(28% 26% at 32% 62%,rgba(255,255,255,.8),transparent 100%)}
+@keyframes glowsheen{to{transform:translate(22%,-14%)}}

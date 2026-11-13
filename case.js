@@ -196,3 +196,15 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
 
 // Copy the icon JSON prompt
 (function(){document.querySelectorAll('.tj-copy').forEach(function(b){b.addEventListener('click',function(){var t=b.closest('.tier-json').querySelector('code').textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var i=document.createElement('textarea');i.value=t;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove()}).finally(function(){b.classList.add('done');b.textContent='Copied';clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('done');b.textContent='Copy JSON'},1800)})})})})();
+
+/* Frosted glows: drifting colour fields in coloured sections that have no interactive demo */
+(function(){
+  var spots=[["--c1","22%","30%","70vw","8vw","6vh","26s"],["--c2","80%","25%","62vw","-10vw","8vh","31s"],["--c3","65%","80%","75vw","7vw","-6vh","23s"],["--c4","95%","60%","48vw","-6vw","10vh","35s"],["--c5","8%","85%","55vw","10vw","-8vh","29s"]];
+  document.querySelectorAll(".cs-body section.band").forEach(function(s){
+    if(s.querySelector(".wavenote,.avail,button,input"))return;
+    var g=document.createElement("div");g.className="glow";g.setAttribute("aria-hidden","true");
+    spots.forEach(function(p,i){var e=document.createElement("i");e.style.cssText="--c:var("+p[0]+");--x:"+p[1]+";--y:"+p[2]+";--s:"+p[3]+";--mx:"+p[4]+";--my:"+p[5]+";--d:"+p[6]+";--dl:-"+(i*4)+"s";g.appendChild(e);});
+    g.appendChild(document.createElement("b"));
+    s.classList.add("has-glow");s.prepend(g);
+  });
+})();
