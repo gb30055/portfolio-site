@@ -1,0 +1,8 @@
+{
+  // Static site served as Workers static assets.
+  // Branch builds run `wrangler preview`, which needs this file and a `previews` block.
+  "name": "portfolio-site",
+  "compatibility_date": "2025-10-01",
+  "assets": { "directory": "." },
+  "previews": {}
+}
