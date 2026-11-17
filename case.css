@@ -535,3 +535,9 @@ html{overflow-x:clip}
 .cs .fa-col>.fa-t{margin:0 0 12px;font-size:17px;font-weight:600;color:var(--ink,#16161a)}
 .cs .fa-col>.fa-card{flex:1;position:relative;padding-top:64px}
 .cs .fa-card>.fa-step{position:absolute;top:18px;right:18px}
+/* Wide screens that pan sideways on phones */
+@media(max-width:767px){.cs figure.pan{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-inline:-16px;padding-inline:16px}
+.cs figure.pan::-webkit-scrollbar{display:none}
+.cs figure.pan img{width:860px;max-width:none}
+.cs figure.pan figcaption{position:sticky;left:0;width:calc(100vw - 32px)}
+.cs figure.pan figcaption::before{content:"Swipe to see the whole screen. ";font-weight:600}}
