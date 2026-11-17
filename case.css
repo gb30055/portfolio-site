@@ -434,3 +434,6 @@ html{overflow-x:clip}
 .glow::after{mix-blend-mode:normal;opacity:.07;filter:grayscale(1) contrast(1.4)}
 .glow b{inset:-40%;background:radial-gradient(28% 26% at 32% 62%,rgba(255,255,255,.8),transparent 100%)}
 @keyframes glowsheen{to{transform:translate(22%,-14%)}}
+/* Wide "Before" screenshots (Scandlearn old LMS3) */
+.cs figure.wide.old .old-shot{position:relative;border-radius:14px;overflow:hidden;background:#fff;outline:1px dashed rgba(0,0,0,.25);outline-offset:4px;box-shadow:0 20px 50px -25px rgba(20,30,60,.35)}
+.cs figure.wide.old img{display:block;width:100%;border-radius:0;box-shadow:none;padding-bottom:36px;background:#fff}

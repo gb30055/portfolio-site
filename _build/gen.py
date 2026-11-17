@@ -176,6 +176,7 @@ OLD_FOOTER = """<footer class="contact wrap">
 </footer>"""
 exec(open(os.path.join(ROOT, "_build", "fancircle_v2.py")).read())
 exec(open(os.path.join(ROOT, "_build", "navig8r_v2.py")).read())
+exec(open(os.path.join(ROOT, "_build", "scandlearn_v2.py")).read())
 NEXT_IMG = {"fancircle": "thumb-fancircle.webp", "career-navig8r": "navig8r-home-feed.webp", "scandlearn": "thumb-scandlearn.webp"}
 for slug, p in PAGES.items():
     nxt = PAGES[p["next"]]
