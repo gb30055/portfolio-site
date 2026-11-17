@@ -517,3 +517,16 @@ html{overflow-x:clip}
 .cs .fa-card{align-items:stretch;padding-left:clamp(20px,3vw,32px)}
 @media (min-width:768px){.cs .fa-card .fa-flow{margin-left:max(0px,calc((100% - var(--w) - 148px)/2))!important}}
 @media (min-width:768px){.cs figure.fa-board .fa-grid{grid-template-columns:1.3fr 1fr 1fr}}
+/* Flow story: walking dot, step counter, note pops in at the problem */
+.cs .fa-card .fa-t{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px}
+.cs .fa-step{display:inline-block;padding:4px 10px;border-radius:999px;background:#0E1B3D;color:#fff;font-size:12.5px;font-weight:600;letter-spacing:.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cs .fa-dot{position:absolute;z-index:3;left:50%;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#fff;border:5px solid #0E1B3D;box-shadow:0 0 0 6px rgba(14,27,61,.15),0 6px 14px rgba(14,27,61,.35);transition:left .6s cubic-bezier(.5,0,.3,1),top .6s cubic-bezier(.5,0,.3,1);pointer-events:none}
+.cs .fa-card.reset .fa-dot{transition:none}
+.cs .fa-card.anim .fa-bub{opacity:0;transform:translateY(6px) scale(.96);transition:opacity .35s,transform .35s}
+.cs .fa-card.anim.bub-on .fa-bub{opacity:1;transform:none}
+.cs .fa-span{position:absolute;z-index:0;left:-10px;right:-10px;border-radius:16px;background:rgba(242,27,27,.10);outline:2px dashed rgba(242,27,27,.55);outline-offset:-2px}
+.cs .fa-card.anim .fa-span{opacity:0;transition:opacity .35s}
+.cs .fa-card.anim.bub-on .fa-span{opacity:1}
+.cs .fa-flow img{position:relative;z-index:1}
+.cs .fa-bub::before{z-index:-1}
+.cs .fa-dot{width:18px;height:18px;margin:-9px 0 0 -9px;border-width:4px}

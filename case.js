@@ -208,3 +208,29 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     s.classList.add("has-glow");s.prepend(g);
   });
 })();
+/* Scandlearn flow analysis: walk a dot through each old flow so the problem plays out (2026-11-17) */
+(function(){
+  var cards=document.querySelectorAll('.fa-card[data-seq]'); if(!cards.length) return;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(function(c){
+    var seq; try{seq=JSON.parse(c.getAttribute('data-seq'))}catch(e){return}
+    var flow=c.querySelector('.fa-flow'), tag=c.querySelector('.fa-step'), start=tag?tag.textContent:'';
+    if(reduce||!flow) return;
+    var dot=document.createElement('span'); dot.className='fa-dot'; flow.appendChild(dot);
+    c.classList.add('anim');
+    var i=0, timer=null, visible=false;
+    function go(){
+      var s=seq[i];
+      if(i===0){c.classList.remove('bub-on');c.classList.add('reset');setTimeout(function(){c.classList.remove('reset')},40)}
+      dot.style.left=s[0]+'%'; dot.style.top=s[1]+'%';
+      if(tag&&s[2]) tag.textContent=s[2];
+      if(s[4]==='b') c.classList.add('bub-on');
+      var hold=s[3]||900; i=(i+1)%seq.length;
+      if(i===0) setTimeout(function(){c.classList.add('bub-on')},0);
+      timer=setTimeout(function(){ if(visible) go(); else timer=null; }, hold);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){es.forEach(function(e){visible=e.isIntersecting; if(visible&&!timer) go();})},{threshold:.35}).observe(c);
+    } else { visible=true; go(); }
+  });
+})();
