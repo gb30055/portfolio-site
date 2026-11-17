@@ -323,3 +323,22 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     c.classList.add('anim');
     new IntersectionObserver(function(es){var v=es[0].isIntersecting;if(v&&!on){on=true;reset();go(0)}else if(!v&&on){on=false;clearTimeout(t);reset();pill.textContent=end}},{threshold:.35}).observe(c)});
 })();
+/* Scandlearn: training list row opens into the editor in place */
+(function(){
+  var ed=document.querySelector('.ed');if(!ed) return;
+  var scr=ed.querySelector('.ed-screen'),ring=ed.querySelector('.ed-ring'),note=ed.querySelector('.ed-note'),manual=false,vis=false,run=0;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function set(s){ed.setAttribute('data-s',s)}
+  function at(x,y){scr.style.setProperty('--x',x+'%');scr.style.setProperty('--y',y+'%')}
+  function say(t){note.textContent=t;note.classList.add('on');clearTimeout(say.t);say.t=setTimeout(function(){note.classList.remove('on')},2000)}
+  function click(){ring.classList.remove('go');void ring.offsetWidth;ring.classList.add('go')}
+  [].forEach.call(ed.querySelectorAll('.ed-ctl button'),function(b){b.addEventListener('click',function(){manual=true;run++;ed.classList.remove('auto');set(b.dataset.s)})});
+  function w(ms,id){return new Promise(function(r,j){setTimeout(function(){(id===run&&vis&&!manual)?r():j()},ms)})}
+  function loop(){if(manual||!vis||reduce) return;var id=++run;ed.classList.add('auto');set('list');at(72,82);
+    w(900,id).then(function(){at(40,31);return w(1100,id)}).then(function(){at(94.8,31);return w(1000,id)})
+    .then(function(){click();set('cur');say('Opens in the row. No page change.');return w(3000,id)})
+    .then(function(){at(50.1,23.4);return w(1000,id)}).then(function(){click();set('enr');return w(2800,id)})
+    .then(function(){at(93.9,23.4);return w(1000,id)}).then(function(){click();set('list');say('Saved. Back in the list.');return w(2400,id)})
+    .then(loop,function(){})}
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){var was=vis;vis=es[0].isIntersecting;if(vis&&!was)loop();else if(!vis){run++;ed.classList.remove('auto')}},{threshold:.4}).observe(ed);
+})();

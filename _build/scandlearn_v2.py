@@ -105,6 +105,18 @@ AFTER_BOARD = ('<figure class="wide fa-board af-board"><div class="fa-grid af-gr
            "Invite and group in one place", "New invite flow: from the home page to Users and Groups, add an email and invite, pick groups in a popup, and the list updates.")
   + '</div><figcaption><span class="af-key"></span>Green arrows: steps I redesigned</figcaption></figure>')
 
+# Inline edit demo: the training list row opens into the editor in place (Genc's Edit Training screens, 2026-11-17)
+ED_DEMO = ('<figure class="wide ed-fig"><div class="ed" data-s="list">'
+  '<div class="ed-screen">'
+  f'<img src="../assets/sl-list-final.webp"{full_attr("sl-list-final.webp")} alt="Final Training Management list: search, columns and filters in the toolbar, a table with type, enrolled people and status, and edit and view icons on the hovered row." loading="lazy">'
+  '<img class="ed-a" src="../assets/sl-edit-curriculum.webp" alt="The same row opened in place for editing, on the Curriculum tab: resources on the left, course contents on the right, Discard and Save changes in the row." loading="lazy">'
+  '<img class="ed-b" src="../assets/sl-edit-enrollment.webp" alt="The Enrollment tab of the same open row: users and groups with search, select all, and who gets notified." loading="lazy">'
+  '<svg class="ed-cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6.2 1.6L10 19z" fill="#0E1B3D" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+  '<span class="ed-ring" aria-hidden="true"></span><p class="ed-note" aria-live="polite"></p></div>'
+  '<div class="ed-ctl" role="group" aria-label="Show state">'
+  '<button type="button" data-s="list">Table</button><button type="button" data-s="cur">Edit: Curriculum</button><button type="button" data-s="enr">Edit: Enrollment</button></div>'
+  '</div><figcaption>The pencil on any row opens the training right there. Save, and you are back in the list.</figcaption></figure>')
+
 _extra = [b for b in PAGES["scandlearn"]["body"] if "<h2>" not in b]   # draft-only slots (walkthrough video, quote)
 
 PAGES["scandlearn"] = dict(
@@ -142,12 +154,12 @@ PAGES["scandlearn"] = dict(
     sec("The training list in three rounds","Admins spend most of their day in the training list, so I took it through three rounds. The first wireframe tested the layout. The second moved filters into a side panel and let a row open in place, showing its courses with links straight to each part of the training. The final version put navigation in one sidebar, moved search, columns and filters into the toolbar, and shows who is enrolled at a glance.",
         pair(("sl-list-v1.webp", "First wireframe of the training list: a profile panel, a menu, column filters and a long table.", "Round 1: wireframe"),
              ("sl-list-v2.webp", "Second wireframe: a filter panel on the left and one training row opened in place, listing its courses and links to details, curriculum, enrollment, schedule, certification, skills test and survey.", "Round 2: a row opens in place")),
-        fig("sl-list-final.webp", "Final Training Management screen: dark sidebar with sub-pages, a toolbar with search, columns and filters, and a table with type, enrolled people and status.", "Final: Training Management", wide=True), cls="band", id="training-list"),
+        "<p><b>Edit without leaving the table.</b> In the final version the pencil on a row opens the whole training in place, with tabs for curriculum, enrollment, schedule, certification, skill test and survey. Discard or save, and you are back where you were in the list. No page loads, no lost scroll position.</p>",
+        ED_DEMO, cls="band", id="training-list"),
     sec("What learners see","Learners need two things: what to do next and where they stand. Their list shows progress, expiry and one Resume button. Inside a training, the course outline stays on the side with each lesson's status, so nobody loses their place.",
         fig("sl-learner-list.webp", "Learner trainings list with tabs for yet to start, in progress and completed, a progress bar per training, expiry dates and a Resume button.", "A learner's trainings", wide=True),
         fig("sl-learner-player.webp", "Course player in dark mode: a self-study lesson with a download button, and the course outline on the right with each lesson's status.", "Inside a training: the outline stays visible", wide=True), id="learners"),
-    sec("One component library","A shared library of type, colours, inputs, pickers and tables with row actions kept 400+ screens consistent. It also made bigger tools, like the certificate builder, quick to put together.",
-        figm("sl-design-system.webp", "Component library: Montserrat type scale, colour palettes, grid, date picker, dropdown, inputs, toggles, icons and buttons.", "The component library"),
+    sec("One component library","One designer, four roles, 400+ screens: without a shared library, every new page would have drifted. Inputs, pickers and tables with row actions were built once and reused, which made bigger tools like the certificate builder quick to put together.",
         fig("sl-cert-builder.webp", "Certificate builder: drag rows, text boxes and images into a certificate, edit text in place, then save or use a template.", "Built from the library: the certificate builder", wide=True), id="components"),
     sec("Outcome", bigstat("400+", "screens handed over to development", "The client kept me on for 4 more months to design a new website, a video player and a CBTA (competency-based training) feature. I left before the build finished, so I have no usage numbers."), id="outcome"),
     sec("What I'd do differently", '<p class="lesson-big">Plan the second survey before the first one ends.</p>', "We had a baseline, the survey, but no plan to measure again. Next time I'd agree before handover to rerun it after launch.", cls="lesson"),
