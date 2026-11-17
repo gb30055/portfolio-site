@@ -459,3 +459,11 @@ html{overflow-x:clip}
 .cs figure.has-m .m-row:has(img[src*="ds-colours"]) img{flex:0 1 62%}
 }
 @media (max-width:640px){.cs figure.wide.has-m .m-stack img.m-card{background:none;border-radius:0}.cs figure.has-m img[src*="ds-dropdown"]{filter:drop-shadow(0 10px 16px rgba(20,30,70,.18))}}
+@media (max-width:640px){
+.cs figure.has-m .m-label{margin:14px 0 -4px;font-size:16px;font-weight:600;line-height:1.35;color:var(--ink,#16161a);text-align:left}
+.cs figure.has-m .m-label:first-child{margin-top:0}
+.cs figure.has-m .m-row.chips{flex-wrap:wrap;justify-content:flex-start;gap:8px}
+.cs figure.has-m .m-row.chips img{flex:0 0 auto;height:30px;width:auto;border-radius:4px;box-shadow:0 1px 0 rgba(20,30,70,.08),0 6px 14px -8px rgba(20,30,70,.4)}
+.cs figure.has-m .m-row img.m-qa{flex:0 0 calc(50% - 6px);max-width:150px;border-radius:10px;box-shadow:0 10px 22px -12px rgba(20,30,70,.4)}
+.cs figure.has-m .m-row:has(.m-qa){justify-content:flex-start}
+}
