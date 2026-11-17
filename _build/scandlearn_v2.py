@@ -5,12 +5,18 @@ def oldwide(src, alt, cap):
             '<p class="old-strip"><span>Before</span><span>Old version</span></p></div>'
             f'<figcaption>{cap}</figcaption></figure>')
 
+MSTACK = {
+  "sl-dashboard.webp": [["dash-stats.webp"], ["dash-reports.webp"]],
+  "sl-search.webp": [["search-bar.webp"], ["search-results.webp"]],
+  "sl-flow-analysis.webp": [["flow-1.webp"], ["flow-2.webp"], ["flow-3.webp"]],
+  "sl-design-system.webp": [["ds-type.webp"], ["ds-calendar.webp", "ds-dropdown.webp"], ["ds-colours.webp"]],
+}
 def figm(src, alt, cap):
-    # Wide slide with a phone-only version: the slide's boxes cut out and stacked, so text stays readable
-    m = src.replace(".webp", "-m.webp")
-    return (f'<figure class="wide"><picture><source media="(max-width:640px)" srcset="../assets/{m}">'
-            f'<img src="../assets/{src}" data-full="../assets/{src}" alt="{html.escape(alt)}" loading="lazy"></picture>'
-            f'<figcaption>{cap}</figcaption></figure>')
+    # Wide slide on desktop. On phones the slide is swapped for its screens alone, cut from Genc's SVGs.
+    cls = lambda f: "m-card" if f.startswith("flow-") or f == "ds-dropdown.webp" else "m-shot"
+    rows = "".join('<div class="m-row">' + "".join(f'<img class="{cls(f)}" src="../assets/m/{f}" data-full="../assets/{src}" alt="" loading="lazy">' for f in r) + "</div>" for r in MSTACK[src])
+    return (f'<figure class="wide has-m"><img class="d-only" src="../assets/{src}" data-full="../assets/{src}" alt="{html.escape(alt)}" loading="lazy">'
+            f'<div class="m-stack" role="img" aria-label="{html.escape(alt)}">{rows}</div><figcaption>{cap}</figcaption></figure>')
 
 def pair(a, b):
     return '<div class="pair">' + fig(*a) + fig(*b) + '</div>'

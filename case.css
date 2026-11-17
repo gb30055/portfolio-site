@@ -447,3 +447,15 @@ html{overflow-x:clip}
 .scandlearn.v2 .cover-desk{background:radial-gradient(ellipse at 60% 70%,#24306b 0,#0f1430 70%)}
 .dark-stage.scandlearn .stage .cs-stats strong{color:#8DB4FF}
 .cs figure picture{display:block}
+/* Scandlearn slides: on phones show only the screens, no slide background (2026-11-17) */
+.cs figure.has-m .m-stack{display:none}
+@media (max-width:640px){
+.cs figure.has-m .d-only{display:none}
+.cs figure.has-m .m-stack{display:grid;gap:14px}
+.cs figure.has-m .m-row{display:flex;gap:12px;align-items:flex-start;justify-content:center}
+.cs figure.has-m .m-row img{min-width:0;flex:1 1 0;height:auto;margin:0}
+.cs figure.has-m .m-shot{border-radius:12px;box-shadow:0 1px 0 rgba(20,30,70,.06),0 14px 30px -14px rgba(20,30,70,.35);background:#fff}
+.cs figure.has-m .m-card{border-radius:0;box-shadow:none;background:none;filter:drop-shadow(0 14px 22px rgba(20,30,70,.25))}
+.cs figure.has-m .m-row:has(img[src*="ds-colours"]) img{flex:0 1 62%}
+}
+@media (max-width:640px){.cs figure.wide.has-m .m-stack img.m-card{background:none;border-radius:0}.cs figure.has-m img[src*="ds-dropdown"]{filter:drop-shadow(0 10px 16px rgba(20,30,70,.18))}}
