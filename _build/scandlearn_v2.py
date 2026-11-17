@@ -5,28 +5,34 @@ def oldwide(src, alt, cap):
             '<p class="old-strip"><span>Before</span><span>Old version</span></p></div>'
             f'<figcaption>{cap}</figcaption></figure>')
 
-# Phone-only version of each slide: the slide's labels as real text, with the UI artwork cut from Genc's SVGs below.
-MSTACK = {
-  "sl-dashboard.webp": [("t","At a glance: what needs attention today."), ["dash-stats.webp"], ["dash-reports.webp"],
-                        ("t","Quick actions for the most common jobs."), ["qa-0.webp","qa-1.webp"]],
-  "sl-search.webp": [("t","Filter by trainings, modules, users or materials."), ["chip-0.webp","chip-1.webp","chip-2.webp","chip-3.webp"],
-                     ("t","⌘K opens search from anywhere."), ["search-bar.webp"], ["search-results.webp"]],
-  "sl-flow-analysis.webp": [["flow-1.webp"], ["flow-2.webp"], ["flow-3.webp"]],
-  "sl-design-system.webp": [("t","Type scale"), ["ds-type.webp"], ("t","Inputs and pickers"), ["ds-calendar.webp", "ds-dropdown.webp"], ("t","Colour"), ["ds-colours.webp"]],
+# Genc's slides rebuilt as boards: the labels are real text in the site font, the UI artwork is cut from Genc's SVGs.
+# Each block: (area, label or None, [images]). Desktop places blocks in a grid by area; phones stack them in order.
+from PIL import Image as _Im
+def _w(f): return _Im.open(os.path.join(ROOT, "assets", "m", f)).size[0]
+BOARDS = {
+  "sl-dashboard.webp": ("dash", [("a","At a glance: what needs attention today.",["dash-stats.webp"]), ("b",None,["dash-reports.webp"]),
+                                 ("c","Quick actions for the most common jobs.",["qa-0.webp","qa-1.webp"])]),
+  "sl-search.webp": ("search", [("a","Filter by trainings, modules, users or materials.",["chip-0.webp","chip-1.webp","chip-2.webp","chip-3.webp"]),
+                                ("b","⌘K opens search from anywhere.",["search-bar.webp"]), ("c",None,["search-results.webp"])]),
+  "sl-flow-analysis.webp": ("flow", [("a",None,["flow-1.webp"]), ("b",None,["flow-2.webp"]), ("c",None,["flow-3.webp"])]),
+  "sl-design-system.webp": ("ds", [("a","Type scale",["ds-type.webp"]), ("b","Inputs and pickers",["ds-calendar.webp","ds-dropdown.webp"]), ("c","Colour",["ds-colours.webp"])]),
 }
 def figm(src, alt, cap):
-    # Wide slide on desktop; on phones, the stack above.
+    kind, blocks = BOARDS[src]
     def cls(f):
         if f.startswith("flow-") or f == "ds-dropdown.webp": return "m-card"
         if f.startswith("chip-"): return "m-chip"
         if f.startswith("qa-"): return "m-qa"
         return "m-shot"
     out = ""
-    for blk in MSTACK[src]:
-        if isinstance(blk, tuple): out += f'<p class="m-label">{blk[1]}</p>'
-        else: out += f'<div class="m-row{" chips" if blk[0].startswith("chip-") else ""}">' + "".join(f'<img class="{cls(f)}" src="../assets/m/{f}" data-full="../assets/{src}" alt="" loading="lazy">' for f in blk) + "</div>"
-    return (f'<figure class="wide has-m"><img class="d-only" src="../assets/{src}" data-full="../assets/{src}" alt="{html.escape(alt)}" loading="lazy">'
-            f'<div class="m-stack" role="img" aria-label="{html.escape(alt)}">{out}</div><figcaption>{cap}</figcaption></figure>')
+    for area, label, imgs in blocks:
+        lab = f'<p class="m-label">{label}</p>' if label else ""
+        row = "chips" if imgs[0].startswith("chip-") else ""
+        ims = "".join(f'<img class="{cls(f)}" src="../assets/m/{f}" data-full="../assets/{src}" alt="" loading="lazy">' for f in imgs)
+        st = f' style="--fw:{_w(imgs[0])}"' if kind == "flow" else ""
+        out += f'<div class="bd-{area}"{st}>{lab}<div class="m-row {row}">{ims}</div></div>'
+    return (f'<figure class="wide board board-{kind}"><div class="m-stack" role="img" aria-label="{html.escape(alt)}">{out}</div>'
+            f'<figcaption>{cap}</figcaption></figure>')
 
 def pair(a, b):
     return '<div class="pair">' + fig(*a) + fig(*b) + '</div>'

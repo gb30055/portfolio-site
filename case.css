@@ -467,3 +467,25 @@ html{overflow-x:clip}
 .cs figure.has-m .m-row img.m-qa{flex:0 0 calc(50% - 6px);max-width:150px;border-radius:10px;box-shadow:0 10px 22px -12px rgba(20,30,70,.4)}
 .cs figure.has-m .m-row:has(.m-qa){justify-content:flex-start}
 }
+/* Scandlearn boards (2026-11-17): slides rebuilt as text + artwork, desktop grid and phone stack */
+.cs figure.board .m-stack{display:grid;gap:28px 32px;align-items:start}
+.cs figure.board .m-label{margin:0 0 12px;font-size:17px;font-weight:600;line-height:1.35;color:var(--ink,#16161a);text-align:left}
+.cs figure.board .m-row{display:flex;gap:14px;align-items:flex-start}
+.cs figure.board .m-row img{display:block;min-width:0;flex:1 1 0;height:auto;margin:0}
+.cs figure.board .m-shot{border-radius:14px;background:#fff;box-shadow:0 1px 0 rgba(20,30,70,.06),0 18px 40px -18px rgba(20,30,70,.35)}
+.cs figure.wide.board img.m-card{border-radius:0;background:none;box-shadow:none;filter:drop-shadow(0 16px 24px rgba(20,30,70,.22))}
+.cs figure.board .m-row.chips{flex-wrap:wrap;gap:10px}
+.cs figure.board .m-row.chips img{flex:0 0 auto;height:34px;width:auto;border-radius:4px;box-shadow:0 1px 0 rgba(20,30,70,.08),0 6px 14px -8px rgba(20,30,70,.4)}
+.cs figure.board img.m-qa{flex:0 0 150px;border-radius:12px;box-shadow:0 12px 26px -14px rgba(20,30,70,.45)}
+.cs figure.board img[src*="ds-colours"]{flex:0 1 70%;border-radius:12px;box-shadow:0 14px 30px -16px rgba(20,30,70,.45)}
+@media (min-width:768px){
+.cs figure.board-dash .m-stack{grid-template-columns:7fr 5fr;grid-template-areas:"a a" "b c"}
+.cs figure.board-search .m-stack{grid-template-columns:5fr 7fr;grid-template-areas:"a c" "b c" ". c"}
+.cs figure.board-ds .m-stack{grid-template-columns:7fr 5fr;grid-template-areas:"a b" "a c"}
+.cs figure.board .bd-a{grid-area:a}.cs figure.board .bd-b{grid-area:b}.cs figure.board .bd-c{grid-area:c}
+.cs figure.board-search .bd-b{align-self:start}
+.cs figure.board-flow .m-stack{display:flex;gap:20px;align-items:flex-start}
+.cs figure.board-flow .m-stack>div{flex:var(--fw) 1 0;min-width:0}
+}
+@media (max-width:767px){.cs figure.board .m-stack{grid-template-columns:minmax(0,1fr);gap:22px}.cs figure.board .m-label{font-size:16px;margin-bottom:10px}.cs figure.board img.m-qa{flex:0 0 calc(50% - 7px);max-width:150px}}
+@media (min-width:768px){.cs figure.board-dash .m-stack{grid-template-columns:8fr 4fr;grid-template-areas:"a c" "b c"}.cs figure.board-search .m-stack{grid-template-columns:4fr 7fr}}
