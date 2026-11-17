@@ -37,6 +37,17 @@ def figm(src, alt, cap):
 def pair(a, b):
     return '<div class="pair">' + fig(*a) + fig(*b) + '</div>'
 
+
+# Flow analysis rebuilt from Genc's separate flow exports (2026-11-17); the notes are Genc's words, set as text.
+def _fa(img, title, note, alt):
+    return (f'<div class="fa-card"><p class="fa-t">{title}</p><p class="fa-note">{note}</p>'
+            f'<img src="../assets/{img}" alt="{html.escape(alt)}" loading="lazy"></div>')
+FLOW_BOARD = ('<figure class="wide fa-board"><div class="fa-grid">'
+  + _fa("sl-fa-curriculum.webp", "Adding curriculum", "Cancelling forces users to restart from scratch.", "Old flow: Curriculum page, Add curriculum, Select type, Add item, Confirm, Add to the list. Cancel at Add item goes back to the Curriculum page.")
+  + _fa("sl-fa-group.webp", "Adding a user to a group", "Redundant steps slow down progress.", "Old flow: Add email, Go to Groups, Add to group, Select groups, Confirm, then the groups are added to the list.")
+  + _fa("sl-fa-module.webp", "Opening a module", "Deep navigation levels slow down core tasks.", "Old flow: Creative Studio, Modules, Filter by draft, Open module.")
+  + '</div><figcaption><img class="fa-light" src="../assets/sl-fa-light.webp" alt="" width="40" height="45">Flow analysis: where the old flows broke</figcaption></figure>')
+
 SL_HERO = ('<figure class="wide cover-desk" aria-label="Scandlearn: the admin training list and the learner course player.">'
   '<img src="../assets/sl-list-final.webp" alt="" loading="eager">'
   '<img src="../assets/sl-learner-player.webp" alt="" loading="eager"></figure>')
@@ -69,7 +80,7 @@ PAGES["scandlearn"] = dict(
         oldwide("sl-old-settings.webp", "The old Create Training settings: schedule, availability, expiry, expiry cycle, new session, notifications, certificate and survey.", "Before: the last of four tabs every new training went through"),
         "<p><b>Mapping it showed why.</b> Some pages sat seven levels deep. Cancelling meant starting over, and steps repeated.</p>",
         fig("sl-old-sitemap.webp", "The old sitemap drawn as levels 0 to 7, with notification and user attribute settings at level 7.", "The old sitemap: some pages sat seven levels deep", wide=True),
-        figm("sl-flow-analysis.webp", "Flow analysis of three old flows: adding curriculum, where cancelling restarts from scratch; adding a user to a group, with redundant steps; and opening a module, buried under deep navigation.", "Flow analysis: where the old flows broke"), id="problem"),
+        FLOW_BOARD, id="problem"),
     sec("What users and rivals told me",
         "In the survey, most people named the system itself as the most frustrating part, ahead of courses, navigation or control.",
         "I compared Scandlearn with CPaT, Aviation eLearning, Evionica, Leon and Webmanuals. The rivals looked modern but gave admins little control over courses and staff. Scandlearn had that control but buried it under an outdated, crowded interface. So the brief became: <b>keep the control, lose the maze.</b>",
