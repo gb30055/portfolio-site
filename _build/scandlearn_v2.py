@@ -66,6 +66,29 @@ SL_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
   + "".join(f'<a href="#{i}">{t}</a>' for i, t in [("problem","Problem"),("research","Research"),("navigation","Navigation"),("search","Search"),("flows","Flows"),("training-list","Training list"),("learners","Learners"),("components","Components"),("outcome","Outcome")])
   + '</div></nav>')
 
+
+# Interactive global search demo (built from Genc's search elements)
+GS_TRAININGS = ["ADS-B Out & In","Controlled Flight Into Terrain (CFIT)","Cosmic and Solar Radiation","Crew Resource Management (CRM)","Fuel Tank Safety Awareness Training","First Aid","Low Visibility (LVO) CAT II/III","Meteorology","Performance-Based Navigation (PBN)","Winter operations and Surface contamination training (generic)","Airbus A320 - Flight Crew"]
+GS_DATA = {"t": GS_TRAININGS,
+  "m": ["ADS-B: How surveillance works","CFIT: Terrain awareness","Crew communication","Radiation exposure on long flights","De-icing procedures","CPR and AED basics","Approach minima","Reading METARs and TAFs"],
+  "u": ["John Doe","Emma Smith","Olivia Jones","Sophia Miller","Jackson Davis","Ava Brown","Liam Wilson","Mia Clark"],
+  "x": ["Aviation Security - Cabin.pdf","A320 Quick Reference.pdf","CRM Case Studies.pdf","test-image.jpg","Winter Ops Checklist.docx","First Aid Poster.png"]}
+import json as _json
+GS_DEMO = ('<figure class="wide gs-fig"><div class="gs" data-gs=\'' + html.escape(_json.dumps(GS_DATA), quote=True) + '\'>'
+  '<div class="gs-app">'
+  '<label class="gs-box"><span class="ic ic-search" aria-hidden="true"></span>'
+  '<span class="gs-tag" hidden><span class="ic"></span><b></b><button type="button" aria-label="Remove filter">×</button></span>'
+  '<input type="text" autocomplete="off" spellcheck="false" aria-label="Search trainings, modules, users and materials" placeholder="Search everything">'
+  '<kbd class="gs-kbd">⌘K</kbd></label>'
+  '<div class="gs-chips" role="toolbar" aria-label="Filter by type">'
+  '<button type="button" data-t="t"><span class="ic ic-cap"></span>Trainings</button>'
+  '<button type="button" data-t="m"><span class="ic ic-puzzle"></span>Modules</button>'
+  '<button type="button" data-t="u"><span class="ic ic-users"></span>Users</button>'
+  '<button type="button" data-t="x"><span class="ic ic-book"></span>Materials</button></div>'
+  '<div class="gs-panel"><p class="gs-h"></p><ul class="gs-list" role="listbox"></ul></div>'
+  '<p class="gs-toast" aria-live="polite"></p></div></div>'
+  '<figcaption>Try it: click the search bar or press ⌘K, pick a type, and type.</figcaption></figure>')
+
 _extra = [b for b in PAGES["scandlearn"]["body"] if "<h2>" not in b]   # draft-only slots (walkthrough video, quote)
 
 PAGES["scandlearn"] = dict(
@@ -97,7 +120,7 @@ PAGES["scandlearn"] = dict(
         fig("sl-dashboard-full.webp", "Admin dashboard: users enrolled, trainings and expired currencies, a feed of reports, a work-in-progress card, quick actions for new training, invite users and new group, and notifications.", "The admin dashboard: what needs attention today, one click from action", wide=True).replace('<figure class="wide">','<figure class="wide pan">'), id="navigation"),
     sec("Search as the main way around","More menus don't fix findability. One search covers trainings, modules, users and materials, with type filters, a ⌘K shortcut and recent searches, so admins jump straight to what they need.",
         vid("sl-search","Finding a training with global search"),
-        figm("sl-search.webp", "Global search: filter chips for trainings, modules, users and materials, the ⌘K search bar, recent searches and a filtered list of trainings.", "Global search"), cls="band", id="search"),
+        GS_DEMO, cls="band", id="search"),
     sec("Fewer steps, no starting over","I redrew the two flows from the analysis above. Curriculum content is now picked from one list with filters, so cancelling no longer throws your picks away. Inviting a user and adding them to a group happen in one place, with no separate Groups page and no confirm step.",
         pair(("sl-flow-curriculum-new.webp", "New curriculum flow: Curriculum page, Add curriculum, all curriculum content, filter and pick content, updated curriculum page.", "Adding curriculum: one filtered list"),
              ("sl-flow-invite-new.webp", "New invite flow: from the home page to Users and Groups, add an email and invite, pick groups in a popup, and the list updates.", "Inviting a user: invite and group in one place")), id="flows"),
