@@ -39,13 +39,15 @@ def pair(a, b):
 
 
 # Flow analysis rebuilt from Genc's separate flow exports (2026-11-17); the notes are Genc's words, set as text.
-def _fa(img, title, note, alt):
-    return (f'<div class="fa-card"><p class="fa-t">{title}</p><p class="fa-note">{note}</p>'
-            f'<img src="../assets/{img}" alt="{html.escape(alt)}" loading="lazy"></div>')
+def _fa(img, title, note, alt, w, pos, side):
+    # Flow export at half its pixel size (2x export), with the note as a speech bubble pinned next to the step it describes
+    return (f'<div class="fa-card"><p class="fa-t">{title}</p><div class="fa-flow" style="--w:{w}px">'
+            f'<img src="../assets/{img}" alt="{html.escape(alt)}" loading="lazy">'
+            f'<p class="fa-bub fa-{side}" style="{pos}">{note}</p></div></div>')
 FLOW_BOARD = ('<figure class="wide fa-board"><div class="fa-grid">'
-  + _fa("sl-fa-curriculum.webp", "Adding curriculum", "Cancelling forces users to restart from scratch.", "Old flow: Curriculum page, Add curriculum, Select type, Add item, Confirm, Add to the list. Cancel at Add item goes back to the Curriculum page.")
-  + _fa("sl-fa-group.webp", "Adding a user to a group", "Redundant steps slow down progress.", "Old flow: Add email, Go to Groups, Add to group, Select groups, Confirm, then the groups are added to the list.")
-  + _fa("sl-fa-module.webp", "Opening a module", "Deep navigation levels slow down core tasks.", "Old flow: Creative Studio, Modules, Filter by draft, Open module.")
+  + _fa("sl-fa-curriculum.webp", "Adding curriculum", "Cancelling forces users to restart from scratch.", "Old flow: Curriculum page, Add curriculum, Select type, Add item, Confirm, Add to the list. Cancel at Add item goes back to the Curriculum page.", 210, "top:20%", "l")
+  + _fa("sl-fa-group.webp", "Adding a user to a group", "Redundant steps slow down progress.", "Old flow: Users page, Add email, Go to Groups, Add to group, Select groups, Confirm, then the groups are added to the list.", 160, "top:29%", "l")
+  + _fa("sl-fa-module.webp", "Opening a module", "Deep navigation levels slow down core tasks.", "Old flow: Home page, Training, Creative Studio, Modules, Filter by draft, Open module.", 138, "top:33%", "l")
   + '</div><figcaption><img class="fa-light" src="../assets/sl-fa-light.webp" alt="" width="40" height="45">Flow analysis: where the old flows broke</figcaption></figure>')
 
 SL_HERO = ('<figure class="wide cover-desk" aria-label="Scandlearn: the admin training list and the learner course player.">'
