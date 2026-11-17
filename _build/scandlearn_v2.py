@@ -5,6 +5,13 @@ def oldwide(src, alt, cap):
             '<p class="old-strip"><span>Before</span><span>Old version</span></p></div>'
             f'<figcaption>{cap}</figcaption></figure>')
 
+def figm(src, alt, cap):
+    # Wide slide with a phone-only version: the slide's boxes cut out and stacked, so text stays readable
+    m = src.replace(".webp", "-m.webp")
+    return (f'<figure class="wide"><picture><source media="(max-width:640px)" srcset="../assets/{m}">'
+            f'<img src="../assets/{src}" data-full="../assets/{src}" alt="{html.escape(alt)}" loading="lazy"></picture>'
+            f'<figcaption>{cap}</figcaption></figure>')
+
 def pair(a, b):
     return '<div class="pair">' + fig(*a) + fig(*b) + '</div>'
 
@@ -40,7 +47,7 @@ PAGES["scandlearn"] = dict(
         oldwide("sl-old-settings.webp", "The old Create Training settings: schedule, availability, expiry, expiry cycle, new session, notifications, certificate and survey.", "Before: the last of four tabs every new training went through"),
         "<p><b>Mapping it showed why.</b> Some pages sat seven levels deep. Cancelling meant starting over, and steps repeated.</p>",
         fig("sl-old-sitemap.webp", "The old sitemap drawn as levels 0 to 7, with notification and user attribute settings at level 7.", "The old sitemap: some pages sat seven levels deep", wide=True),
-        fig("sl-flow-analysis.webp", "Flow analysis of three old flows: adding curriculum, where cancelling restarts from scratch; adding a user to a group, with redundant steps; and opening a module, buried under deep navigation.", "Flow analysis: where the old flows broke", wide=True), id="problem"),
+        figm("sl-flow-analysis.webp", "Flow analysis of three old flows: adding curriculum, where cancelling restarts from scratch; adding a user to a group, with redundant steps; and opening a module, buried under deep navigation.", "Flow analysis: where the old flows broke"), id="problem"),
     sec("What users and rivals told me",
         "In the survey, most people named the system itself as the most frustrating part, ahead of courses, navigation or control.",
         "I compared Scandlearn with CPaT, Aviation eLearning, Evionica, Leon and Webmanuals. The rivals looked modern but gave admins little control over courses and staff. Scandlearn had that control but buried it under an outdated, crowded interface. So the brief became: <b>keep the control, lose the maze.</b>",
@@ -50,10 +57,10 @@ PAGES["scandlearn"] = dict(
     sec("Navigation by role","Admins, authors, instructors and learners need different things. Starting from the role map, I rebuilt the sitemap into seven main sections, each with a few groups, so every role sees its own pages first. Global search, a left panel and a tree of tabs tie them together.",
         fig("sl-new-sitemap.webp", "The new sitemap: main navigation with global search, left panel menu and tabs tree view, over seven sections from Dashboard to Configuration.", "The new sitemap", wide=True),
         "<p><b>The dashboard opens on what needs attention.</b> Key numbers, the latest activity, quick actions to add a training, invite users or make a group, and notifications.</p>",
-        fig("sl-dashboard.webp", "Admin dashboard: users enrolled, trainings and currencies, a feed of reports, quick actions for new training, invite users and new group, and notifications.", "The admin dashboard", wide=True), id="navigation"),
+        figm("sl-dashboard.webp", "Admin dashboard: users enrolled, trainings and currencies, a feed of reports, quick actions for new training, invite users and new group, and notifications.", "The admin dashboard"), id="navigation"),
     sec("Search as the main way around","More menus don't fix findability. One search covers trainings, modules, users and materials, with type filters, a ⌘K shortcut and recent searches, so admins jump straight to what they need.",
         vid("sl-search","Finding a training with global search"),
-        fig("sl-search.webp","Global search: filter chips for trainings, modules, users and materials, the ⌘K search bar, recent searches and a filtered list of trainings.","Global search",wide=True), cls="band", id="search"),
+        figm("sl-search.webp", "Global search: filter chips for trainings, modules, users and materials, the ⌘K search bar, recent searches and a filtered list of trainings.", "Global search"), cls="band", id="search"),
     sec("Fewer steps, no starting over","I redrew the two flows from the analysis above. Curriculum content is now picked from one list with filters, so cancelling no longer throws your picks away. Inviting a user and adding them to a group happen in one place, with no separate Groups page and no confirm step.",
         pair(("sl-flow-curriculum-new.webp", "New curriculum flow: Curriculum page, Add curriculum, all curriculum content, filter and pick content, updated curriculum page.", "Adding curriculum: one filtered list"),
              ("sl-flow-invite-new.webp", "New invite flow: from the home page to Users and Groups, add an email and invite, pick groups in a popup, and the list updates.", "Inviting a user: invite and group in one place")), id="flows"),
@@ -65,7 +72,7 @@ PAGES["scandlearn"] = dict(
         fig("sl-learner-list.webp", "Learner trainings list with tabs for yet to start, in progress and completed, a progress bar per training, expiry dates and a Resume button.", "A learner's trainings", wide=True),
         fig("sl-learner-player.webp", "Course player in dark mode: a self-study lesson with a download button, and the course outline on the right with each lesson's status.", "Inside a training: the outline stays visible", wide=True), id="learners"),
     sec("One component library","A shared library of type, colours, inputs, pickers and tables with row actions kept 400+ screens consistent. It also made bigger tools, like the certificate builder, quick to put together.",
-        fig("sl-design-system.webp", "Component library: Montserrat type scale, colour palettes, grid, date picker, dropdown, inputs, toggles, icons and buttons.", "The component library", wide=True),
+        figm("sl-design-system.webp", "Component library: Montserrat type scale, colour palettes, grid, date picker, dropdown, inputs, toggles, icons and buttons.", "The component library"),
         fig("sl-cert-builder.webp", "Certificate builder: drag rows, text boxes and images into a certificate, edit text in place, then save or use a template.", "Built from the library: the certificate builder", wide=True), id="components"),
     sec("Outcome", bigstat("400+", "screens handed over to development", "The client kept me on for 4 more months to design a new website, a video player and a CBTA (competency-based training) feature. I left before the build finished, so I have no usage numbers."), id="outcome"),
     sec("What I'd do differently", '<p class="lesson-big">Plan the second survey before the first one ends.</p>', "We had a baseline, the survey, but no plan to measure again. Next time I'd agree before handover to rerun it after launch.", cls="lesson"),

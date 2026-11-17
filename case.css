@@ -446,3 +446,4 @@ html{overflow-x:clip}
 .scandlearn .cs-body section.band figcaption{color:#3c4a70}
 .scandlearn.v2 .cover-desk{background:radial-gradient(ellipse at 60% 70%,#24306b 0,#0f1430 70%)}
 .dark-stage.scandlearn .stage .cs-stats strong{color:#8DB4FF}
+.cs figure picture{display:block}
