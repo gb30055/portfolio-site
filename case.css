@@ -437,3 +437,6 @@ html{overflow-x:clip}
 /* Wide "Before" screenshots (Scandlearn old LMS3) */
 .cs figure.wide.old .old-shot{position:relative;border-radius:14px;overflow:hidden;background:#fff;outline:1px dashed rgba(0,0,0,.25);outline-offset:4px;box-shadow:0 20px 50px -25px rgba(20,30,60,.35)}
 .cs figure.wide.old img{display:block;width:100%;border-radius:0;box-shadow:none;padding-bottom:36px;background:#fff}
+/* Two-column image pairs use the full wide container (2026-11-17) */
+@media (min-width:768px){.cs-body .pair{margin-inline:calc(50% - min(50vw - 16px,600px));gap:32px;align-items:start}}
+.cs-body .pair img[src*="sl-survey"]{padding:clamp(16px,3vw,36px);background:#fff;box-sizing:border-box}
