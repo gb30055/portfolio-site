@@ -43,14 +43,14 @@ def _fa(img, title, note, alt, w, pos, seq, start, span=""):
     # Flow export at half size (2x export). The note is a speech bubble beside the problem step. case.js walks a dot
     # through the steps (seq: [x%, y%, label, hold ms, "b" = show the note]) so each flow plays out its problem.
     sp = f'<span class="fa-span" style="{span}"></span>' if span else ""
-    return (f'<div class="fa-card" data-seq=\'{seq}\'><p class="fa-t">{title}<span class="fa-step">{start}</span></p>'
+    return (f'<div class="fa-col"><p class="fa-t">{title}</p><div class="fa-card" data-seq=\'{seq}\'><span class="fa-step">{start}</span>'
             f'<div class="fa-flow" style="--w:{w}px">{sp}<img src="../assets/{img}" alt="{html.escape(alt)}" loading="lazy">'
-            f'<p class="fa-bub" style="{pos}">{note}</p></div></div>')
+            f'<p class="fa-bub" style="{pos}">{note}</p></div></div></div>')
 FLOW_BOARD = ('<figure class="wide fa-board"><div class="fa-grid">'
   + _fa("sl-fa-curriculum.webp", "Adding curriculum", "Cancelling forces users to restart from scratch.", "Old flow: Curriculum page, Add curriculum, Select type, Add item, Confirm, Add to the list. Cancel at Add item goes back to the Curriculum page.", 210, "top:20%", '[[-5, 5.1, "Step 1 of 4"], [-5, 22.7, "Step 2 of 4"], [-5, 40.3, "Step 3 of 4"], [3, 65.2, "Step 4 of 4: cancel?"], [79, 65.2, "Cancel", 0, "b"], [88.4, 65.2, "Cancel"], [88.4, 5.1, "Cancel"], [72, 5.1, "Cancel"], [41.5, 5.1, "Cancel"], [-5, 5.1, "Back to step 1", 2600]]', "Cancel sends you back to step 1")
   + _fa("sl-fa-group.webp", "Adding a user to a group", "Redundant steps slow down progress.", "Old flow: Users page, Add email, Go to Groups, Add to group, Select groups, Confirm, then the groups are added to the list.", 160, "top:29%", '[[-5, 3.9, "Step 1 of 7"], [-5, 17.4, "Step 2 of 7"], [-5, 30.8, "Step 3 of 7", 0, "b"], [-5, 44.4, "Step 4 of 7"], [-5, 57.8, "Step 5 of 7"], [-5, 77, "Step 6 of 7"], [-5, 96, "Step 7 of 7: done", 2600]]', "7 steps for one person", "top:26%;height:36%")
   + _fa("sl-fa-module.webp", "Opening a module", "Deep navigation levels slow down core tasks.", "Old flow: Home page, Training, Creative Studio, Modules, Filter by draft, Open module.", 138, "top:36%", '[[-7, 5.2, "Level 1 of 6"], [-7, 23.1, "Level 2 of 6"], [-7, 41, "Level 3 of 6", 0, "b"], [-7, 58.9, "Level 4 of 6"], [-7, 76.8, "Level 5 of 6"], [-7, 94.6, "Level 6 of 6: open", 2600]]', "6 levels deep")
-  + '</div><figcaption><img class="fa-light" src="../assets/sl-fa-light.webp" alt="" width="40" height="45">Flow analysis: where the old flows broke</figcaption></figure>')
+  + '</div></figure>')
 
 SL_HERO = ('<figure class="wide cover-desk" aria-label="Scandlearn: the admin training list and the learner course player.">'
   '<img src="../assets/sl-list-final.webp" alt="" loading="eager">'
