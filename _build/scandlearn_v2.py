@@ -89,6 +89,22 @@ GS_DEMO = ('<figure class="wide gs-fig"><div class="gs" data-gs=\'' + html.escap
   '<p class="gs-toast" aria-live="polite"></p></div></div>'
   '<figcaption>Try it: click the search bar or press ⌘K, pick a type, and type.</figcaption></figure>')
 
+def _after(title, nodes, newfrom, end, alt):
+    # Redesigned flow as live HTML: nodes light up in order; arrows from index newfrom on are new (green)
+    out = []
+    for i, n in enumerate(nodes):
+        if i: out.append(f'<span class="af-ar{" new" if i >= newfrom else ""}" aria-hidden="true"></span>')
+        out.append(f'<span class="af-n{" first" if i == 0 else ""}">{html.escape(n)}</span>')
+    return (f'<div class="fa-col"><p class="fa-t">{title}</p><div class="fa-card af-card" data-end="{html.escape(end)}" role="img" aria-label="{html.escape(alt)}">'
+            f'<span class="fa-step">{html.escape(end)}</span><div class="af">{"".join(out)}</div></div></div>')
+
+AFTER_BOARD = ('<figure class="wide fa-board af-board"><div class="fa-grid af-grid">'
+  + _after("Adding curriculum", ["Curriculum page","Add curriculum","All curriculum content","Filter and pick content","Updated curriculum page"], 3,
+           "One list, nothing lost on cancel", "New curriculum flow: Curriculum page, Add curriculum, all curriculum content, filter and pick content, updated curriculum page.")
+  + _after("Inviting a user", ["Home page","Users & Groups","Add email and click invite","Popup: add the user to groups","List updates with the new user"], 2,
+           "Invite and group in one place", "New invite flow: from the home page to Users and Groups, add an email and invite, pick groups in a popup, and the list updates.")
+  + '</div><figcaption><span class="af-key"></span>Green arrows: steps I redesigned</figcaption></figure>')
+
 _extra = [b for b in PAGES["scandlearn"]["body"] if "<h2>" not in b]   # draft-only slots (walkthrough video, quote)
 
 PAGES["scandlearn"] = dict(
@@ -122,8 +138,7 @@ PAGES["scandlearn"] = dict(
         vid("sl-search","Finding a training with global search"),
         GS_DEMO, cls="band", id="search"),
     sec("Fewer steps, no starting over","I redrew the two flows from the analysis above. Curriculum content is now picked from one list with filters, so cancelling no longer throws your picks away. Inviting a user and adding them to a group happen in one place, with no separate Groups page and no confirm step.",
-        pair(("sl-flow-curriculum-new.webp", "New curriculum flow: Curriculum page, Add curriculum, all curriculum content, filter and pick content, updated curriculum page.", "Adding curriculum: one filtered list"),
-             ("sl-flow-invite-new.webp", "New invite flow: from the home page to Users and Groups, add an email and invite, pick groups in a popup, and the list updates.", "Inviting a user: invite and group in one place")), id="flows"),
+        AFTER_BOARD, id="flows"),
     sec("The training list in three rounds","Admins spend most of their day in the training list, so I took it through three rounds. The first wireframe tested the layout. The second moved filters into a side panel and let a row open in place, showing its courses with links straight to each part of the training. The final version put navigation in one sidebar, moved search, columns and filters into the toolbar, and shows who is enrolled at a glance.",
         pair(("sl-list-v1.webp", "First wireframe of the training list: a profile panel, a menu, column filters and a long table.", "Round 1: wireframe"),
              ("sl-list-v2.webp", "Second wireframe: a filter panel on the left and one training row opened in place, listing its courses and links to details, curriculum, enrollment, schedule, certification, skills test and survey.", "Round 2: a row opens in place")),

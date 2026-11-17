@@ -307,3 +307,19 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     .then(loop,function(){})}
   if('IntersectionObserver' in window) new IntersectionObserver(function(es){var was=visible;visible=es[0].isIntersecting;if(visible&&!was)loop();else if(!visible)run++},{threshold:.4}).observe(root);
 })();
+/* Scandlearn: redesigned flow cards light up step by step */
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('.af-card'));if(!cards.length) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  cards.forEach(function(c){
+    var parts=[].slice.call(c.querySelector('.af').children),nodes=parts.filter(function(p){return p.classList.contains('af-n')}),
+        pill=c.querySelector('.fa-step'),end=c.getAttribute('data-end'),t=null,on=false;
+    function reset(){parts.forEach(function(p){p.classList.remove('on','cur')})}
+    function go(i){if(!on) return;
+      if(i>=parts.length){nodes[nodes.length-1].classList.remove('cur');pill.textContent=end;t=setTimeout(function(){reset();go(0)},2800);return}
+      var p=parts[i];p.classList.add('on');
+      if(p.classList.contains('af-n')){parts.forEach(function(q){q.classList.remove('cur')});p.classList.add('cur');pill.textContent='Step '+(nodes.indexOf(p)+1)+' of '+nodes.length}
+      t=setTimeout(function(){go(i+1)},p.classList.contains('af-n')?650:180)}
+    c.classList.add('anim');
+    new IntersectionObserver(function(es){var v=es[0].isIntersecting;if(v&&!on){on=true;reset();go(0)}else if(!v&&on){on=false;clearTimeout(t);reset();pill.textContent=end}},{threshold:.35}).observe(c)});
+})();
