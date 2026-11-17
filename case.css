@@ -440,3 +440,9 @@ html{overflow-x:clip}
 /* Two-column image pairs use the full wide container (2026-11-17) */
 @media (min-width:768px){.cs-body .pair{margin-inline:calc(50% - min(50vw - 16px,600px));gap:32px;align-items:start}}
 .cs-body .pair img[src*="sl-survey"]{padding:clamp(16px,3vw,36px);background:#fff;box-sizing:border-box}
+/* Scandlearn v2 (2026-11-17): navy cover, blue bands */
+.scandlearn .cs-body section.band{--band:#E3ECFF;--b1:#E6EEFF;--b2:#CFDDFF;--g1:rgba(80,130,255,.3);--g2:rgba(255,255,255,.6);--f0:#E8F0FF;--c1:#8DB4FF;--c2:#B7CEFF;--c3:#C9BDFF;--c4:#8FD8FF;--c5:#FFFFFF}
+.scandlearn .cs-body section.band p,.scandlearn .cs-body section.band li{color:#121a33}
+.scandlearn .cs-body section.band figcaption{color:#3c4a70}
+.scandlearn.v2 .cover-desk{background:radial-gradient(ellipse at 60% 70%,#24306b 0,#0f1430 70%)}
+.dark-stage.scandlearn .stage .cs-stats strong{color:#8DB4FF}
