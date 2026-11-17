@@ -58,8 +58,9 @@ SL_HERO = ('<figure class="wide cover-desk" aria-label="Scandlearn: the admin tr
 
 SL_SUMMARY = ('<div class="tldr"><p class="tldr-h">The short version</p><ol>'
   '<li><a href="#navigation"><b>Each role sees its own pages first.</b> Seven clear sections replaced a sitemap where some pages sat seven levels deep.</a></li>'
-  '<li><a href="#search"><b>Search became the main way around.</b> One search across trainings, modules, users and materials, one ⌘K away.</a></li>'
+  '<li><a href="#search"><b>Search became the main way around. <span class="try">Live demo</span></b> One search across trainings, modules, users and materials, one ⌘K away.</a></li>'
   '<li><a href="#flows"><b>No more starting over.</b> Curriculum content is picked from one filtered list, so cancelling no longer throws your work away.</a></li>'
+  '<li><a href="#training-list"><b>Edit without leaving the table. <span class="try">Live demo</span></b> A row opens the whole training in place.</a></li>'
   '</ol></div>')
 
 SL_CHAPTERS = ('<nav class="chapters" aria-label="Sections"><div>'
@@ -123,7 +124,7 @@ PAGES["scandlearn"] = dict(
   cls="dark-stage v2 dark-end scandlearn",
   footer=V2_FOOTER,
   title="Scandlearn", tag="How do pilots find their training in a system that feels like a maze?",
-  intro="A Swedish training and certification platform for airlines. As the only designer, I redesigned it in 8 months, then stayed 4 more to design new features.",
+  intro="A Swedish B2B platform where airlines train and certify their pilots and crew. As the only designer, I redesigned it in 8 months, then stayed 4 more to design new features.",
   facts=[("Role","Product Designer, sole designer"),("My part","Survey and interviews, competitor review, sitemap, admin and learner experience, search and the component library. The Scandlearn team owned the product and built it."),("Users","Admin, Author, Protocol Instructor, Learner"),("Timeline","2022 to 2023, web")],
   stats=[("400+","screens in 8 months"),("4","user roles, each with its own navigation"),("30","survey replies, plus user interviews")],
   hero=SL_HERO, summary=SL_SUMMARY, chapters=SL_CHAPTERS,
@@ -141,7 +142,7 @@ PAGES["scandlearn"] = dict(
         "I compared Scandlearn with CPaT, Aviation eLearning, Evionica, Leon and Webmanuals. The rivals looked modern but gave admins little control over courses and staff. Scandlearn had that control but buried it under an outdated, crowded interface. So the brief became: <b>keep the control, lose the maze.</b>",
         pair(("sl-survey.webp", "Four survey charts, from part of the 30 respondents: comfort with digital platforms, the most frustrating part of the system, apps used most, and the pros of those apps.", "Survey charts from part of the 30 respondents, not the whole group"),
              ("sl-roles.webp", "Each role, from Administrator to Learner, Author, Financial and Protocol Manager, with the pages it needs, marked by priority.", "Each role and the pages it needs, ranked by use")),
-        fig("sl-competitors.webp", "Competitor matrix comparing Scandlearn, CPaT, Aviation eLearning and Evionica on value proposition, advantages, disadvantages and design details.", "Competitor analysis", wide=True), cls="band", id="research"),
+        cls="band", id="research"),
     sec("Navigation by role","Admins, authors, instructors and learners need different things. Starting from the role map, I rebuilt the sitemap into seven main sections, each with a few groups, so every role sees its own pages first. Global search, a left panel and a tree of tabs tie them together.",
         fig("sl-new-sitemap.webp", "The new sitemap: main navigation with global search, left panel menu and tabs tree view, over seven sections from Dashboard to Configuration.", "The new sitemap", wide=True),
         "<p><b>The dashboard opens on what needs attention.</b> Key numbers, the latest activity, quick actions to add a training, invite users or make a group, and notifications.</p>",
@@ -161,6 +162,6 @@ PAGES["scandlearn"] = dict(
         fig("sl-learner-player.webp", "Course player in dark mode: a self-study lesson with a download button, and the course outline on the right with each lesson's status.", "Inside a training: the outline stays visible", wide=True), id="learners"),
     sec("One component library","One designer, four roles, 400+ screens: without a shared library, every new page would have drifted. Inputs, pickers and tables with row actions were built once and reused, which made bigger tools like the certificate builder quick to put together.",
         fig("sl-cert-builder.webp", "Certificate builder: drag rows, text boxes and images into a certificate, edit text in place, then save or use a template.", "Built from the library: the certificate builder", wide=True), id="components"),
-    sec("Outcome", bigstat("400+", "screens handed over to development", "The client kept me on for 4 more months to design a new website, a video player and a CBTA (competency-based training) feature. I left before the build finished, so I have no usage numbers."), id="outcome"),
+    sec("Outcome", bigstat("+4", "months: the client extended my contract", "After I handed over the redesign, 400+ screens, they kept me on to design a new website, a video player and a CBTA (competency-based training) feature. I left before the build finished, so I have no usage numbers."), id="outcome"),
     sec("What I'd do differently", '<p class="lesson-big">Plan the second survey before the first one ends.</p>', "We had a baseline, the survey, but no plan to measure again. Next time I'd agree before handover to rerun it after launch.", cls="lesson"),
   ], next="fancircle")

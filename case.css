@@ -629,3 +629,9 @@ html{overflow-x:clip}
 @media(max-width:767px){.ed-screen{border-radius:8px}.ed-cur{width:14px;height:14px}.ed-ctl button{padding:8px 10px;font-size:12px}.cs .ed-note{font-size:12px;bottom:8px;padding:6px 12px}}
 @media (prefers-reduced-motion:reduce){.ed-screen .ed-a,.ed-screen .ed-b,.ed-cur{transition:none}}
 .cs-body section .ed p.ed-note.ed-note{color:#fff}
+
+/* Dark header bar: full-bleed via a pseudo element so it neither clips the copy tooltip nor covers the page below */
+.dark-stage .top{box-shadow:none;clip-path:none}
+.dark-stage .top::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:var(--stage);z-index:-1}
+html{overflow-x:clip}
+.tldr .try{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(141,180,255,.16);color:#8DB4FF;font-size:12px;font-weight:600;letter-spacing:.02em;vertical-align:2px;white-space:nowrap}
