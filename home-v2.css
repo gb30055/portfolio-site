@@ -160,8 +160,6 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 }
 @media (prefers-reduced-motion:reduce){.st-svg *,.st-g{transition:none!important}}
 
-/* Aurora streaks behind the page */
-canvas.aurora{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:.55;filter:blur(6px)}
 .v2home main,.v2home footer{position:relative;z-index:1}
 
 /* How I work: tabs instead of scroll (2026-11-18) */
@@ -280,11 +278,5 @@ canvas.aurora{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-
 @media (max-width:760px){.pg-text{order:-1}.pg-take{margin-bottom:12px}}
 .scr-dots i.stuck{box-shadow:0 0 0 4px rgba(255,106,61,.18)}
 
-/* Liquid glass background (replaces aurora) */
-canvas.aurora{display:none}
-canvas.glassbg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 .q-chip.in{pointer-events:none}
 
-/* Hero glass lens (lens.js) */
-.h-lens{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform;
-  box-shadow:0 0 0 1px rgba(255,255,255,.85),inset 0 0 0 1px rgba(255,255,255,.5),0 18px 40px -18px rgba(30,40,80,.35),inset 0 10px 24px -12px rgba(255,255,255,.9)}
