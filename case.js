@@ -22,9 +22,13 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
       li.innerHTML='<span class="sn">'+('0'+(m?m[1]:i+1)).slice(-2)+'</span><span class="st"></span>';li.querySelector('.st').textContent=m?m[2]:t;
       steps.appendChild(li);ph.appendChild(f);f.dataset.i=i;
     });
+    var dev=document.createElement('div');dev.className='story-device';while(ph.firstChild)dev.appendChild(ph.firstChild);ph.appendChild(dev);
+    // entry style per screen: push like app navigation, fade for state changes on the same screen, sheet for the bottom sheet
+    var T=['push','push','fade','fade','sheet','push'];
+    Array.prototype.forEach.call(dev.children,function(f,k){f.dataset.t=T[k]||'push';var nx=dev.children[k+1];f.dataset.out=nx?(T[k+1]||'push'):'push'});
     story.appendChild(steps);story.appendChild(ph);row.replaceWith(story);
     var lis=steps.children,figs=ph.querySelectorAll('figure');
-    function on(i){Array.prototype.forEach.call(lis,function(l,k){l.classList.toggle('on',k===i);l.classList.toggle('done',k<i)});figs.forEach(function(f,k){f.classList.toggle('on',k===i)});steps.style.setProperty('--p',lis.length>1?i/(lis.length-1):0)}
+    function on(i){Array.prototype.forEach.call(lis,function(l,k){l.classList.toggle('on',k===i);l.classList.toggle('done',k<i)});figs.forEach(function(f,k){f.classList.toggle('on',k===i);f.classList.toggle('prev',k===i-1);f.classList.toggle('gone',k<i-1)});steps.style.setProperty('--p',lis.length>1?i/(lis.length-1):0)}
     on(0);
     var mq=matchMedia('(min-width:900px)'),raf=0;
     function pos(){raf=0;var r=story.getBoundingClientRect(),h=r.height-innerHeight;if(h<=0)return;var p=Math.max(0,Math.min(.999,-r.top/h));on(Math.floor(p*lis.length))}
