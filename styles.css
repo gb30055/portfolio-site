@@ -602,3 +602,4 @@ h1 em { background: none; }
   .tl-num{font-size:24px}
 }
 .tl-y{white-space:nowrap}@media (max-width:899px){.tl li{grid-template-columns:76px minmax(0,1fr)}.tl-y{font-size:18px;letter-spacing:-.02em}}
+.r-mono.r-tk img{width:auto;height:22px}
