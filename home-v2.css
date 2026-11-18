@@ -93,3 +93,25 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .hd-states rect{fill:none;stroke:#b8c2d2;stroke-width:1.5;opacity:0}
 .on .hd-states rect{opacity:1;stroke:transparent;transition-delay:.9s}
 .on .hd-states .s1{fill:#3d5bff}.on .hd-states .s2{fill:#2a44d6}.on .hd-states .s3{fill:#c3ccda}
+
+/* Personal Background (Nice to meet you) */
+.bg-hi{font-size:clamp(40px,5.4vw,76px);line-height:1;letter-spacing:-.045em;margin-bottom:36px;min-height:1em}
+.bg-caret{display:inline-block;width:.06em;height:.82em;margin-left:.06em;background:currentColor;vertical-align:-.06em;animation:bgblink 1s steps(1) infinite}
+@keyframes bgblink{50%{opacity:0}}
+.bg-photos{display:flex;gap:16px;margin:0 0 56px}
+.bg-photos figure{margin:0;flex:calc(var(--ar)) 1 0;min-width:0}
+.bg-photos img{display:block;width:100%;aspect-ratio:var(--ar);height:auto;object-fit:cover;border-radius:16px}
+.bg-photos figcaption,.bg-out figcaption{margin-top:10px;font-size:13px;font-weight:500;color:rgba(30,25,35,.55)}
+.bg-out{margin-top:64px}
+.bg-out-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:14px}
+.bg-out .slot{margin:0}
+.bg-out .slot div{aspect-ratio:4/5;border-radius:16px;border:1.5px dashed #b8c2d2;display:grid;place-items:center;font-size:14px;font-weight:600;color:rgba(30,25,35,.4)}
+.bg-links{margin:22px 0 0;font-weight:600}
+.bg-links a{color:inherit;text-underline-offset:4px}
+@media (max-width:760px){
+  .bg-photos{overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-16px;margin-right:-16px;padding:0 16px}
+  .bg-photos figure{flex:0 0 72%;scroll-snap-align:start}
+  .bg-photos img{aspect-ratio:4/5}
+  .bg-out-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.bg-out figure.slot{border:0;padding:0;background:none;box-shadow:none;border-radius:0}

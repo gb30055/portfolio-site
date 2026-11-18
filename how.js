@@ -30,3 +30,9 @@
     else if(!e.isIntersecting&&f._t){clearTimeout(f._t);f._t=null;set(f,false)}})},{threshold:.4});
   figs.forEach(function(f){io.observe(f)});
 })();
+/* Typed greeting */
+(function(){var t=document.querySelector('.bg-type');if(!t||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var s=t.dataset.text;t.setAttribute('aria-label',s);t.textContent='';
+  var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();var i=0;
+    (function step(){t.textContent=s.slice(0,++i);if(i<s.length)setTimeout(step,i===4||i===12?160:70+Math.random()*60)})()},{threshold:.1});
+  io.observe(t.parentNode);})();
