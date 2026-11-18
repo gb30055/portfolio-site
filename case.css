@@ -635,3 +635,4 @@ html{overflow-x:clip}
 .dark-stage .top::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:var(--stage);z-index:-1}
 html{overflow-x:clip}
 .tldr .try{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(141,180,255,.16);color:#8DB4FF;font-size:12px;font-weight:600;letter-spacing:.02em;vertical-align:2px;white-space:nowrap}
+.scandlearn.v2 .cover-desk img{aspect-ratio:16/9;object-fit:contain}
