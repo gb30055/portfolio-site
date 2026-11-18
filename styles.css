@@ -540,3 +540,5 @@ h1 em { background: none; }
 .ab-team img { object-position: 50% 45%; }
 .ab-grid .ab-ql { grid-column: 1 / -1; }
 @media (max-width: 899px) { .ab-team { grid-column: auto; aspect-ratio: 1 / 1; } .ab-grid .ab-ql { grid-column: auto; } }
+.ab-n{display:flex;align-items:center;gap:14px}
+.ab-yt{width:.9em;height:auto;flex:none}
