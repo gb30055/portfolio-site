@@ -36,3 +36,19 @@
   var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();var i=0;
     (function step(){t.textContent=s.slice(0,++i);if(i<s.length)setTimeout(step,i===4||i===12?160:70+Math.random()*60)})()},{threshold:.1});
   io.observe(t.parentNode);})();
+/* How I work: linear story */
+(function(){var f=document.querySelector('.st-fig');if(!f)return;
+  var gs=f.querySelectorAll('.st-g'),lis=document.querySelectorAll('.st-list li'),num=f.querySelector('.st-num'),unit=f.querySelector('.st-unit');
+  var r=(function(s){return function(){s=(s*9301+49297)%233280;return s/233280}})(3),C={a:[125,128,46],b:[285,128,34]};
+  f.querySelectorAll('.hd-dot').forEach(function(c){var g=c.classList.contains('hd-a')?C.a:C.b,a=r()*6.283,d=Math.sqrt(r())*g[2];
+    c.style.setProperty('--tx',(g[0]+Math.cos(a)*d-c.getAttribute('cx')).toFixed(1)+'px');
+    c.style.setProperty('--ty',(g[1]+Math.sin(a)*d-c.getAttribute('cy')).toFixed(1)+'px');c.style.transitionDelay=(.3+r()*.4).toFixed(2)+'s';});
+  var cur=0;
+  function go(i){if(i===cur)return;cur=i;f.dataset.s=i;
+    gs.forEach(function(g,k){g.classList.toggle('on',k===i-1)});
+    lis.forEach(function(l,k){l.classList.toggle('on',k===i-1)});
+    var li=lis[i-1];num.textContent=li.dataset.n;unit.textContent=li.dataset.u;}
+  go(1);
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)go([].indexOf.call(lis,e.target)+1)})},{rootMargin:'-45% 0px -45% 0px'});
+  lis.forEach(function(l){io.observe(l)});
+})();
