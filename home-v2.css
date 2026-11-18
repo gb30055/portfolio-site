@@ -32,8 +32,6 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .how-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
 .how-list figure{margin:0 0 20px;aspect-ratio:4/3;overflow:hidden;border-radius:16px;background:#fff;box-shadow:0 30px 60px -45px rgba(30,25,45,.4)}
 .how-list img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
-.how-list li:nth-child(1) img{object-fit:contain;padding:14px;object-position:center}
-.how-list li:nth-child(2) img{object-position:0 50%;width:220%;max-width:none;height:100%;object-fit:contain}
 .how-n{font:600 14px/1 var(--sans);color:rgba(30,25,35,.45);font-variant-numeric:tabular-nums}
 .how-list h3{margin:8px 0 8px;font:600 22px/1.2 var(--sans);letter-spacing:-.02em}
 .how-list p{margin:0;font-size:16px;line-height:1.55;font-weight:500;color:rgba(30,25,35,.7)}
@@ -63,3 +61,35 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .bg-roles .r-main b{font-size:17px}
 .bg-roles .r-main span{font-size:14px}
 .bg-roles .r-yr{background:none;padding:0;color:rgba(30,25,35,.55);font-weight:500;justify-self:end}
+
+/* How I work: animated diagrams */
+.how-list figure.hd{aspect-ratio:4/3;background:#fff;display:block}
+.hd-svg{display:block;width:100%;height:100%;font-family:var(--sans)}
+.hd-svg *{transition:transform .9s cubic-bezier(.65,0,.25,1),opacity .5s ease,fill .5s ease,stroke .5s ease}
+.hd-cap{font-size:30px;font-weight:600;letter-spacing:-.03em;fill:#111}
+.hd-unit{font-size:16px;font-weight:500;fill:rgba(30,25,35,.5);letter-spacing:0}
+.hd-lab{font-size:14px;font-weight:500;fill:rgba(30,25,35,.6);opacity:0}
+.hd-lab.hd-l{opacity:1}
+.on .hd-lab{opacity:1;transition-delay:.6s}
+.hd-dot{fill:#9aa6ba}
+.on .hd-dot{transform:translate(var(--tx),var(--ty))}
+.on .hd-a{fill:#ff6a3d}.on .hd-b{fill:#3d5bff}
+.hd-ring circle{fill:none;stroke:rgba(30,25,35,.15);stroke-dasharray:4 5;opacity:0}
+.on .hd-ring circle{opacity:1;transition-delay:.7s}
+.hd-seg{fill:#c3ccda}
+.hd-drop{transform-box:fill-box;transform-origin:50% 100%}
+.on .hd-drop{opacity:0;transform:scaleY(.15);transition-delay:0s}
+.hd-keep{transition-delay:.35s!important}
+.on .hd-keep{fill:#3d5bff;transform:translateX(var(--tx))}
+.hd-axis{stroke:rgba(30,25,35,.2);stroke-width:1.5}
+.hd-card{fill:none;stroke:#b8c2d2;stroke-width:1.5;stroke-dasharray:6 5}
+.on .hd-card{fill:#f7f9fc;stroke:#e1e7f0;stroke-dasharray:0}
+.hd-av,.hd-t1,.hd-t2,.hd-l1,.hd-l2,.hd-btn{fill:none;stroke:#b8c2d2;stroke-width:1.5}
+.on .hd-av{fill:#ff6a3d;stroke:transparent}
+.on .hd-t1{fill:#111;stroke:transparent}.on .hd-t2,.on .hd-l1,.on .hd-l2{fill:#c3ccda;stroke:transparent}
+.on .hd-btn{fill:#3d5bff;stroke:transparent}
+.hd-spec{opacity:0}.hd-spec line{stroke:#ff1d8e;stroke-width:1.2}.hd-spec text{font-size:11px;font-weight:600;fill:#ff1d8e}
+.on .hd-spec{opacity:1;transition-delay:.7s}
+.hd-states rect{fill:none;stroke:#b8c2d2;stroke-width:1.5;opacity:0}
+.on .hd-states rect{opacity:1;stroke:transparent;transition-delay:.9s}
+.on .hd-states .s1{fill:#3d5bff}.on .hd-states .s2{fill:#2a44d6}.on .hd-states .s3{fill:#c3ccda}
