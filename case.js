@@ -31,10 +31,15 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     function on(i){Array.prototype.forEach.call(lis,function(l,k){l.classList.toggle('on',k===i);l.classList.toggle('done',k<i)});figs.forEach(function(f,k){f.classList.toggle('on',k===i);f.classList.toggle('prev',k===i-1);f.classList.toggle('gone',k<i-1)});steps.style.setProperty('--p',lis.length>1?i/(lis.length-1):0)}
     on(0);
     var mq=matchMedia('(min-width:900px)'),raf=0;
-    function pos(){raf=0;var r=story.getBoundingClientRect(),h=r.height-innerHeight;if(h<=0)return;var p=Math.max(0,Math.min(.999,-r.top/h));on(Math.floor(p*lis.length))}
+    var lock=0;function pos(){raf=0;if(Date.now()<lock)return;var r=story.getBoundingClientRect(),h=r.height-innerHeight;if(h<=0)return;var p=Math.max(0,Math.min(.999,-r.top/h));on(Math.floor(p*lis.length))}
     function mode(){story.classList.toggle('pin',mq.matches);story.style.setProperty('--n',lis.length);if(mq.matches)pos()}
     mode();(mq.addEventListener?mq.addEventListener('change',mode):mq.addListener(mode));
     addEventListener('scroll',function(){if(mq.matches&&!raf)raf=requestAnimationFrame(pos)},{passive:true});
+    // Tap a step: show its screen right away, then glide the page to that step's spot
+    Array.prototype.forEach.call(lis,function(l,k){l.tabIndex=0;l.setAttribute('role','button');
+      function go(){if(!mq.matches)return;on(k);var r=story.getBoundingClientRect(),h=r.height-innerHeight;lock=Date.now()+1200;scrollTo({top:r.top+scrollY+h*(k+.5)/lis.length,behavior:'smooth'})}
+      l.addEventListener('click',go);l.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+    addEventListener('scrollend',function(){if(lock&&Date.now()<lock){lock=0}});
     var io2=new IntersectionObserver(function(es){if(mq.matches)return;es.forEach(function(e){if(e.isIntersecting)on(+e.target.dataset.i)})},{rootMargin:'-45% 0px -45% 0px'});
     ph.querySelectorAll('figure').forEach(function(f){io2.observe(f)});
   }

@@ -663,3 +663,4 @@ html{overflow-x:clip}
  .story.pin .story-device figure.gone[data-t=fade],.story.pin .story-device figure.gone[data-t=sheet]{transform:none;opacity:0}
 }
 @media (prefers-reduced-motion:reduce){.story.pin .story-device figure{transition:opacity .2s!important;transform:none!important}.story.pin .story-device figure:not(.on){opacity:0!important}}
+@media (min-width:900px){.story.pin .story-steps li{cursor:pointer}.story.pin .story-steps li:not(.on):hover{color:rgba(0,0,0,.6)}.story.pin .story-steps li:focus-visible{outline:2px solid #111;outline-offset:4px;border-radius:8px}}
