@@ -1,105 +1,124 @@
-/* How I work: a one-minute game in five rounds. Fix a broken sign-up the way Genc would. */
+/* How I work: fix a broken sign-up form in five steps (spot, understand, remove, redesign, hand off). */
 (function(){
   var box=document.querySelector('.pg-box');if(!box)return;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $=function(s,el){return (el||box).querySelector(s)},$$=function(s,el){return [].slice.call((el||box).querySelectorAll(s))};
-  var navs=$$('.pg-r'),views=$$('[data-show]'),ask=$('.pg-ask'),fb=$('.pg-fb'),take=$('.pg-take'),next=$('.pg-next'),skip=$('.pg-skip');
-  var R=[
-    {t:'Spot the pain',ask:'20 people are trying to sign up. Watch them, then tap the spot where they get stuck.',
-     take:'Watch where people stall before deciding what to fix.'},
-    {t:'Understand it',ask:'This is what they told you. Drag each quote into a theme, or tap a quote and then a theme.',
-     take:'Group what people say into a few themes. Fix the theme, not the loudest quote.'},
-    {t:'Map the steps',ask:'The sign-up has 9 steps. Tap the ones that don’t earn their place.',
-     take:'Cut steps on paper first. A step you remove is a step nobody can fail.'},
-    {t:'Design each step',ask:'Same password field, two designs. Which one would you ship?',
-     take:'Design each step for the moment someone gets it wrong.'},
-    {t:'Deliver',ask:'The new sign-up is ready. Ship it and watch the same 20 people.',
-     take:'Ship it, then measure. That’s how I work.'}
+  var stage=$('.fm-stage'),old=$('.fm-old'),neu=$('.fm-new'),an=$('.fa-an'),wand=$('.fa-wand'),tray=$('.qtray'),meter=$('.fmeter'),
+      navs=$$('.pg-r'),ask=$('.pg-ask'),fb=$('.pg-fb'),take=$('.pg-take'),next=$('.pg-next');
+  var S=[
+    {t:'Spot the pain',ask:'A sign-up form like many out there. Hover the highlighted parts to see what’s wrong with each one.',
+     take:'Look at the whole journey before fixing any one screen.',next:'Analyze the feedback'},
+    {t:'Understand it',ask:'This is what people said. Drag each quote onto the problem it describes, or tap a quote and then the spot.',
+     take:'Match what people say to where it happens. That tells you what to fix first.',next:'Remove friction'},
+    {t:'Remove friction',ask:'Now cut. Click any part of the form that doesn’t earn its place. Then hit Redesign.',
+     take:'Every field you remove is one nobody can get wrong.',next:'Redesign'},
+    {t:'Redesign',ask:'Same goal, a fraction of the effort. Rules shown up front, one clear action.',
+     take:'Design each step for the moment someone gets it wrong.',next:'Zoom into the details'},
+    {t:'Hand off',ask:'Every size, gap and state is specified, so engineers build exactly what was designed.',
+     take:'That’s how I work: from pain to pixels.',next:'Play again ↺'}
   ];
-  var cur=0,done=[];
-  function say(t,cls){fb.textContent=t||'';fb.className='pg-fb'+(cls?' '+cls:'')}
-  function finish(msg){done[cur]=1;navs[cur].classList.add('done');say(msg,'good');take.textContent=R[cur].take;take.hidden=false;
-    next.hidden=false;next.textContent=cur===4?'Play again ↺':'Next round →';skip.hidden=true;}
-  function show(i){cur=i;sim.stop();
+  var cur=0,done={};
+  function say(t,c){fb.textContent=t||'';fb.className='pg-fb'+(c?' '+c:'')}
+  function complete(i,msg){done[i]=1;navs[i].classList.add('done');if(msg)say(msg,'good');take.textContent=S[i].take;take.hidden=false}
+
+  /* ---- state per step ---- */
+  function resetForm(){
+    $$('.gone',old).forEach(function(e){e.classList.remove('gone')});
+    $$('.matched',old).forEach(function(e){e.classList.remove('matched')});
+    $$('.pb q',old).forEach(function(q){q.parentNode.removeChild(q)});
+    $$('.qc',tray).forEach(function(q){q.hidden=false;q.className='qc';q.style.transform='';delete q.dataset.demo});
+  }
+  function go(i){cur=i;
     navs.forEach(function(n,k){if(k===i)n.setAttribute('aria-current','step');else n.removeAttribute('aria-current')});
-    views.forEach(function(v){v.hidden=v.dataset.show.split(' ').indexOf(String(i))<0});
-    $('.pg-i').textContent=i+1;$('.pg-t').textContent=R[i].t;ask.textContent=R[i].ask;say('');take.hidden=true;next.hidden=true;skip.hidden=false;
-    skip.textContent=i===4?'Ship it':'Skip';
-    ({0:r1,1:r2,2:r3,3:r4,4:r5})[i]();}
-  navs.forEach(function(n,i){n.addEventListener('click',function(){show(i)})});
-  next.addEventListener('click',function(){if(cur===4){done=[];navs.forEach(function(n){n.classList.remove('done')});show(0)}else show(cur+1)});
-  skip.addEventListener('click',function(){if(cur===4)ship();else show(cur+1)});
+    $('.pg-i').textContent=i+1;$('.pg-t').textContent=S[i].t;ask.textContent=S[i].ask;say('');take.hidden=true;
+    next.textContent=S[i].next+(i<4?' →':'');
+    if(i===0)resetForm();
+    var redesigned=i>=3;old.hidden=redesigned;neu.hidden=!redesigned;
+    stage.classList.toggle('on-pain',i<=1);stage.classList.toggle('on-cut',i===2);stage.classList.toggle('on-spec',i===4);
+    an.hidden=i!==0;wand.hidden=i!==2;tray.hidden=i!==1;meter.hidden=i!==2;
+    $$('.pp.show',old).forEach(function(p){p.classList.remove('show')});
+    if(i===1)startQuotes();
+    if(i===2)updMeter();
+    if(i===3){neu.style.animation='none';void neu.offsetWidth;neu.style.animation=''}
+    if(i===3)complete(3);if(i===4){complete(4);spec()}
+    if(i===0&&!done[0])say('9 problems. Hover a few, then analyze the feedback.');
+  }
+  navs.forEach(function(n,i){n.addEventListener('click',function(){go(i)})});
+  next.addEventListener('click',function(){
+    if(cur===4){done={};navs.forEach(function(n){n.classList.remove('done')});go(0);return}
+    if(cur===0)complete(0);go(cur+1)});
+  an.addEventListener('click',function(){complete(0);go(1)});
+  wand.addEventListener('click',function(){complete(2);go(3)});
 
-  /* ---- simulated users on the sign-up screen ---- */
-  var scr=$('.scr'),layer=$('.scr-dots'),cnt=$('.sc-n');
-  var sim=(function(){var dots=[],raf=0,timer=0,mode='before',fin=0,onEnd=null,running=false;
-    function zoneY(z){var e=$('[data-zone="'+z+'"]',scr);return [e.offsetTop,e.offsetTop+e.offsetHeight]}
-    function start(m,cb){stop();mode=m;onEnd=cb;fin=0;cnt.textContent='0';running=true;layer.innerHTML='';dots=[];
-      var W=scr.clientWidth,ck=zoneY('checks'),fl=zoneY('fields'),bt=zoneY('button'),n=20;
-      var stuck=m==='before'?pick(n,13):[],drop=m==='after'?pick(n,2):[];
-      for(var i=0;i<n;i++){var el=document.createElement('i');layer.appendChild(el);
-        var d={el:el,x:24+Math.random()*(W-48),y:-10,v:(m==='after'?1.6:1.3)+Math.random()*.5,t0:i*(reduce?0:(m==='after'?110:200)),
-          stop:stuck.indexOf(i)>=0?ck[0]+8+Math.random()*(ck[1]-ck[0]-16):drop.indexOf(i)>=0?fl[0]+Math.random()*(fl[1]-fl[0]):null,
-          gone:drop.indexOf(i)>=0,end:bt[1]+6,st:0};
-        dots.push(d)}
-      var t0=performance.now();
-      (function f(now){var all=true;
-        dots.forEach(function(d){if(now-t0<d.t0){all=false;return}
-          if(d.st===0){d.y+=reduce?999:d.v*2;
-            if(d.stop!==null&&d.y>=d.stop){d.y=d.stop;d.st=d.gone?3:1;d.el.className=d.gone?'gone':'stuck'}
-            else if(d.y>=d.end){d.y=d.end;d.st=2;d.el.className='fin';fin++;cnt.textContent=fin}
-            else all=false}
-          var jx=d.st===1&&!reduce?Math.sin(now/90+d.x)*2:0;
-          d.el.style.transform='translate('+(d.x+jx).toFixed(1)+'px,'+d.y.toFixed(1)+'px)'});
-        if(all&&running){running=false;if(onEnd)onEnd(fin);if(mode==='before'&&!reduce)timer=setTimeout(function(){if(cur===0&&!done[0])start('before')},2600)}
-        if(dots.some(function(d){return d.st===1})||!all)raf=requestAnimationFrame(f)})(t0)}
-    function pick(n,k){var a=[];while(a.length<k){var r=Math.floor(Math.random()*n);if(a.indexOf(r)<0)a.push(r)}return a}
-    function stop(){cancelAnimationFrame(raf);clearTimeout(timer);running=false}
-    return {start:start,stop:stop}})();
+  /* ---- step 5: redlines measured from the real redesign, so every number is true to the build ---- */
+  function spec(){var sp=$('.spec',neu);sp.innerHTML='';
+    var btn=$('.fn-btn',neu),pw=$('.fn-pw',neu),pwi=$('.fn-pw .fi',neu);
+    function mk(cls,x,y,w,h,label){var m=document.createElement('span');m.className='sm '+cls;m.style.left=x+'px';m.style.top=y+'px';
+      if(w)m.style.width=w+'px';if(h)m.style.height=h+'px';m.innerHTML='<b>'+label+'</b>';sp.appendChild(m)}
+    var bx=btn.offsetLeft,by=btn.offsetTop,bw=btn.offsetWidth,bh=btn.offsetHeight;
+    var iy=pw.offsetTop+pwi.offsetTop,ih=pwi.offsetHeight,gap=by-(pw.offsetTop+pw.offsetHeight);
+    var r=parseFloat(getComputedStyle(btn).borderTopLeftRadius);
+    mk('v',bx+bw+8,by,0,bh,bh);
+    mk('v',bx+bw+8,iy,0,ih,ih);
+    if(gap>4)mk('v',bx+bw/2,by-gap,0,gap,gap);
+    mk('h',0,by+bh/2,bx,0,bx);
+    mk('t',bx+2,by-16,0,0,'radius '+r);
+    mk('t',bx+bw+8,by+bh+8,0,0,'Geist 16 / 600');
+    mk('t',bx,neu.offsetHeight+8,0,0,'<i></i>#3D5BFF');
+    mk('t',bx+bw-176,neu.offsetHeight+8,0,0,'Default · Hover · Pressed · Loading');
+  }
 
-  function r1(){scr.classList.remove('clean');$('.pg-scr').classList.remove('found');
-    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();if(cur===0)sim.start('before')}},{threshold:.4});io.observe(scr);}
-  scr.addEventListener('click',function(e){if(cur!==0||done[0])return;var z=e.target.closest('[data-zone]');z=z&&z.dataset.zone;
-    if(z==='checks'){$('.pg-scr').classList.add('found');finish('Right. Three checkboxes nobody understands, right before the button.')}
-    else say('They get past that part. Watch where the dots pile up.','bad')});
+  /* ---- step 1: pins and bubbles (tap on touch) ---- */
+  $$('.pp',old).forEach(function(p){p.addEventListener('click',function(e){e.stopPropagation();var on=!p.classList.contains('show');
+    $$('.pp.show',old).forEach(function(o){o.classList.remove('show')});p.classList.toggle('show',on)})});
 
-  /* ---- round 2: sort quotes ---- */
-  var sel=null,chips=$$('.q-chip'),pool=$('.q-pool'),bins=$$('.q-bin');
-  function r2(){chips.forEach(function(c){pool.appendChild(c);c.disabled=false;c.className='q-chip';c.style.transform=''});sel=null}
-  function place(c,b){if(c.dataset.t===b.dataset.t){$('div',b).appendChild(c);c.disabled=true;c.classList.remove('sel');c.classList.add('in');sel=null;
-      if(!pool.querySelector('.q-chip'))finish('Two themes: it takes too long, and people don’t trust it with their data.');else say('')}
-    else{c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');say('Not quite. Read it again: is it about time or about trust?','bad')}}
-  chips.forEach(function(c){var sx,sy,drag=false;
-    c.addEventListener('pointerdown',function(e){if(c.disabled)return;sx=e.clientX;sy=e.clientY;drag=false;c.setPointerCapture(e.pointerId)});
-    c.addEventListener('pointermove',function(e){if(sx===undefined||c.disabled)return;var dx=e.clientX-sx,dy=e.clientY-sy;
-      if(!drag&&Math.abs(dx)+Math.abs(dy)>6){drag=true;c.classList.add('drag')}
-      if(drag){c.style.transform='translate('+dx+'px,'+dy+'px)';bins.forEach(function(b){var r=b.getBoundingClientRect();b.classList.toggle('over',e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom)})}});
-    c.addEventListener('pointerup',function(e){if(sx===undefined)return;sx=undefined;
-      if(drag){c.classList.remove('drag');c.style.transform='';var hit=bins.filter(function(b){return b.classList.contains('over')})[0];bins.forEach(function(b){b.classList.remove('over')});if(hit)place(c,hit);c._skip=true}});
-    c.addEventListener('click',function(){if(c._skip){c._skip=false;return}if(c.disabled)return;
-      chips.forEach(function(o){if(o!==c)o.classList.remove('sel')});c.classList.toggle('sel');sel=c.classList.contains('sel')?c:null;
-      if(sel)say('Now tap a theme.')})});
-  bins.forEach(function(b){b.addEventListener('click',function(e){if(sel)place(sel,b)})});
+  /* ---- step 2: quotes onto pain points ---- */
+  var sel=null;
+  function target(n){return $('[data-p="'+n+'"]',old)}
+  function match(q,el){var n=q.dataset.to;
+    if(el.dataset.p!==n){q.classList.remove('shake');void q.offsetWidth;q.classList.add('shake');say('That quote is about something else. Try another spot.','bad');return false}
+    $$('[data-p="'+n+'"]',old).forEach(function(e){e.classList.add('matched')});
+    var pb=$('.pb',target(n));if(pb&&!$('q',pb)){var z=document.createElement('q');z.textContent=q.textContent.replace(/[“”]/g,'');pb.appendChild(z)}
+    q.hidden=true;q.classList.remove('sel');sel=null;
+    var left=$$('.qc',tray).filter(function(x){return !x.hidden}).length;
+    if(!left)complete(1,'All six matched. Three problems nobody mentioned, but they still cost people time.');
+    else say(left+' to go.');
+    return true}
+  function fly(q,el,cb){var a=q.getBoundingClientRect(),b=el.getBoundingClientRect();q.classList.add('fly');
+    q.style.transform='translate('+(b.left+b.width/2-a.left-a.width/2)+'px,'+(b.top+b.height/2-a.top-a.height/2)+'px) scale(.6)';
+    setTimeout(function(){q.classList.remove('fly');q.style.transform='';cb()},reduce?0:1000)}
+  function startQuotes(){var first=$$('.qc',tray).filter(function(x){return !x.hidden})[0];
+    if(!first||done[1]||first.dataset.demo)return;first.dataset.demo=1;
+    setTimeout(function(){if(cur!==1)return;say('Like this one:');
+      fly(first,target(first.dataset.to),function(){match(first,target(first.dataset.to));say('Your turn: drag the rest.')})},reduce?0:900)}
+  $$('.qc',tray).forEach(function(q){var sx,sy,drag=false,over=null;
+    q.addEventListener('pointerdown',function(e){sx=e.clientX;sy=e.clientY;drag=false;q.setPointerCapture(e.pointerId)});
+    q.addEventListener('pointermove',function(e){if(sx===undefined)return;var dx=e.clientX-sx,dy=e.clientY-sy;
+      if(!drag&&Math.abs(dx)+Math.abs(dy)>6){drag=true;q.classList.add('drag')}
+      if(!drag)return;q.style.transform='translate('+dx+'px,'+dy+'px)';
+      q.style.pointerEvents='none';var t=document.elementFromPoint(e.clientX,e.clientY);q.style.pointerEvents='';
+      t=t&&t.closest?t.closest('.fm-old [data-p]'):null;
+      if(over&&over!==t)over.classList.remove('drop-over');over=t;if(t)t.classList.add('drop-over')});
+    q.addEventListener('pointerup',function(){if(sx===undefined)return;sx=undefined;
+      if(drag){q.classList.remove('drag');q.style.transform='';if(over){over.classList.remove('drop-over');match(q,over)}over=null;q._skip=true}});
+    q.addEventListener('click',function(){if(q._skip){q._skip=false;return}
+      $$('.qc',tray).forEach(function(o){if(o!==q)o.classList.remove('sel')});
+      q.classList.toggle('sel');sel=q.classList.contains('sel')?q:null;
+      if(sel)say('Now tap the spot in the form it’s about.')})});
 
-  /* ---- round 3: cut steps ---- */
-  var steps=$$('.f-step'),ft=$('.f-t'),fm=$('.f-meter em');
-  function upd(){var n=steps.filter(function(s){return s.classList.contains('cut')}).length,sec=270-n*38;
-    ft.textContent=Math.floor(sec/60)+':'+('0'+sec%60).slice(-2);fm.style.width=(sec/270*100)+'%';return n}
-  function r3(){steps.forEach(function(s){s.classList.remove('cut','keep');s.disabled=false});upd()}
-  steps.forEach(function(s){s.addEventListener('click',function(){if(done[2])return;
-    if(s.dataset.cut==='1'){s.classList.add('cut');s.disabled=true;var n=upd();
-      if(n===5)finish('Down to 4 steps. Phone, SMS and the survey questions can come later, or never.');else say(5-n+' more to cut.')}
-    else{s.classList.remove('keep');void s.offsetWidth;s.classList.add('keep');say('Keep that one. Sign-up can’t work without it.','bad')}})});
+  /* ---- step 3: remove parts of the form ---- */
+  function cuts(){return $$('[data-rm].gone',old).length}
+  function updMeter(){var n=cuts(),total=$$('[data-rm]',old).length,sec=Math.round(270-n*(220/total));
+    $('.fm-t').textContent=Math.floor(sec/60)+':'+('0'+sec%60).slice(-2);
+    $('.fmeter em').style.width=(sec/270*100)+'%';
+    $('.fm-n').textContent=n+' of '+total+' parts removed';wand.disabled=n<3}
+  old.addEventListener('click',function(e){
+    if(cur===1){if(sel&&!e.target.closest('.pp')){var t=e.target.closest('[data-p]');if(t)match(sel,t)}return}
+    if(cur!==2)return;var el=e.target.closest('[data-rm]');if(!el||el.classList.contains('gone'))return;
+    if(el.dataset.p==='1')$$('[data-p="1"]',old).forEach(function(x){x.classList.add('gone')});else el.classList.add('gone');
+    updMeter();var n=cuts();
+    say(n<3?'Keep cutting. '+(3-n)+' more to unlock Redesign.':'Redesign is ready when you are.',n<3?'':'good');
+    if(n>=3&&!done[2])complete(2)});
 
-  /* ---- round 4: pick a design ---- */
-  var opts=$$('.v-opt');
-  function r4(){opts.forEach(function(o){o.classList.remove('pick','win','lose');o.disabled=false})}
-  opts.forEach(function(o){o.addEventListener('click',function(){opts.forEach(function(x){x.disabled=true;x.classList.add(x.dataset.ok==='1'?'win':'lose')});o.classList.add('pick');
-    finish(o.dataset.ok==='1'?'Yes. B shows the rules before anyone fails them.':'Most people trip on A: it only explains the rules after they fail. B shows them up front.')})});
-
-  /* ---- round 5: ship ---- */
-  function r5(){scr.classList.add('clean');$('.pg-scr').classList.remove('found');layer.innerHTML='';cnt.textContent='0'}
-  function ship(){skip.hidden=true;say('Shipping…');sim.start('after',function(n){finish('Before: 7 of 20 finished. After: '+n+' of 20. (Simulated people, real habit.)')})}
-
-  show(0);
+  go(0);
 })();

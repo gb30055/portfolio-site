@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=202611181311">
-<link rel="stylesheet" href="home-v2.css?v=202611181509">
+<link rel="stylesheet" href="home-v2.css?v=20261118152713">
 </head>
 <body class="v2home">
 <a class="skip" href="#work">Skip to work</a>
@@ -69,37 +69,45 @@
     <h2 id="how-title" class="w-h">How I work</h2>
     <p class="st-sub">A one-minute game. Fix a broken sign-up the way I would.</p>
     <div class="pg-box">
-      <nav class="pg-nav" aria-label="Rounds"><button type="button" class="pg-r" data-r="0" aria-current="step"><span>01</span>Spot the pain</button><button type="button" class="pg-r" data-r="1"><span>02</span>Understand it</button><button type="button" class="pg-r" data-r="2"><span>03</span>Map the steps</button><button type="button" class="pg-r" data-r="3"><span>04</span>Design each step</button><button type="button" class="pg-r" data-r="4"><span>05</span>Deliver</button></nav>
+      <nav class="pg-nav" aria-label="Steps"><button type="button" class="pg-r" data-r="0"><span>01</span>Spot the pain</button><button type="button" class="pg-r" data-r="1"><span>02</span>Understand it</button><button type="button" class="pg-r" data-r="2"><span>03</span>Remove friction</button><button type="button" class="pg-r" data-r="3"><span>04</span>Redesign</button><button type="button" class="pg-r" data-r="4"><span>05</span>Hand off</button></nav>
       <div class="pg-stage">
-        <div class="pg-field" aria-live="polite">
-          <!-- R1 + R5: sign-up screen with simulated users -->
-          <div class="pg-scr" data-show="0 4">
-            <div class="scr" data-zone="screen">
-              <p class="scr-h">Create account</p>
-              <div class="scr-f" data-zone="fields"><i></i><i></i><i class="xf"></i><i class="xf"></i><i class="xf"></i></div>
-              <div class="scr-c xf" data-zone="checks"><b></b><b></b><b></b><span class="scr-tag">Terms, marketing, newsletter</span></div>
-              <div class="scr-btn" data-zone="button">Sign up</div>
-              <div class="scr-dots" aria-hidden="true"></div>
-            </div>
-            <div class="scr-count"><span class="sc-k">Finished</span><b class="sc-n">0</b><span class="sc-of">of 20 people</span></div>
-          </div>
-          <!-- R2 -->
-          <div class="pg-q" data-show="1"><div class="q-pool"><button type="button" class="q-chip" data-t="long">“Too many fields”</button><button type="button" class="q-chip" data-t="trust">“Why do you need my phone?”</button><button type="button" class="q-chip" data-t="long">“Took me 10 minutes”</button><button type="button" class="q-chip" data-t="trust">“Is my data safe?”</button><button type="button" class="q-chip" data-t="long">“I gave up halfway”</button><button type="button" class="q-chip" data-t="trust">“Who sees my company size?”</button></div><div class="q-bins"><div class="q-bin" data-t="long"><p>Too long</p><div></div></div><div class="q-bin" data-t="trust"><p>Don't trust it</p><div></div></div></div></div>
-          <!-- R3 -->
-          <div class="pg-f" data-show="2"><div class="f-flow"><button type="button" class="f-step" data-cut="0"><span>Email</span></button><button type="button" class="f-step" data-cut="0"><span>Password</span></button><button type="button" class="f-step" data-cut="1"><span>Confirm password</span></button><button type="button" class="f-step" data-cut="1"><span>Phone number</span></button><button type="button" class="f-step" data-cut="1"><span>Verify by SMS</span></button><button type="button" class="f-step" data-cut="0"><span>Full name</span></button><button type="button" class="f-step" data-cut="1"><span>Company size</span></button><button type="button" class="f-step" data-cut="1"><span>How did you hear about us?</span></button><button type="button" class="f-step" data-cut="0"><span>Done</span></button></div><div class="f-meter"><span>Time to finish</span><b class="f-t">4:30</b><i><em></em></i></div></div>
-          <!-- R4 -->
-          <div class="pg-v" data-show="3">
-            <button type="button" class="v-opt" data-ok="0"><span class="v-k">A</span><span class="v-l">Password</span><span class="v-in">••••••</span><span class="v-err">Password does not meet requirements</span></button>
-            <button type="button" class="v-opt" data-ok="1"><span class="v-k">B</span><span class="v-l">Password <em>Show</em></span><span class="v-in">••••••</span><span class="v-rules"><i class="ok">8+ characters</i><i class="ok">A number</i><i>A symbol</i></span></button>
-          </div>
+        <div class="fm-stage">
+          <div class="fm-zoom"><div class="fm fm-old">
+  <div class="fm-ban" data-p="9" data-rm><button type="button" class="pp" data-pp="9" aria-label="Problem 9: Error first"><span>9</span></button><span class="pb" role="tooltip"><b>Error first</b>An error banner before anyone has typed a thing.</span><span>⚠ Please correct the errors below.</span></div>
+  <p class="fm-h">Create your account</p>
+  <div class="fr2"><div class="ff "><span class="fl">First name*</span><span class="fi"></span></div><div class="ff "><span class="fl">Last name*</span><span class="fi"></span></div></div>
+  <div class="ff "><span class="fl">Email address*</span><span class="fi"><em>name@company.com</em></span></div>
+  <div class="fw" data-p="1" data-rm><button type="button" class="pp" data-pp="1" aria-label="Problem 1: Typing it twice"><span>1</span></button><span class="pb" role="tooltip"><b>Typing it twice</b>Confirm email and confirm password double the typing and still miss typos.</span><div class="ff "><span class="fl">Confirm email address*</span><span class="fi"></span></div></div>
+  <div class="fw" data-p="2"><button type="button" class="pp" data-pp="2" aria-label="Problem 2: Hidden rules"><span>2</span></button><span class="pb" role="tooltip"><b>Hidden rules</b>Password rules only show up after you fail them.</span><div class="ff bad"><span class="fl">Password*</span><span class="fi">••••••</span><small class="fe">Invalid password</small></div></div>
+  <div class="fw" data-p="1" data-rm><div class="ff "><span class="fl">Confirm password*</span><span class="fi"></span></div></div>
+  <div class="fw" data-p="3" data-rm><button type="button" class="pp" data-pp="3" aria-label="Problem 3: Phone too early"><span>3</span></button><span class="pb" role="tooltip"><b>Phone too early</b>A required phone number before anyone trusts the product.</span><div class="ff"><span class="fl">Phone number*</span><span class="fr"><span class="fi fs">+1 <i class="car">▾</i></span><span class="fi"></span></span></div></div>
+  <div class="fw" data-p="4" data-rm><button type="button" class="pp" data-pp="4" aria-label="Problem 4: Date of birth"><span>4</span></button><span class="pb" role="tooltip"><b>Date of birth</b>Three dropdowns for a birthday the product never uses.</span><div class="ff"><span class="fl">Date of birth*</span><span class="fr"><span class="fi">DD <i class="car">▾</i></span><span class="fi">MM <i class="car">▾</i></span><span class="fi">YYYY <i class="car">▾</i></span></span></div></div>
+  <div class="fw fgrp" data-p="5" data-rm><button type="button" class="pp" data-pp="5" aria-label="Problem 5: Sales questions"><span>5</span></button><span class="pb" role="tooltip"><b>Sales questions</b>Four company questions between people and the product.</span><p class="fg-h">About your company</p><div class="fr2"><div class="ff "><span class="fl">Company name*</span><span class="fi"></span></div><div class="ff "><span class="fl">Company size*</span><span class="fi"><i class="car">▾</i></span></div></div><div class="fr2"><div class="ff "><span class="fl">Job title*</span><span class="fi"></span></div><div class="ff "><span class="fl">How did you hear about us?*</span><span class="fi"><i class="car">▾</i></span></div></div></div>
+  <div class="fw" data-p="6" data-rm><button type="button" class="pp" data-pp="6" aria-label="Problem 6: Captcha"><span>6</span></button><span class="pb" role="tooltip"><b>Captcha</b>An unreadable captcha that blocks real people too.</span><div class="ff"><span class="fl">Type the characters*</span><span class="fr"><span class="cap">x7Gq2</span><span class="fi"></span></span></div></div>
+  <div class="fchk"><span class="ck on"></span>I agree to the Terms of Service and Privacy Policy*</div>
+  <div class="fw" data-p="7" data-rm><button type="button" class="pp" data-pp="7" aria-label="Problem 7: Pre-ticked boxes"><span>7</span></button><span class="pb" role="tooltip"><b>Pre-ticked boxes</b>Marketing emails and data sharing are switched on by default.</span><div class="fchk"><span class="ck on"></span>Send me marketing emails</div><div class="fchk"><span class="ck on"></span>Share my data with selected partners</div></div>
+  <div class="fbtns"><span class="fw fb-reset" data-p="8" data-rm><button type="button" class="pp" data-pp="8" aria-label="Problem 8: Reset button"><span>8</span></button><span class="pb" role="tooltip"><b>Reset button</b>A big Reset next to Submit. One misclick wipes the form.</span><span class="fb r">Reset</span></span><span class="fb s">Submit</span></div>
+</div><div class="fm fm-new" hidden>
+  <p class="fn-h">Create your account</p><p class="fn-s">Start your free trial. No card needed.</p>
+  <span class="fn-g"><b>G</b> Continue with Google</span>
+  <p class="fn-or"><span>or</span></p>
+  <div class="fn-f"><span class="fl">Work email</span><span class="fi">gencb@studio.com</span></div>
+  <div class="fn-f fn-pw"><span class="fl">Password <em>Show</em></span><span class="fi">••••••••</span><span class="fn-rules"><i class="ok">8+ characters</i><i class="ok">A number</i><i>A symbol</i></span></div>
+  <span class="fn-btn">Create account</span>
+  <p class="fn-t">By continuing you agree to the Terms and Privacy Policy.</p>
+  <div class="spec" aria-hidden="true"></div>
+</div></div>
+          <div class="fm-act"><button type="button" class="fa fa-an">Analyze the feedback <span aria-hidden="true">→</span></button><button type="button" class="fa fa-wand" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 15 9"/><path d="M14 4v3M12.5 5.5h3M19 9v2M18 10h2M18 3v1.5M17.25 3.75h1.5"/></svg>Redesign</button></div>
         </div>
         <div class="pg-text">
-          <p class="pg-k">Round <b class="pg-i">1</b> of 5</p>
-          <h3 class="pg-t">Spot the pain</h3>
+          <p class="pg-k">Step <b class="pg-i">1</b> of 5</p>
+          <h3 class="pg-t"></h3>
           <p class="pg-ask"></p>
+          <div class="qtray" hidden><button type="button" class="qc" data-to="1">“I typed my email twice and still got it wrong.”</button><button type="button" class="qc" data-to="2">“It only told me the password rules after I failed.”</button><button type="button" class="qc" data-to="3">“Why does a free trial need my phone number?”</button><button type="button" class="qc" data-to="5">“So many questions about my company before I've seen anything.”</button><button type="button" class="qc" data-to="7">“I had to untick boxes so I wouldn't get spam.”</button><button type="button" class="qc" data-to="8">“I hit Reset by accident and lost everything.”</button></div>
+          <div class="fmeter" hidden><span>Time to finish</span><b class="fm-t">4:30</b><i><em></em></i><small class="fm-n">16 fields</small></div>
           <p class="pg-fb" role="status"></p>
           <p class="pg-take" hidden></p>
-          <div class="pg-ctl"><button type="button" class="pg-next" hidden>Next round →</button><button type="button" class="pg-skip">Skip</button></div>
+          <div class="pg-ctl"><button type="button" class="pg-next">Next</button></div>
         </div>
       </div>
     </div>
@@ -142,7 +150,7 @@
 
 <footer class="contact close"><div class="close-in"><p class="close-k">Hiring a product designer?</p><h2>Let's talk.</h2><p class="close-sub">Open to remote roles in EU and US time zones.</p><div class="close-ctas"><span class="cta-split"><a class="cta-y" href="mailto:gencberisha3@gmail.com">Email me</a><button type="button" class="cta-copy" data-copy="gencberisha3@gmail.com" aria-label="Copy email address" title="Copy email address"><svg class="i-copy" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg><svg class="i-ok" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="cta-tip" aria-live="polite"></span></button></span><a class="cta-o" href="genc-berisha-cv.pdf">Download CV</a><a class="cta-o" href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a></div><p class="fine">© 2026 Genc Berisha · The Qualia Lab</p></div><div class="close-lines" aria-hidden="true"></div></footer>
 
-<script src="play.js?v=202611181441" defer></script>
+<script src="play.js?v=20261118152713" defer></script>
 <script src="how.js?v=202611181418" defer></script>
 <script src="script.js?v=202611181311" defer></script>
 </body>
