@@ -1,124 +1,88 @@
-/* How I work: fix a broken sign-up form in five steps (spot, understand, remove, redesign, hand off). */
+/* How I work: an AI-drafted contact form, fixed by the "Genc" cursor. It ends as a working contact form.
+   Autoplays once when scrolled into view; visitors can replay, hunt the problems themselves, toggle
+   AI Draft / Genc's Cut, or skip straight to the message form. */
 (function(){
-  var box=document.querySelector('.pg-box');if(!box)return;
+  var ag=document.querySelector('.ag');if(!ag)return;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var $=function(s,el){return (el||box).querySelector(s)},$$=function(s,el){return [].slice.call((el||box).querySelectorAll(s))};
-  var stage=$('.fm-stage'),old=$('.fm-old'),neu=$('.fm-new'),an=$('.fa-an'),wand=$('.fa-wand'),tray=$('.qtray'),meter=$('.fmeter'),
-      navs=$$('.pg-r'),ask=$('.pg-ask'),fb=$('.pg-fb'),take=$('.pg-take'),next=$('.pg-next');
-  var S=[
-    {t:'Spot the pain',ask:'A sign-up form like many out there. Hover the highlighted parts to see what’s wrong with each one.',
-     take:'Look at the whole journey before fixing any one screen.',next:'Analyze the feedback'},
-    {t:'Understand it',ask:'This is what people said. Drag each quote onto the problem it describes, or tap a quote and then the spot.',
-     take:'Match what people say to where it happens. That tells you what to fix first.',next:'Remove friction'},
-    {t:'Remove friction',ask:'Now cut. Click any part of the form that doesn’t earn its place. Then hit Redesign.',
-     take:'Every field you remove is one nobody can get wrong.',next:'Redesign'},
-    {t:'Redesign',ask:'Same goal, a fraction of the effort. Rules shown up front, one clear action.',
-     take:'Design each step for the moment someone gets it wrong.',next:'Zoom into the details'},
-    {t:'Hand off',ask:'Every size, gap and state is specified, so engineers build exactly what was designed.',
-     take:'That’s how I work: from pain to pixels.',next:'Play again ↺'}
+  var $=function(s,el){return (el||ag).querySelector(s)},$$=function(s,el){return [].slice.call((el||ag).querySelectorAll(s))};
+  var card=$('.ag-card'),form=$('.ai'),gc=$('.gc'),say=$('.gc-say'),hud=$('.ag-hud'),pt=$('.ag-pt'),bin=$('.ag-bin'),
+      togs=$$('.ag-v'),hunt=$('.ag-hunt'),replay=$('.ag-replay'),skip=$('.ag-skip'),ht=$('.ai-ht'),bt=$('.ai-bt');
+  var sub=$('.ai-s'),nm=$('.ai-f .ai-l'),AI_S=sub.textContent,AI_N=nm.textContent,G_S='It goes straight to my inbox.',AI_H=ht.textContent,AI_B=bt.textContent,G_H='Tell me what you’re building.',G_B='Send message →';
+  var PROMPT='Make a contact form for my portfolio';
+  /* the eight fixes, in play order; hot = which marked parts of the draft belong to each problem */
+  var F=[
+    {hot:'3',say:'Five social buttons. Nobody came here to follow me.',run:function(){gone($$('[data-hot="3"]'))}},
+    {hot:'4',say:'Say something real.',run:function(){form.classList.add('f4');typeTo(ht,G_H);sub.textContent=G_S}},
+    {hot:'5',say:'Grey on white fails contrast.',run:function(){form.classList.add('f5')}},
+    {hot:'1',say:'Labels, not placeholders.',run:function(){form.classList.add('f1')}},
+    {hot:'2',say:'Cut 7 fields AI invented.',run:function(){var c=$$('[data-cut]');c.forEach(function(e){e.classList.add('lift')});
+      bin.classList.add('on');setTimeout(function(){c.forEach(function(e){e.classList.remove('lift')});gone(c);nm.textContent='Name';bin.classList.add('bump');
+      setTimeout(function(){bin.classList.remove('bump','on')},500)},reduce?0:420)}},
+    {hot:'6',say:'Pre-ticked newsletter? Never.',run:function(){gone($$('[data-hot="6"]'))}},
+    {hot:'7',say:'Give the message room.',run:function(){form.classList.add('f7')}},
+    {hot:'8',say:'One clear action.',run:function(){form.classList.add('f8');bt.textContent=G_B}}
   ];
-  var cur=0,done={};
-  function say(t,c){fb.textContent=t||'';fb.className='pg-fb'+(c?' '+c:'')}
-  function complete(i,msg){done[i]=1;navs[i].classList.add('done');if(msg)say(msg,'good');take.textContent=S[i].take;take.hidden=false}
+  var done={},timers=[],mode='idle',found=0;
+  function later(fn,ms){var t=setTimeout(fn,reduce?0:ms);timers.push(t);return t}
+  function stop(){timers.forEach(clearTimeout);timers=[];gc.classList.remove('on');say.classList.remove('on');$$('.hint').forEach(function(e){e.classList.remove('hint')})}
+  function gone(els){els.forEach(function(e){e.classList.add('gone')})}
+  function typeTo(el,txt){if(reduce){el.textContent=txt;return}var i=0;el.textContent='';(function s(){el.textContent=txt.slice(0,++i);if(i<txt.length)later(s,28)})()}
+  function setTog(v){togs.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)})}
+  function inputs(on){$$('input,textarea,button.ai-b',form).forEach(function(e){if(on){e.removeAttribute('readonly');e.removeAttribute('tabindex')}else{e.setAttribute('tabindex','-1');if(e.tagName!=='BUTTON')e.setAttribute('readonly','')}})}
+  function hudSay(t,good){hud.textContent=t;hud.className='ag-hud'+(good?' good':'')}
 
-  /* ---- state per step ---- */
-  function resetForm(){
-    $$('.gone',old).forEach(function(e){e.classList.remove('gone')});
-    $$('.matched',old).forEach(function(e){e.classList.remove('matched')});
-    $$('.pb q',old).forEach(function(q){q.parentNode.removeChild(q)});
-    $$('.qc',tray).forEach(function(q){q.hidden=false;q.className='qc';q.style.transform='';delete q.dataset.demo});
-  }
-  function go(i){cur=i;
-    navs.forEach(function(n,k){if(k===i)n.setAttribute('aria-current','step');else n.removeAttribute('aria-current')});
-    $('.pg-i').textContent=i+1;$('.pg-t').textContent=S[i].t;ask.textContent=S[i].ask;say('');take.hidden=true;
-    next.textContent=S[i].next+(i<4?' →':'');
-    if(i===0)resetForm();
-    var redesigned=i>=3;old.hidden=redesigned;neu.hidden=!redesigned;
-    stage.classList.toggle('on-pain',i<=1);stage.classList.toggle('on-cut',i===2);stage.classList.toggle('on-spec',i===4);
-    an.hidden=i!==0;wand.hidden=i!==2;tray.hidden=i!==1;meter.hidden=i!==2;
-    $$('.pp.show',old).forEach(function(p){p.classList.remove('show')});
-    if(i===1)startQuotes();
-    if(i===2)updMeter();
-    if(i===3){neu.style.animation='none';void neu.offsetWidth;neu.style.animation=''}
-    if(i===3)complete(3);if(i===4){complete(4);spec()}
-    if(i===0&&!done[0])say('9 problems. Hover a few, then analyze the feedback.');
-  }
-  navs.forEach(function(n,i){n.addEventListener('click',function(){go(i)})});
-  next.addEventListener('click',function(){
-    if(cur===4){done={};navs.forEach(function(n){n.classList.remove('done')});go(0);return}
-    if(cur===0)complete(0);go(cur+1)});
-  an.addEventListener('click',function(){complete(0);go(1)});
-  wand.addEventListener('click',function(){complete(2);go(3)});
+  function draft(){stop();mode='idle';done={};found=0;card.classList.remove('hunt');
+    form.className='ai';ht.textContent=AI_H;sub.textContent=AI_S;nm.textContent=AI_N;bt.textContent=AI_B;
+    $$('.gone,.found,.lift').forEach(function(e){e.classList.remove('gone','found','lift')});
+    inputs(false);setTog('ai');hudSay('');$('.ai-done').hidden=true}
+  function final(msg){stop();mode='done';card.classList.remove('hunt');
+    F.forEach(function(f,i){done[i]=1});$$('.lift').forEach(function(e){e.classList.remove('lift')});
+    $$('.found').forEach(function(e){e.classList.toggle('found',false)});
+    ht.textContent=G_H;sub.textContent=G_S;nm.textContent='Name';bt.textContent=G_B;form.classList.add('f1','f4','f5','f7','f8','clean');gone($$('[data-cut],[data-hot="3"],[data-hot="6"]'));
+    bin.classList.remove('on');inputs(true);setTog('genc');hudSay(msg||'Genc’s Cut. It’s a real form now: send me a message.',true)}
 
-  /* ---- step 5: redlines measured from the real redesign, so every number is true to the build ---- */
-  function spec(){var sp=$('.spec',neu);sp.innerHTML='';
-    var btn=$('.fn-btn',neu),pw=$('.fn-pw',neu),pwi=$('.fn-pw .fi',neu);
-    function mk(cls,x,y,w,h,label){var m=document.createElement('span');m.className='sm '+cls;m.style.left=x+'px';m.style.top=y+'px';
-      if(w)m.style.width=w+'px';if(h)m.style.height=h+'px';m.innerHTML='<b>'+label+'</b>';sp.appendChild(m)}
-    var bx=btn.offsetLeft,by=btn.offsetTop,bw=btn.offsetWidth,bh=btn.offsetHeight;
-    var iy=pw.offsetTop+pwi.offsetTop,ih=pwi.offsetHeight,gap=by-(pw.offsetTop+pw.offsetHeight);
-    var r=parseFloat(getComputedStyle(btn).borderTopLeftRadius);
-    mk('v',bx+bw+8,by,0,bh,bh);
-    mk('v',bx+bw+8,iy,0,ih,ih);
-    if(gap>4)mk('v',bx+bw/2,by-gap,0,gap,gap);
-    mk('h',0,by+bh/2,bx,0,bx);
-    mk('t',bx+2,by-16,0,0,'radius '+r);
-    mk('t',bx+bw+8,by+bh+8,0,0,'Geist 16 / 600');
-    mk('t',bx,neu.offsetHeight+8,0,0,'<i></i>#3D5BFF');
-    mk('t',bx+bw-176,neu.offsetHeight+8,0,0,'Default · Hover · Pressed · Loading');
-  }
+  /* cursor helpers: positions are relative to the card */
+  function point(el,dx,dy){var a=card.getBoundingClientRect(),b=el.getBoundingClientRect(),x=b.left-a.left+(dx==null?b.width*.7:dx);
+    gc.classList.toggle('flip',x>a.width-190);
+    gc.style.transform='translate('+x+'px,'+(b.top-a.top+(dy==null?b.height*.45:dy))+'px)';gc.classList.add('on')}
+  function beat(i,cb){var f=F[i],el=$('[data-hot="'+f.hot+'"]:not(.gone)')||form;
+    say.classList.remove('on');point(el);
+    later(function(){say.textContent=f.say;say.classList.add('on');f.run();done[i]=1;
+      later(cb||function(){},1150)},560)}
 
-  /* ---- step 1: pins and bubbles (tap on touch) ---- */
-  $$('.pp',old).forEach(function(p){p.addEventListener('click',function(e){e.stopPropagation();var on=!p.classList.contains('show');
-    $$('.pp.show',old).forEach(function(o){o.classList.remove('show')});p.classList.toggle('show',on)})});
+  /* autoplay: prompt types, the draft appears, then Genc fixes it beat by beat */
+  function play(){draft();mode='play';card.classList.add('pre');pt.textContent='';hudSay('');
+    var i=0;(function t(){pt.textContent=PROMPT.slice(0,++i);if(i<PROMPT.length)later(t,32);else later(gen,350)})()}
+  function gen(){card.classList.remove('pre');hudSay('Looks done. Is it?');
+    later(function(){hudSay('');gc.style.transform='translate(110%,-30px)';gc.classList.add('on');var k=0;
+      (function next(){if(k<F.length)beat(k++,next);else later(function(){form.classList.add('clean');final()},400)})()},1300)}
 
-  /* ---- step 2: quotes onto pain points ---- */
-  var sel=null;
-  function target(n){return $('[data-p="'+n+'"]',old)}
-  function match(q,el){var n=q.dataset.to;
-    if(el.dataset.p!==n){q.classList.remove('shake');void q.offsetWidth;q.classList.add('shake');say('That quote is about something else. Try another spot.','bad');return false}
-    $$('[data-p="'+n+'"]',old).forEach(function(e){e.classList.add('matched')});
-    var pb=$('.pb',target(n));if(pb&&!$('q',pb)){var z=document.createElement('q');z.textContent=q.textContent.replace(/[“”]/g,'');pb.appendChild(z)}
-    q.hidden=true;q.classList.remove('sel');sel=null;
-    var left=$$('.qc',tray).filter(function(x){return !x.hidden}).length;
-    if(!left)complete(1,'All six matched. Three problems nobody mentioned, but they still cost people time.');
-    else say(left+' to go.');
-    return true}
-  function fly(q,el,cb){var a=q.getBoundingClientRect(),b=el.getBoundingClientRect();q.classList.add('fly');
-    q.style.transform='translate('+(b.left+b.width/2-a.left-a.width/2)+'px,'+(b.top+b.height/2-a.top-a.height/2)+'px) scale(.6)';
-    setTimeout(function(){q.classList.remove('fly');q.style.transform='';cb()},reduce?0:1000)}
-  function startQuotes(){var first=$$('.qc',tray).filter(function(x){return !x.hidden})[0];
-    if(!first||done[1]||first.dataset.demo)return;first.dataset.demo=1;
-    setTimeout(function(){if(cur!==1)return;say('Like this one:');
-      fly(first,target(first.dataset.to),function(){match(first,target(first.dataset.to));say('Your turn: drag the rest.')})},reduce?0:900)}
-  $$('.qc',tray).forEach(function(q){var sx,sy,drag=false,over=null;
-    q.addEventListener('pointerdown',function(e){sx=e.clientX;sy=e.clientY;drag=false;q.setPointerCapture(e.pointerId)});
-    q.addEventListener('pointermove',function(e){if(sx===undefined)return;var dx=e.clientX-sx,dy=e.clientY-sy;
-      if(!drag&&Math.abs(dx)+Math.abs(dy)>6){drag=true;q.classList.add('drag')}
-      if(!drag)return;q.style.transform='translate('+dx+'px,'+dy+'px)';
-      q.style.pointerEvents='none';var t=document.elementFromPoint(e.clientX,e.clientY);q.style.pointerEvents='';
-      t=t&&t.closest?t.closest('.fm-old [data-p]'):null;
-      if(over&&over!==t)over.classList.remove('drop-over');over=t;if(t)t.classList.add('drop-over')});
-    q.addEventListener('pointerup',function(){if(sx===undefined)return;sx=undefined;
-      if(drag){q.classList.remove('drag');q.style.transform='';if(over){over.classList.remove('drop-over');match(q,over)}over=null;q._skip=true}});
-    q.addEventListener('click',function(){if(q._skip){q._skip=false;return}
-      $$('.qc',tray).forEach(function(o){if(o!==q)o.classList.remove('sel')});
-      q.classList.toggle('sel');sel=q.classList.contains('sel')?q:null;
-      if(sel)say('Now tap the spot in the form it’s about.')})});
+  /* hunt: visitors click the problems; each catch is fixed by the cursor */
+  function startHunt(){draft();mode='hunt';card.classList.add('hunt');hudSay('Find what’s wrong. Click anything that bothers you. 0 of 8 found.');
+    later(hint,15000)}
+  function hint(){if(mode!=='hunt')return;var i=F.findIndex(function(f,k){return !done[k]});if(i<0)return;
+    var el=$('[data-hot="'+F[i].hot+'"]:not(.gone)');if(el){el.classList.remove('hint');void el.offsetWidth;el.classList.add('hint')}later(hint,9000)}
+  form.addEventListener('click',function(e){if(mode!=='hunt')return;e.preventDefault();
+    var h=e.target.closest('[data-hot]');var i=h?F.findIndex(function(f){return f.hot===h.dataset.hot}):-1;
+    if(i<0||done[i]){hudSay(i<0?'Nothing wrong there. Keep looking.':'Already fixed. Keep looking.');return}
+    found++;h.classList.add('found');beat(i,function(){if(found>=F.length){form.classList.add('clean');final('You found all 8. That’s the job. Now send me a message.')}});
+    hudSay('Found '+found+' of 8.',true)});
 
-  /* ---- step 3: remove parts of the form ---- */
-  function cuts(){return $$('[data-rm].gone',old).length}
-  function updMeter(){var n=cuts(),total=$$('[data-rm]',old).length,sec=Math.round(270-n*(220/total));
-    $('.fm-t').textContent=Math.floor(sec/60)+':'+('0'+sec%60).slice(-2);
-    $('.fmeter em').style.width=(sec/270*100)+'%';
-    $('.fm-n').textContent=n+' of '+total+' parts removed';wand.disabled=n<3}
-  old.addEventListener('click',function(e){
-    if(cur===1){if(sel&&!e.target.closest('.pp')){var t=e.target.closest('[data-p]');if(t)match(sel,t)}return}
-    if(cur!==2)return;var el=e.target.closest('[data-rm]');if(!el||el.classList.contains('gone'))return;
-    if(el.dataset.p==='1')$$('[data-p="1"]',old).forEach(function(x){x.classList.add('gone')});else el.classList.add('gone');
-    updMeter();var n=cuts();
-    say(n<3?'Keep cutting. '+(3-n)+' more to unlock Redesign.':'Redesign is ready when you are.',n<3?'':'good');
-    if(n>=3&&!done[2])complete(2)});
+  /* the finished form sends a message: opens the visitor's email app, prefilled */
+  form.addEventListener('submit',function(e){e.preventDefault();if(mode!=='done')return;
+    var n=form.name.value.trim(),m=form.email.value.trim(),t=form.message.value.trim(),out=$('.ai-done');
+    if(!n||!/.+@.+\..+/.test(m)||!t){out.hidden=false;out.style.color='#d4471c';out.textContent='Add your name, a valid email and a message.';return}
+    var body=t+'\n\n'+n+' ('+m+')';
+    location.href='mailto:gencberisha3@gmail.com?subject='+encodeURIComponent('Portfolio message from '+n)+'&body='+encodeURIComponent(body);
+    out.hidden=false;out.style.color='';out.textContent='Opening your email app… Thanks, '+n+'!'});
 
-  go(0);
+  togs.forEach(function(b){b.addEventListener('click',function(){if(b.dataset.v==='ai'){draft();form.classList.remove('clean')}else final()})});
+  replay.addEventListener('click',play);
+  hunt.addEventListener('click',startHunt);
+  skip.addEventListener('click',function(){final()});
+
+  draft();
+  if(reduce){final();return}
+  var io=new IntersectionObserver(function(es){if(es[0].isIntersecting&&mode==='idle'){io.disconnect();play()}},{threshold:.45});
+  io.observe(card);
 })();
