@@ -161,5 +161,29 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 @media (prefers-reduced-motion:reduce){.st-svg *,.st-g{transition:none!important}}
 
 /* Aurora streaks behind the page */
-canvas.aurora{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:.75}
+canvas.aurora{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:.55;filter:blur(6px)}
 .v2home main,.v2home footer{position:relative;z-index:1}
+
+/* How I work: tabs instead of scroll (2026-11-18) */
+.st-stage{position:static}
+.st-grid{align-items:center}
+.st-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:0 0 28px}
+.st-tabs button{position:relative;overflow:hidden;text-align:left;font:600 16px/1.25 var(--sans);letter-spacing:-.01em;color:rgba(30,25,35,.5);background:rgba(255,255,255,.45);border:0;border-radius:14px;padding:14px 16px 16px;cursor:pointer;transition:background .3s,color .3s}
+.st-tabs button .how-n{display:block;margin-bottom:6px}
+.st-tabs button:hover{color:#111}
+.st-tabs button[aria-selected=true]{background:#fff;color:#111;box-shadow:0 20px 40px -32px rgba(30,25,45,.45)}
+.st-tabs button:focus-visible{outline:2px solid #3d5bff;outline-offset:2px}
+.st-prog{position:absolute;left:0;bottom:0;height:3px;width:100%;background:#3d5bff;transform:scaleX(0);transform-origin:0 50%}
+[aria-selected=true] .st-prog{transform:scaleX(var(--p,1))}
+.st-panel h3{margin:8px 0 12px;font:600 clamp(26px,2.6vw,36px)/1.15 var(--sans);letter-spacing:-.03em}
+.st-panel p{margin:0;font-size:19px;line-height:1.55;font-weight:500;color:rgba(30,25,35,.7);max-width:38ch}
+.st-panel:not([hidden]){animation:stin .45s ease}
+@keyframes stin{from{opacity:0;transform:translateY(8px)}}
+@media (max-width:760px){
+  .st-tabs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 20px;padding:0 16px;scrollbar-width:none}
+  .st-tabs::-webkit-scrollbar{display:none}
+  .st-tabs button{flex:0 0 auto;scroll-snap-align:start;font-size:15px}
+  .st-grid{gap:24px}
+  .st-panel p{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){.st-panel:not([hidden]){animation:none}}
