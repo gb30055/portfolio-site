@@ -115,3 +115,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
   .bg-out-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 .bg-out figure.slot{border:0;padding:0;background:none;box-shadow:none;border-radius:0}
+.bg-photos img,.bg-out img{filter:grayscale(1)}
