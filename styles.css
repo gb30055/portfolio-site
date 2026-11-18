@@ -603,3 +603,9 @@ h1 em { background: none; }
 }
 .tl-y{white-space:nowrap}@media (max-width:899px){.tl li{grid-template-columns:76px minmax(0,1fr)}.tl-y{font-size:18px;letter-spacing:-.02em}}
 .r-mono.r-tk img{width:auto;height:22px}
+.ab-more{padding-top:20px;border-top:1px solid rgba(30,25,35,.12)}
+.ab-more b{font-weight:600;color:var(--ink)}
+.ab-more a{font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-color:rgba(30,25,35,.3);text-underline-offset:3px;white-space:nowrap}
+.ab-more a:hover{text-decoration-color:currentColor}
+.ab-in{display:inline-block;height:.95em;width:auto;margin:0 5px 0 2px;vertical-align:-.1em}
+.ab-more b{white-space:nowrap}
