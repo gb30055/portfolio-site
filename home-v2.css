@@ -284,3 +284,7 @@ canvas.aurora{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-
 canvas.aurora{display:none}
 canvas.glassbg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 .q-chip.in{pointer-events:none}
+
+/* Hero glass lens (lens.js) */
+.h-lens{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform;
+  box-shadow:0 0 0 1px rgba(255,255,255,.85),inset 0 0 0 1px rgba(255,255,255,.5),0 18px 40px -18px rgba(30,40,80,.35),inset 0 10px 24px -12px rgba(255,255,255,.9)}
