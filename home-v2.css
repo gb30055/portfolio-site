@@ -360,3 +360,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
   .clock{font-size:15px}
   .clock b{white-space:nowrap}
 }
+@media (max-width:699px){.meet-h{transform:none!important}}
