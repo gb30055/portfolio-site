@@ -664,3 +664,17 @@ html{overflow-x:clip}
 }
 @media (prefers-reduced-motion:reduce){.story.pin .story-device figure{transition:opacity .2s!important;transform:none!important}.story.pin .story-device figure:not(.on){opacity:0!important}}
 @media (min-width:900px){.story.pin .story-steps li{cursor:pointer}.story.pin .story-steps li:not(.on):hover{color:rgba(0,0,0,.6)}.story.pin .story-steps li:focus-visible{outline:2px solid #111;outline-offset:4px;border-radius:8px}}
+
+/* Poke cursor (poke.js): hand on a telescopic stick taps the screen glass */
+.poke{position:fixed;inset:0;pointer-events:none;z-index:2147482000;opacity:0;transition:opacity .2s}
+.poke-svg{position:absolute;left:0;top:0;transform-origin:30px 10px;will-change:transform;filter:drop-shadow(0 6px 10px rgba(0,0,0,.18))}
+.poke-svg{margin:0}
+html.poke-on,html.poke-on *{cursor:none!important}
+.poke-ring{position:absolute;width:var(--s);height:var(--s);margin:calc(var(--s)/-2) 0 0 calc(var(--s)/-2);border-radius:50%;border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 0 1px rgba(20,20,40,.18),inset 0 0 12px rgba(255,255,255,.6),-2px 0 6px -2px rgba(255,70,70,.5),2px 0 6px -2px rgba(60,120,255,.55);animation:poke-ring .55s cubic-bezier(.2,.8,.3,1) forwards}
+.poke-ring::after{content:"";position:absolute;inset:35%;border-radius:50%;background:radial-gradient(rgba(255,255,255,.9),rgba(255,255,255,0) 70%);animation:poke-flash .25s ease-out forwards}
+@keyframes poke-ring{from{transform:scale(.2);opacity:1}to{transform:scale(1);opacity:0}}
+@keyframes poke-flash{from{opacity:1}to{opacity:0}}
+.poke-crack{position:absolute;width:260px;height:260px;margin:-130px 0 0 -130px;transition:opacity .8s}
+.poke-crack.out{opacity:0}
+html.poke-shake body>*:not(.poke){animation:poke-shake .28s linear}
+@keyframes poke-shake{0%,100%{transform:none}20%{transform:translate(3px,-2px)}40%{transform:translate(-3px,2px)}60%{transform:translate(2px,1px)}80%{transform:translate(-1px,-1px)}}
