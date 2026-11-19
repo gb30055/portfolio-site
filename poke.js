@@ -2,7 +2,7 @@
    A hand on a metal telescopic stick held from below the screen, so
    you "poke" the screens from your couch: each click taps the glass with
    a tick and a ripple.
-   Case study pages only, mouse only, off for reduced motion. The
+   Case study pages, only while an image is open in the lightbox, mouse only, off for reduced motion. The
    fingertip is the hotspot. */
 (function () {
   if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
@@ -61,12 +61,18 @@
 
   function onMove(e) {
     mx = e.clientX; my = e.clientY;
-    var inZone = true;
+    var inZone = lbOpen();
     if (inZone !== inside) {
       inside = inZone;
       document.documentElement.classList.toggle('poke-on', inside);
       if (inside && !ready) { gripX = target(); ready = true; }
     }
+  }
+  // Only while the lightbox (an opened image) is showing.
+  function lbOpen() { return document.documentElement.classList.contains('lb-on'); }
+  function sync() {
+    var o = lbOpen() && mx > -999;
+    if (o !== inside) { inside = o; document.documentElement.classList.toggle('poke-on', o); if (o && !ready) { gripX = target(); ready = true; } }
   }
   function target() { return Math.min(Math.max(mx + innerWidth * .3, innerWidth * .15), innerWidth * 1.05); }
 
@@ -132,6 +138,7 @@
   var last = performance.now();
   function frame(t) {
     var dt = Math.min(1 / 30, (t - last) / 1000); last = t;
+    sync();
     layer.style.opacity = inside ? 1 : 0;
     if (ready) {
       gripX += (target() - gripX) * (1 - Math.exp(-dt / .1));
