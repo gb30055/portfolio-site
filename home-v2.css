@@ -162,3 +162,7 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .meet-bio{z-index:2}
 @media (max-width:699px){.meet-bg{left:0;right:0;top:4%;bottom:14%}}
 @media (prefers-reduced-motion:reduce){.meet-bg{transform:none}}
+/* Meet v5: smaller portrait, about the headline width, so headline + photo + bio fit one screen */
+.meet-stage{--w:min(calc(100vw - 32px),860px)}
+.meet-bio{width:min(74%,560px)}
+@media (max-width:699px){.meet-stage{--w:calc(100% + 32px)}.meet-bio{width:auto}}
