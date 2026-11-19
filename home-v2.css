@@ -166,3 +166,17 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .meet-stage{--w:min(calc(100vw - 32px),860px)}
 .meet-bio{width:min(74%,560px)}
 @media (max-width:699px){.meet-stage{--w:calc(100% + 32px)}.meet-bio{width:auto}}
+/* Homepage close: light, like the hero. Page blue with the hero's spectral lines rising from the bottom */
+.v2home .close{background:var(--page,#E4ECF7);color:var(--ink,#000)}
+.v2home .close::before{content:"";position:absolute;left:0;right:0;bottom:0;height:min(520px,90%);background:url("assets/hero-top.webp") center top/cover no-repeat;transform:scaleY(-1);-webkit-mask-image:linear-gradient(#000 35%,transparent);mask-image:linear-gradient(#000 35%,transparent);pointer-events:none}
+.v2home .close-lines{display:none}
+.v2home .close-k{color:var(--muted,#485164)}
+.v2home .close h2{color:var(--ink,#000)}
+.v2home .close-sub{color:var(--muted,#485164)}
+.v2home .cta-split{background:var(--ink,#000)}
+.v2home .close-ctas .cta-split .cta-y{color:#fff}
+.v2home .close-ctas .cta-copy{color:#fff;border-left-color:rgba(255,255,255,.22)}
+.v2home .cta-copy:hover{background:rgba(255,255,255,.1)}
+.v2home .cta-o{color:var(--ink,#000);border-color:rgba(0,0,0,.18);background:rgba(255,255,255,.55)}
+.v2home .cta-o:hover{border-color:rgba(0,0,0,.4);background:#fff}
+.v2home .close .fine{color:rgba(30,25,35,.55);position:relative}
