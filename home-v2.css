@@ -117,3 +117,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .bg-out figure.slot{border:0;padding:0;background:none;box-shadow:none;border-radius:0}
 .bg-photos img,.bg-out img{filter:grayscale(1)}
 .bg-grid{grid-template-columns:minmax(0,1fr)}.bg-me{max-width:780px}
+.how-list figure,.how-list figure.hd{background:rgba(255,255,255,.5)}
