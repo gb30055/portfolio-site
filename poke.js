@@ -1,7 +1,7 @@
 /* Poke cursor: our own take on the telescopic hand-pointer trend.
    A hand on a metal telescopic stick held from below the screen, so
    you "poke" the screens from your couch: each click taps the glass with
-   a tick, and a frantic run of taps cracks it for a moment (the joke).
+   a tick and a ripple.
    Case study pages only, mouse only, off for reduced motion. The
    fingertip is the hotspot. */
 (function () {
@@ -115,29 +115,9 @@
       o.connect(og).connect(ac.destination); o.start(t); o.stop(t + .1);
     } catch (e) {}
   }
-  function crack(x, y) {
-    var el = document.createElement('div'); el.className = 'poke-crack';
-    el.style.left = x + 'px'; el.style.top = y + 'px';
-    var p = '', r = Math.random;
-    for (var k = 0; k < 7; k++) {
-      var a = k / 7 * Math.PI * 2 + r() * .5, len = 40 + r() * 70, px = 0, py = 0;
-      p += 'M0 0';
-      for (var j = 1; j <= 3; j++) { var l = len * j / 3, b = a + (r() - .5) * .5; px = Math.cos(b) * l; py = Math.sin(b) * l; p += 'L' + px.toFixed(1) + ' ' + py.toFixed(1); }
-    }
-    p += 'M-14 -6Q0 -18 15 -4Q20 10 4 16Q-12 18 -16 4Z';
-    el.innerHTML = '<svg width="260" height="260" viewBox="-130 -130 260 260"><path d="' + p + '" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="1.6"/><path d="' + p + '" fill="none" stroke="rgba(20,20,30,.45)" stroke-width=".7" transform="translate(.8 .8)"/></svg>';
-    layer.appendChild(el);
-    setTimeout(function () { el.classList.add('out'); }, 1400);
-    setTimeout(function () { el.remove(); }, 2200);
-  }
   function hit(x, y, size, level, count) {
     ring(x, y, size);
     tick(level);
-    if (count >= 6 && count % 3 === 0) {
-      crack(x, y);
-      document.documentElement.classList.remove('poke-shake'); void document.documentElement.offsetWidth;
-      document.documentElement.classList.add('poke-shake');
-    }
   }
 
   var last = performance.now();
