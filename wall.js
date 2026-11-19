@@ -9,7 +9,7 @@
   var CFG = {
     minimumScale: 0.72, centerScale: 1, gap: 18, randomness: 0, rotation: 0,
     lens: true, lensWidth: 220, lensStrength: 0.7, colorSplit: false,
-    frameRadius: 28, cornerRadius: 18, tileWidth: 180, tileHeight: 130,
+    frameRadius: 0, cornerRadius: 30, tileWidth: 190, tileHeight: 190,
     buttonLabel: 'View project'
   };
   var src = root.querySelector('script[type="application/json"]');
@@ -148,6 +148,7 @@
   /* ---- DOM ---- */
   root.classList.add('wall-on');
   root.style.setProperty('--wall-r', CFG.frameRadius + 'px');
+  root.style.setProperty('--tile-r', CFG.cornerRadius + 'px');
   var layer = document.createElement('div'); layer.className = 'wall-layer';
   root.appendChild(layer);
   var NS = 'http://www.w3.org/2000/svg', feImg = null, fid = 'wall-lens';

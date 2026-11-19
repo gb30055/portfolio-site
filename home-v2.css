@@ -199,3 +199,18 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .wall-ov-go{transform:translate(-50%,-100%);padding:12px 22px;border-radius:999px;background:rgba(0,0,0,.75);color:#fff;font-size:15px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .wall-ov.open .wall-ov-bg,.wall-ov.open .wall-ov-x,.wall-ov.open .wall-ov-go{opacity:1}
 @media (prefers-reduced-motion:reduce){.wall-ov-frame,.wall-ov-bg{transition:none}}
+/* Wall v2: no box. Sits on the page colour and fades in from the section above */
+.wall-sec{padding:0}
+.wall{height:100vh;height:100svh;border-radius:0;clip-path:none;background:transparent;-webkit-mask-image:linear-gradient(transparent,#000 22%);mask-image:linear-gradient(transparent,#000 22%)}
+.wall-rim{display:none}
+/* Wall v3: matches the Framer original. Bigger square-ish tiles, side rim on, "Let's talk." over the bottom */
+.wall-sec{position:relative}
+.wall-rim{display:block}
+.wall-tile{border-radius:var(--tile-r,30px)}
+.wall-talk{position:absolute;left:0;right:0;bottom:40px;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:none;z-index:5}
+.wall-talk h2{margin:0;font-size:32px;font-weight:600;letter-spacing:-.01em;color:var(--ink,#000)}
+.wall-btns{display:flex;gap:16px}
+.wall-btns a{pointer-events:auto;width:80px;height:80px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(180deg,#1A7BFF,#0A5FE0);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 20px rgba(10,95,224,.25);transition:transform .2s ease}
+.wall-btns a:hover{transform:translateY(-2px)}
+.wall-btns a:focus-visible{outline:2px solid #0A5FE0;outline-offset:3px}
+@media (max-width:699px){.wall-btns a{width:64px;height:64px;border-radius:16px}.wall-talk h2{font-size:26px}}
