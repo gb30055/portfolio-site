@@ -21,6 +21,7 @@
       ['#problem', '.big-stat', '', '30 controls on one page. This is what I inherited.'],
       ['#setup', 'figure', 'one job at a time', 'One question per step. That\u2019s most of the trick.'],
       ['#availability', '.avail', '', 'Try it: switch a day on. The pickers only show up when needed.'],
+      ['#executive', '.tier-json', '', 'Copy this into any image model and change the "subject" lines to get new icons in the same 3D style.'],
       ['#outcome', '.big-stat', '', '13 \u2192 6 min is from walkthroughs, not analytics. Just so you know.']
     ],
     'scandlearn': [
