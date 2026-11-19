@@ -95,24 +95,33 @@
     setTimeout(function () { el.remove(); }, 600);
   }
 
-  /* Glass tick: a short filtered noise click plus a high ping, synthesised
-     so there's no audio file. Starts only after the first click. */
-  var ac = null;
+  /* Tap sound: three real taps cut from the trend clip, picked at random
+     with a slight pitch wobble so repeats don't sound looped. Audio can
+     only start after a click; the files are decoded up front. */
+  var ac = null, bufs = [], loading = false;
+  var base = (document.currentScript && document.currentScript.src) || '';
+  base = base ? base.replace(/poke\.js.*$/, '') : '../';
+  function load() {
+    if (loading) return; loading = true;
+    ['tap1', 'tap2', 'tap3'].forEach(function (n) {
+      fetch(base + 'assets/sfx/' + n + '.mp3').then(function (r) { return r.arrayBuffer(); })
+        .then(function (d) { return ac.decodeAudioData(d); })
+        .then(function (b) { bufs.push(b); }).catch(function () {});
+    });
+  }
+  // The context starts suspended (no sound before a click) but can decode
+  // the files right away, so even the first tap is heard.
+  try { ac = new (window.AudioContext || window.webkitAudioContext)(); load(); } catch (e) {}
   function tick(level) {
     try {
-      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (!ac) return;
       if (ac.state === 'suspended') ac.resume();
-      var t = ac.currentTime, vol = .18 + .1 * level;
-      var n = ac.createBuffer(1, ac.sampleRate * .03, ac.sampleRate), d = n.getChannelData(0);
-      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 4);
-      var src = ac.createBufferSource(); src.buffer = n;
-      var bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 3200 - 300 * level; bp.Q.value = 1.4;
-      var g = ac.createGain(); g.gain.value = vol;
-      src.connect(bp).connect(g).connect(ac.destination); src.start(t);
-      var o = ac.createOscillator(), og = ac.createGain();
-      o.frequency.setValueAtTime(2300 - 250 * level, t); o.frequency.exponentialRampToValueAtTime(1500, t + .08);
-      og.gain.setValueAtTime(vol * .35, t); og.gain.exponentialRampToValueAtTime(.0001, t + .09);
-      o.connect(og).connect(ac.destination); o.start(t); o.stop(t + .1);
+      var b = bufs[Math.floor(Math.random() * bufs.length)];
+      if (!b) return; // first tap while the files load
+      var src = ac.createBufferSource(), g = ac.createGain();
+      src.buffer = b; src.playbackRate.value = .95 + Math.random() * .1;
+      g.gain.value = .45 + .1 * level;
+      src.connect(g).connect(ac.destination); src.start();
     } catch (e) {}
   }
   function hit(x, y, size, level, count) {
