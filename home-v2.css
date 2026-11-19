@@ -330,3 +330,12 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .wall{-webkit-mask-image:none;mask-image:none}
 .wall-sec::before{content:"";position:absolute;left:0;right:0;top:0;height:22%;z-index:3;pointer-events:none;background:linear-gradient(#050507,transparent)}
 .wall-sec .talk-card{background:rgba(242,246,252,.95)}
+/* Longer, eased fade to black (Genc: "too sharp") */
+.studio-sec{margin-top:-140px;padding-top:clamp(380px,36vw,560px);background:linear-gradient(180deg,#e4ecf7 0%,#e2e9f4 6%,#d9e0eb 12%,#cad1db 18%,#b5bbc4 24%,#9ca1a9 30%,#80848b 36%,#62666c 42%,#46484d 48%,#2d2e32 54%,#18191b 60%,#0a0a0c 66%,#050507 72%)}
+#meet{position:relative;z-index:1}
+/* Studio block: room to breathe (Genc: "minimal") */
+.studio-sec{padding-bottom:clamp(180px,18vw,300px)}
+.studio-sec .meet-studio{padding:clamp(40px,5vw,80px) 0}
+.studio-sec .ms-logo img{width:clamp(170px,13vw,210px)}
+.studio-sec .ms-lead{margin-top:clamp(48px,5vw,72px);font-size:clamp(18px,1.5vw,22px);font-weight:500;max-width:34ch;color:rgba(255,255,255,.9)}
+.studio-sec .ms-link{margin-top:clamp(28px,3vw,40px);color:rgba(255,255,255,.7)}
