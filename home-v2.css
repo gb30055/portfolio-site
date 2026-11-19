@@ -331,3 +331,32 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 /* Glow must not extend the page below the wall */
 .wall-sec{overflow:clip}
 .r-mono.r-round{background:#fff;padding:2px}.r-mono.r-round img{border-radius:50%}
+/* ---- Mobile audit fixes (2026-11-19) ---- */
+@media (max-width:699px){
+  /* Hero: two compact stat tiles side by side instead of two tall rows */
+  .hero-bento{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:10px;max-width:none}
+  .hb-tile{flex-direction:column;align-items:flex-start;justify-content:space-between;gap:10px;min-height:0;padding:16px 18px 16px;border-radius:22px}
+  .hb-num{font-size:52px}
+  /* Clock: visitor's time on its own clean line */
+  .clock .ck-you:not([hidden]){display:block}
+  .clock .ck-you .ck-sep{display:none}
+  /* Closing buttons: email full width, LinkedIn and CV share a row */
+  .talk-btns{max-width:340px;margin-left:auto;margin-right:auto}
+  .talk-btns>*{flex:1 1 calc(50% - 5px);justify-content:center}
+  .talk-btns>.msplit{flex-basis:100%;display:flex}
+  .talk-btns>.msplit>a{flex:1;justify-content:center;text-align:center}
+  .talk-btns .h-cta{min-height:48px}
+  /* Less dead air around the portrait */
+  .meet{padding-top:96px;padding-bottom:96px}
+}
+/* Bigger touch targets without changing the look */
+@media (pointer:coarse){
+  .roles .r-case{min-height:44px;display:inline-flex;align-items:center}
+  .ms-link,.name.logo{position:relative}
+  .ms-link::after,.name.logo::after{content:"";position:absolute;inset:-12px -8px}
+}
+@media (max-width:699px){
+  .meet-stage{margin-top:14px}
+  .clock{font-size:15px}
+  .clock b{white-space:nowrap}
+}

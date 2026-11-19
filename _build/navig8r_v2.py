@@ -47,7 +47,7 @@ PAGES["career-navig8r"] = dict(
   body=[
     sec("The problem",bigstat("30","controls on one setup page","No mentors, no bookings. I took over mentor onboarding from a previous designer, and it was the hardest flow in the product: 4 crowded steps, a 100-word essay, and one page asking for availability, languages and links all at once."),
         '<p class="evidence">The founder\'s verdict on the old flow was simple: <b>the process is too long.</b> That became the brief.</p>',
-        "<p>Click any screen to see the whole page.</p>",
+        "<p>Open any screen to see the whole page.</p>",
         '<div class="lp-row">'
         + loupe("cn2-b_avail-hi.webp","The old Availability page: time zone, every day with its own time pickers, languages, and LinkedIn, Twitter and Instagram links, all on one page. The magnifier shows that days switched off still show their time pickers.","Before: time pickers for all 7 days, even the ones switched off",0.20,0.45,0.70,0.54,40,1.6,old=True)
         + loupe("cn2-b_focus-hi.webp","The old Mentoring Focus page: job role, a 100-word essay, skills, a key project and an intro video side by side. The magnifier shows the essay field, half covered by a tips popup.","Before: a 100-word essay, half hidden by a tips popup",0.36,0.23,0.70,0.56,42,1.4,old=True)

@@ -88,7 +88,7 @@ GS_DEMO = ('<figure class="wide gs-fig"><div class="gs" data-gs=\'' + html.escap
   '<button type="button" data-t="x"><span class="ic ic-book"></span>Materials</button></div>'
   '<div class="gs-panel"><p class="gs-h"></p><ul class="gs-list" role="listbox"></ul></div>'
   '<p class="gs-toast" aria-live="polite"></p></div></div>'
-  '<figcaption>Try it: click the search bar or press ⌘K, pick a type, and type.</figcaption></figure>')
+  '<figcaption>Try it: open the search, pick a type, and type.</figcaption></figure>')
 
 def _after(title, nodes, newfrom, end, alt):
     # Redesigned flow as live HTML: nodes light up in order; arrows from index newfrom on are new (green)
@@ -131,7 +131,7 @@ PAGES["scandlearn"] = dict(
   body=_extra + [
     sec("The problem",
         bigstat("21", "steps to publish one training", "Support was stretched thin because users couldn't find features. The 2020 handbook sent to me on day one needed 21 numbered steps just to publish a training. In interviews and a survey, people called it \"a frustrating maze\"."),
-        "<p>Screens of the old platform, from that handbook. Click any screen to see it whole.</p>",
+        "<p>Screens of the old platform, from that handbook. Open any screen to see it whole.</p>",
         oldwide("sl-old-crew.webp", "The old Crew page: an icon rail, a second column of role and status filters, then the user list. Names and emails are blurred.", "Before: an icon rail, then a filter column, then the list. Three layers of menus before any content."),
         oldwide("sl-old-settings.webp", "The old Create Training settings: schedule, availability, expiry, expiry cycle, new session, notifications, certificate and survey.", "Before: the last of four tabs every new training went through"),
         "<p><b>Mapping it showed why.</b> Some pages sat seven levels deep. Cancelling meant starting over, and steps repeated.</p>",

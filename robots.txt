@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /for/
+Disallow: /_build/
+Sitemap: https://portfolio.thequalialab.com/sitemap.xml

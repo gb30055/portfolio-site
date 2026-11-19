@@ -697,3 +697,21 @@ html.mp-on:not(.lb-on),html.mp-on:not(.lb-on) *{cursor:none!important}
 .wn-play .i-pause,.wavenote.playing .wn-play .i-play{display:none}.wavenote.playing .wn-play .i-pause{display:block}
 .wn-ph{position:absolute;top:-8px;bottom:-8px;width:2px;margin-left:-1px;background:#111;border-radius:2px;pointer-events:none;z-index:2}
 .wn-bars i.p{background:#8d8d96}
+/* ---- Mobile audit fixes (2026-11-19) ---- */
+@media (max-width:699px){
+  .v2 .cover-phones{gap:8px;padding:22px 10px}
+  .v2 .cover-phones img{width:auto;flex:0 1 30%;min-width:0;border-radius:12px}
+  .v2 .cover-phones img:nth-child(2){width:auto;flex-basis:36%}
+}
+@media (pointer:coarse){
+  .wn-play{width:44px;height:44px}
+  .wn-pin{min-height:36px}
+  .av-reset{min-height:40px;padding-left:14px;padding-right:14px}
+  .av-row{min-height:48px}
+  .gs-kbd{display:none}
+}
+.wn-head{gap:10px}
+.wn-file{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wn-play{flex:none}
+.wn-try{flex:none}
+@media (max-width:380px){.wn-try{display:none}}
