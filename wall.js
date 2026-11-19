@@ -133,8 +133,11 @@
       var i = (y * cw + x) * 4, mx = 0, my = 0;
       // Only the rim band matters; skip the maths in the calm middle.
       if (x < B || y < B || x > cw - B || y > ch - B) {
-        var f = lensField(x + .5, y + .5, cw, ch, B);
-        if (f.d > 0 && f.d < B) { var t = f.d / B, m = (1 - t) * (1 - t); mx = -f.nx * m; my = -f.ny * m; }
+        // Side and bottom bends are added, not switched, so the corners blend
+        // smoothly instead of showing a diagonal seam.
+        var px = x + .5, py = y + .5, ds = cw * .5 - Math.abs(px - cw * .5), db = ch - py;
+        if (ds > 0 && ds < B) { var ts = ds / B; mx = -(px >= cw * .5 ? 1 : -1) * (1 - ts) * (1 - ts); }
+        if (db > 0 && db < B) { var tb = db / B; my = -(1 - tb) * (1 - tb); }
       }
       d[i] = 127.5 + 127.5 * mx; d[i + 1] = 127.5 + 127.5 * my; d[i + 2] = 128; d[i + 3] = 255;
     }
