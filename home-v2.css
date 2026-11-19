@@ -306,3 +306,12 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .ms-link:hover{border-bottom-color:#111}
 @media (max-width:699px){.meet-studio{grid-template-columns:1fr;gap:20px;margin:56px 0 0}.ms-logo img{width:140px}}
 @media (min-width:700px){.meet-studio{width:min(100%,680px)}}
+/* Meet v7: long journey paragraph in flow under the fade, then a centred studio sign-off */
+@media (min-width:700px){.meet-bio{position:relative;left:auto;bottom:auto;transform:none;margin:-7% auto 0;width:min(100%,680px)}}
+.meet-bio{font:500 clamp(18px,1.55vw,22px)/1.55 var(--sans);letter-spacing:-.01em;color:#1a1d24}
+.meet-studio{display:flex;flex-direction:column;align-items:center;gap:0;width:min(100%,680px);margin:clamp(72px,8vw,112px) auto 0;padding:0;border-top:0;text-align:center}
+.ms-logo{padding:0}
+.ms-logo img{width:clamp(160px,13vw,190px)}
+.ms-lead{margin:28px 0 0;max-width:30ch;font:600 clamp(20px,1.9vw,26px)/1.3 var(--sans);letter-spacing:-.02em;color:#111}
+.ms-link{margin-top:18px}
+@media (max-width:699px){.meet-studio{margin:56px 0 0}.ms-logo img{width:150px}.meet-bio{margin:-8px 16px 0}}
