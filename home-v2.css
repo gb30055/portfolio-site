@@ -162,29 +162,3 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .meet-bio{z-index:2}
 @media (max-width:699px){.meet-bg{left:0;right:0;top:4%;bottom:14%}}
 @media (prefers-reduced-motion:reduce){.meet-bg{transform:none}}
-/* Meet v3b: the whole scene blurred behind the subject, like portrait mode */
-.meet-bg{left:6%;right:6%;top:14%;bottom:10%;border-radius:28px;background-position:50% 30%;background-size:cover;
-  -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%);filter:saturate(1.3)}
-/* Meet v3c: clean café plate behind the subject */
-.meet-bg{filter:none;background-position:50% 45%}
-@media (max-width:699px){.meet-bg{left:0;right:0;top:calc(100vw * .1);bottom:auto;height:calc(100vw * .7);border-radius:0}}
-/* Meet v4: the photo panel and the portrait are one piece (no muddy fades, no box edges);
-   parallax happens inside the panel and on the headline */
-.meet-h{transform:translate3d(0,calc(var(--py) * -36px),0)}
-.meet-stage{margin-top:-.30em}
-.meet-img{-webkit-mask-image:none;mask-image:none;transform:none;clip-path:inset(-60% 0 0 0 round 0 0 28px 28px)}
-.meet-bg{left:0;right:0;top:20%;bottom:0;border-radius:28px;overflow:hidden;background:#2a2622;-webkit-mask-image:none;mask-image:none;transform:none;filter:none}
-.meet-bg::before{content:"";position:absolute;inset:-14% -4%;background:url(assets/genc-portrait-bg.webp) 50% 45%/cover;transform:translate3d(0,calc(var(--py) * 70px),0) scale(1.04);will-change:transform}
-.meet-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.18));pointer-events:none}
-.meet-bio{position:static;transform:none;translate:none;width:auto;max-width:720px;margin:36px auto 0;text-align:left}
-@media (max-width:699px){
-  .meet-stage{width:100%;margin-left:0;margin-right:0}
-  .meet-bg{top:20%;bottom:0;height:auto;border-radius:20px}
-  .meet-img{clip-path:inset(-60% 0 0 0 round 0 0 20px 20px)}
-  .meet-bio{margin:24px 0 0;font-size:20px}
-}
-@media (prefers-reduced-motion:reduce){.meet-bg::before{transform:scale(1.04)}}
-.meet-img{display:block;vertical-align:top}.meet-bio{position:relative;z-index:2}
-.meet-bio{left:auto;bottom:auto}.meet-bg{bottom:2px}
-.meet-img{clip-path:none;will-change:auto}.meet-stage{clip-path:inset(-40% 0 0 0 round 0 0 28px 28px)}.meet-bg{clip-path:inset(0 round 28px);bottom:0}@media (max-width:699px){.meet-stage{clip-path:inset(-40% 0 0 0 round 0 0 20px 20px)}.meet-bg{clip-path:inset(0 round 20px)}}
-.meet{overflow-x:visible}
