@@ -60,13 +60,25 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
   var L=+w.dataset.len,wave=w.querySelector('.wn-wave'),bars=w.querySelector('.wn-bars'),sel=w.querySelector('.wn-sel'),pins=w.querySelector('.wn-pins'),
       form=w.querySelector('.wn-form'),input=form.querySelector('input'),at=form.querySelector('.wn-at b'),list=w.querySelector('.wn-list'),hint=w.querySelector('.wn-hint');
   var N=innerWidth<600?56:90,seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
-  for(var i=0;i<N;i++){var b=document.createElement('i');var x=i/N,env=.35+.65*Math.abs(Math.sin(x*9.4))*(.6+.4*Math.sin(x*3.1+1));b.style.height=Math.max(8,Math.round((.25+.75*rnd())*env*100))+'%';bars.appendChild(b)}
-  var B=bars.children,notes=[{a:31,b:57,who:'AG',name:'Alex Garcia',text:'I think this part could be a little slower.'}],cur=null;
+  var PK=(w.dataset.peaks||'').split(',').map(Number).filter(function(v){return !isNaN(v)});
+  for(var i=0;i<N;i++){var b=document.createElement('i'),h;if(PK.length){var a0=Math.floor(i/N*PK.length),a1=Math.max(a0+1,Math.floor((i+1)/N*PK.length)),m=0;for(var j=a0;j<a1;j++)m=Math.max(m,PK[j]);h=Math.max(6,m)}else{var x=i/N,env=.35+.65*Math.abs(Math.sin(x*9.4))*(.6+.4*Math.sin(x*3.1+1));h=Math.max(8,Math.round((.25+.75*rnd())*env*100))}b.style.height=h+'%';bars.appendChild(b)}
+  // Real audio: play button, playhead, and selecting a part plays that part.
+  // Web Audio (decoded up front) so seeking works on any server, even without range requests.
+  var ph=w.querySelector('.wn-ph'),pb=w.querySelector('.wn-play'),ac=null,buf=null,srcN=null,t0=0,off=0,stopAt=L,raf=0,want=null;
+  var au=w.dataset.src?{paused:true,get currentTime(){return this.paused?off:Math.min(L,off+(ac.currentTime-t0))}}:null;
+  if(au){fetch(w.dataset.src).then(function(r){return r.arrayBuffer()}).then(function(d){ac=ac||new (window.AudioContext||window.webkitAudioContext)();return ac.decodeAudioData(d)}).then(function(b){buf=b;if(want){playRange(want[0],want[1])}}).catch(function(){})}
+  function stop(keep){if(srcN){srcN.onended=null;try{srcN.stop()}catch(e){}srcN=null}if(au&&!au.paused){off=au.currentTime;au.paused=true}cancelAnimationFrame(raf);w.classList.remove('playing');pb&&pb.setAttribute('aria-label','Play the track');if(!keep)paint()}
+  function tick(){if(!au||au.paused)return;var t=au.currentTime;ph.hidden=false;ph.style.left=t/L*100+'%';paint();if(t>=stopAt-.02){stop();if(stopAt>=L-.05){off=0;ph.hidden=true;paint()}return}raf=requestAnimationFrame(tick)}
+  function playRange(a,b){if(!au)return;if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}}if(ac.state==='suspended')ac.resume();if(!buf){want=[a,b];return}want=null;stop(true);
+    srcN=ac.createBufferSource();srcN.buffer=buf;srcN.connect(ac.destination);off=a;stopAt=b;t0=ac.currentTime;srcN.start(0,a,Math.max(.05,b-a));au.paused=false;
+    w.classList.add('playing');pb&&pb.setAttribute('aria-label','Pause');raf=requestAnimationFrame(tick)}
+  if(pb)pb.onclick=function(){if(!au)return;if(!au.paused){stop();return}var from=off>=L-.1?0:off;playRange(from,L)};
+  var B=bars.children,notes=[{a:6,b:12.5,who:'AG',name:'Alex Garcia',text:'I think this part could be a little slower.'}],cur=null;
   function fmt(t){t=Math.round(t);return ('0'+Math.floor(t/60)).slice(-2)+':'+('0'+t%60).slice(-2)}
-  function paint(){for(var i=0;i<N;i++){var t=(i+.5)/N*L,c='';notes.forEach(function(n){if(t>=n.a&&t<=n.b)c=n.mine?'m':'c'});if(cur&&t>=cur.a&&t<=cur.b)c='s';B[i].className=c}}
+  function paint(){for(var i=0;i<N;i++){var t=(i+.5)/N*L,c='';notes.forEach(function(n){if(t>=n.a&&t<=n.b)c=n.mine?'m':'c'});if(cur&&t>=cur.a&&t<=cur.b)c='s';if(!c&&au&&!ph.hidden&&t<=au.currentTime)c='p';B[i].className=c}}
   function pin(n,k){var p=document.createElement('button');p.type='button';p.className='wn-pin'+(n.mine?' mine':'');p.style.left=Math.min(88,Math.max(12,(n.a+n.b)/2/L*100))+'%';
     p.innerHTML='<i>'+n.who+'</i><span></span>';p.querySelector('span').textContent=n.text;p.setAttribute('aria-label',n.name+' at '+fmt(n.a)+' to '+fmt(n.b)+': '+n.text);
-    p.onclick=function(){[].forEach.call(list.children,function(li,j){li.classList.toggle('on',j===k)})};pins.appendChild(p);
+    p.onclick=function(){[].forEach.call(list.children,function(li,j){li.classList.toggle('on',j===k)});playRange(n.a,n.b)};pins.appendChild(p);
     var li=document.createElement('li');li.className=n.mine?'mine':'';li.innerHTML='<i>'+n.who+'</i><b>'+n.name+'<small>'+fmt(n.a)+' – '+fmt(n.b)+'</small></b><span></span>';li.querySelector('span').textContent=n.text;list.appendChild(li)}
   function render(){pins.innerHTML='';list.innerHTML='';notes.forEach(pin);paint();var ps=[].slice.call(pins.children),rows=[[],[],[]],stack=0;ps.forEach(function(p){var r={left:p.offsetLeft-p.offsetWidth/2,right:p.offsetLeft+p.offsetWidth/2};for(var k=0;k<3;k++){if(!rows[k].some(function(q){return r.left<q.right+6&&r.right>q.left-6})){rows[k].push(r);p.style.bottom=(6+k*34)+'px';stack=Math.max(stack,k);break}}});w.querySelector('.wn-stage').style.paddingTop=(56+stack*34)+'px';pins.style.height=(52+stack*34)+'px'}
   function tAt(e){var r=wave.getBoundingClientRect();return Math.max(0,Math.min(L,(e.clientX-r.left)/r.width*L))}
@@ -74,7 +86,7 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
   var start=null;
   wave.addEventListener('pointerdown',function(e){wave.setPointerCapture(e.pointerId);start=tAt(e);cur={a:start,b:start};show()});
   wave.addEventListener('pointermove',function(e){if(start===null)return;var t=tAt(e);cur={a:Math.min(start,t),b:Math.max(start,t)};show()});
-  wave.addEventListener('pointerup',function(){if(start===null)return;start=null;if(cur.b-cur.a<3){var m=(cur.a+cur.b)/2;cur={a:Math.max(0,m-8),b:Math.min(L,m+8)}}show();form.hidden=false;hint.textContent='Now write your note';input.focus({preventScroll:true})});
+  wave.addEventListener('pointerup',function(){if(start===null)return;start=null;if(cur.b-cur.a<1){var m=(cur.a+cur.b)/2;cur={a:Math.max(0,m-2.5),b:Math.min(L,m+2.5)}}show();playRange(cur.a,cur.b);form.hidden=false;hint.textContent='Now write your note';input.focus({preventScroll:true})});
   wave.addEventListener('keydown',function(e){if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft'&&e.key!=='Enter')return;e.preventDefault();if(!cur)cur={a:0,b:15};if(e.key==='Enter'){form.hidden=false;input.focus();return}var d=e.key==='ArrowRight'?5:-5;var len=cur.b-cur.a;cur.a=Math.max(0,Math.min(L-len,cur.a+d));cur.b=cur.a+len;show()});
   form.querySelector('.wn-cancel').onclick=function(){cur=null;show();hint.textContent='Drag across the track'};
   form.addEventListener('submit',function(e){e.preventDefault();if(!cur)return;var t=input.value.trim()||'This part could be tighter.';notes.push({a:cur.a,b:cur.b,who:'You',name:'You',text:t,mine:true});input.value='';cur=null;show();render();hint.textContent='Pinned. Try another part'});

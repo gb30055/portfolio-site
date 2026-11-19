@@ -690,3 +690,10 @@ html.mp-on:not(.lb-on),html.mp-on:not(.lb-on) *{cursor:none!important}
 .mp-genc.talk .mp-chat{opacity:1;transform:none}
 .mp-genc.flip .mp-chat{left:auto;right:-6px;border-radius:16px 4px 16px 16px;transform-origin:100% 0}
 .mp-genc.flip .mp-tag{left:auto;right:-4px}
+/* Wavenote with a real vocal: play button, playhead, played bars */
+.wn-file{display:inline-flex;align-items:center;gap:10px}
+.wn-play{display:inline-grid;place-items:center;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:#111;color:#FFDC5C;cursor:pointer;transition:transform .15s}
+.wn-play:hover{transform:scale(1.06)}.wn-play:focus-visible{outline:3px solid #9db0ff;outline-offset:2px}
+.wn-play .i-pause,.wavenote.playing .wn-play .i-play{display:none}.wavenote.playing .wn-play .i-pause{display:block}
+.wn-ph{position:absolute;top:-8px;bottom:-8px;width:2px;margin-left:-1px;background:#111;border-radius:2px;pointer-events:none;z-index:2}
+.wn-bars i.p{background:#8d8d96}
