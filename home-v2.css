@@ -180,3 +180,22 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .v2home .cta-o{color:var(--ink,#000);border-color:rgba(0,0,0,.18);background:rgba(255,255,255,.55)}
 .v2home .cta-o:hover{border-color:rgba(0,0,0,.4);background:#fff}
 .v2home .close .fine{color:rgba(30,25,35,.55);position:relative}
+
+/* Image wall replaces the footer (port of the Framer ProximityImageWallLite) */
+.wall-sec{padding:0 12px 12px}
+.wall{position:relative;height:calc(100vh - 12px);height:calc(100svh - 12px);border-radius:var(--wall-r,28px);overflow:hidden;clip-path:inset(0 round var(--wall-r,28px));isolation:isolate;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;cursor:grab;background:rgba(255,255,255,.35)}
+.wall.is-drag{cursor:grabbing}
+.wall>script{display:none}
+.wall-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit}
+.wall-tile{position:absolute;left:0;top:0;border-radius:18px;overflow:hidden;background:rgba(255,255,255,.4);will-change:transform;transform-origin:center}
+.wall-tile img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none}
+.wall-rim{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:4}
+.wall-ov{position:fixed;inset:0;z-index:2147483000;touch-action:none;-webkit-tap-highlight-color:transparent}
+.wall-ov-bg{position:absolute;inset:-120px;background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);opacity:0;transition:opacity 420ms ease}
+.wall-ov-frame{position:absolute;transform-origin:center;transition:transform 420ms cubic-bezier(.22,1,.36,1),clip-path 420ms cubic-bezier(.22,1,.36,1),-webkit-clip-path 420ms cubic-bezier(.22,1,.36,1);will-change:transform;cursor:zoom-out}
+.wall-ov-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.wall-ov-x,.wall-ov-go{position:absolute;opacity:0;transition:opacity 300ms ease;z-index:7;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.wall-ov-x{width:48px;height:48px;border-radius:50%;border:0;padding:0;background:rgba(0,0,0,.75);box-shadow:0 2px 8px rgba(0,0,0,.25);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.wall-ov-go{transform:translate(-50%,-100%);padding:12px 22px;border-radius:999px;background:rgba(0,0,0,.75);color:#fff;font-size:15px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.wall-ov.open .wall-ov-bg,.wall-ov.open .wall-ov-x,.wall-ov.open .wall-ov-go{opacity:1}
+@media (prefers-reduced-motion:reduce){.wall-ov-frame,.wall-ov-bg{transition:none}}
