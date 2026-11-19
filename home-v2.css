@@ -266,3 +266,32 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .talk-btns .h-cta:not(.dark){background:rgba(255,255,255,.75)}
 @media (max-width:699px){.talk-card{padding:26px 20px 24px;border-radius:26px}.talk-eyebrow{font-size:14px}.talk-btns{gap:10px}}
 .talk-spec{background:none;color:inherit}
+/* Let's talk v3: dark card, the colour Q glowing on top, AI as the hero word */
+.talk-card.talk-dark{max-width:760px;padding:44px 48px 40px;background:rgba(10,10,16,.86);color:#fff;
+  -webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 40px 100px -30px rgba(10,10,40,.6)}
+.talk-dark::before{opacity:.9}
+.talk-q{position:relative;width:76px;margin:0 auto 22px}
+.talk-q img{position:relative;z-index:1;display:block;width:100%;height:auto}
+.talk-q::before{content:"";position:absolute;inset:-60% -80%;border-radius:50%;z-index:0;
+  background:radial-gradient(closest-side,rgba(255,229,81,.28),rgba(255,29,29,.14) 35%,rgba(0,255,255,.12) 60%,rgba(139,0,255,.1) 75%,transparent);filter:blur(14px);
+  animation:talk-q 6s ease-in-out infinite alternate}
+@keyframes talk-q{to{transform:scale(1.15);opacity:.75}}
+.talk-dark h2{margin:0;color:#fff!important;font:600 clamp(30px,4vw,52px)/1.06 var(--sans)!important;letter-spacing:-.035em}
+.talk-ai-l{color:rgba(255,255,255,.92)}
+.talk-ai{display:inline-block;font-size:1.5em;line-height:.9;letter-spacing:-.04em;padding:0 .04em;
+  background:linear-gradient(100deg,#FF1D1D 0%,#FFE551 30%,#fff 50%,#00FFFF 70%,#8B00FF 100%);background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:talk-ai 7s ease-in-out infinite alternate}
+@keyframes talk-ai{from{background-position:0 0}to{background-position:100% 0}}
+.talk-sub{margin:18px auto 0;max-width:34ch;font:500 clamp(16px,1.4vw,19px)/1.45 var(--sans);color:rgba(255,255,255,.66)}
+.talk-dark .talk-btns{margin-top:28px}
+.talk-dark .msplit{background:#fff;color:#111}
+.talk-dark .hero-split .h-cta.dark{color:#111}
+.talk-dark .m-copy{border-left-color:rgba(0,0,0,.14)}
+.talk-dark .m-copy:hover{background:rgba(0,0,0,.06)}
+.talk-dark .talk-btns .h-cta:not(.dark){background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.22)}
+.talk-dark .talk-btns .h-cta:not(.dark):hover{background:rgba(255,255,255,.16)}
+@media (max-width:699px){.talk-card.talk-dark{padding:30px 22px 26px}.talk-q{width:60px;margin-bottom:16px}}
+@media (prefers-reduced-motion:reduce){.talk-q::before,.talk-ai{animation:none}}
+.talk-card.talk-dark{background:rgba(9,9,14,.95)}
+.talk-q::before{inset:-45% -60%;background:radial-gradient(closest-side,transparent 38%,rgba(255,229,81,.22) 50%,rgba(255,29,29,.12) 62%,rgba(0,255,255,.1) 76%,rgba(139,0,255,.08) 88%,transparent)}
