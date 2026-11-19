@@ -325,3 +325,6 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
   -webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
   -webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent 100%);mask-image:radial-gradient(closest-side,#000 55%,transparent 100%)}
 @media (max-width:699px){.talk-card{padding:28px 12px 24px}.talk-card::after{inset:-50px -40px}}
+/* Bigger glow (Genc) */
+.talk-card::after{inset:-160px -260px -120px;-webkit-backdrop-filter:blur(28px);backdrop-filter:blur(28px)}
+@media (max-width:699px){.talk-card::after{inset:-110px -90px -80px}}
