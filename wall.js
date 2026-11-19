@@ -17,6 +17,7 @@
   try { items = JSON.parse(src.textContent); } catch (e) {}
   // { thumb, full, alt, link }
   var IM = items.filter(function (i) { return i && (i.thumb || i.full); });
+  IM = IM.slice(0, 20); // up to 20 images; they repeat across the endless wall
   if (!IM.length) return;
   IM.forEach(function (i) { i.thumb = i.thumb || i.full; i.full = i.full || i.thumb; });
 
