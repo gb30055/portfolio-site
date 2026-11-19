@@ -143,4 +143,12 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .meet .bg-photos figcaption::before{content:counter(fr,decimal-leading-zero) "  ";opacity:.6;white-space:pre}
 .film-a{--strip:rgba(255,255,255,.5);--perf:rgba(30,25,35,.13);--cap:rgba(30,25,35,.55)}
 .film-b{--strip:#1b1c21;--perf:rgba(255,255,255,.14);--cap:rgba(255,255,255,.55)}
-@media (max-width:899px){.meet .bg-photos{border-radius:0;padding:28px 16px 24px}}
+@media (max-width:899px){.meet .bg-photos{border-radius:0;padding:28px 16px 24px;scroll-padding:0 16px}}
+/* Meet v2: bigger portrait, dark headline, scroll parallax (--py from how.js, -1..1) */
+.meet{--py:0;overflow-x:clip}
+.meet-h{color:#111;transform:translate3d(0,calc(var(--py) * 70px),0);will-change:transform}
+.meet-stage{--w:min(calc(100vw - 32px),1240px);width:var(--w);margin-left:calc((100% - var(--w))/2);margin-right:calc((100% - var(--w))/2)}
+.meet-img{transform:translate3d(0,calc(var(--py) * -40px),0) scale(calc(1 + var(--py) * -.03));transform-origin:50% 100%;will-change:transform}
+.meet-bio{width:min(80%,680px);font-size:clamp(18px,2.1vw,28px);translate:0 calc(var(--py) * -30px)}
+@media (max-width:699px){.meet-stage{--w:calc(100% + 32px)}.meet-bio{translate:none}}
+@media (prefers-reduced-motion:reduce){.meet-h,.meet-img{transform:none}.meet-bio{translate:none}}

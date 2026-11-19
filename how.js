@@ -36,3 +36,7 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.querySelecto
   var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();var i=0;
     (function step(){t.textContent=s.slice(0,++i);if(i<s.length)setTimeout(step,i===4||i===12?160:70+Math.random()*60)})()},{threshold:.1});
   io.observe(t.parentNode);});
+// Meet section parallax: --py runs from 1 (section entering at the bottom) to -1 (leaving at the top)
+(function(){var m=document.getElementById('meet');if(!m||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var raf=0;
+  function f(){raf=0;var r=m.getBoundingClientRect(),c=r.top+Math.min(r.height,innerHeight*1.4)/2,p=(c-innerHeight/2)/innerHeight;m.style.setProperty('--py',Math.max(-1,Math.min(1,p)).toFixed(3))}
+  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);f();})();
