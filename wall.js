@@ -7,7 +7,7 @@
   if (!root) return;
 
   var CFG = {
-    minimumScale: 0.72, centerScale: 1, gap: 18, randomness: 0, rotation: 0,
+    minimumScale: 0.42, centerScale: 1, gap: 18, randomness: 0, rotation: 0,
     lens: true, lensWidth: 220, lensStrength: 0.7, colorSplit: false,
     frameRadius: 0, cornerRadius: 30, tileWidth: 190, tileHeight: 190,
     buttonLabel: 'View project'
@@ -97,15 +97,16 @@
     p.src = it.thumb;
   });
 
+  // Few, big, spread-out tiles (Genc's Framer reference): each image fits a
+  // square slot about a quarter of the wall wide; slots sit far apart in
+  // offset rows. Wide images keep their ratio inside the slot.
   function layout() {
     var minS = clamp(CFG.minimumScale, 0, 1), cS = Math.max(.2, CFG.centerScale);
-    var maxS = Math.max(1, cS, minS);
-    var maxTileW = Math.max(40, CFG.tileHeight * Math.max(.4, maxRatio));
-    var safeW = maxTileW * maxS, safeH = CFG.tileHeight * maxS;
-    var g = CFG.gap;
-    return { minS: minS, cS: cS, maxTileW: maxTileW, cellW: Math.max(24, safeW + g, safeW + Math.max(1, g * .35)), rowStep: Math.max(24, safeH + g) };
+    var S = clamp(W * .235, 130, 340);
+    return { minS: minS, cS: cS, S: S, cellW: S * 1.72, rowStep: Math.min(S * 1.72 * .75, Math.max(S * 1.15, H * .43)) };
   }
-  function tileW(i, L) { return Math.max(40, Math.min(L.maxTileW, CFG.tileHeight * Math.max(.4, ratios[i]))); }
+  function tileW(i, L) { var r = Math.max(.4, ratios[i]); return r >= 1 ? L.S : L.S * r; }
+  function tileH(i, L) { var r = Math.max(.4, ratios[i]); return r >= 1 ? L.S / r : L.S; }
 
   /* ---- lens ---- */
   // Lens only on the left and right edges: the wall is full-bleed, so there
@@ -201,9 +202,9 @@
     for (var y = -2; y < rows - 2; y++) {
       for (var x = -2; x < cols - 2; x++) {
         var gx = x + colOff, gy = y + rowOff, key = gx + ':' + gy;
-        var i = imgIndex(gx, gy), tw = tileW(i, L), th = CFG.tileHeight;
+        var i = imgIndex(gx, gy), tw = tileW(i, L), th = tileH(i, L);
         var shiftRow = Math.abs(gy % 2) === 1 ? cw * .5 : 0;
-        var tx = x * cw - wx + shiftRow + (cw - tw) * .5, ty = y * rs - wy;
+        var tx = x * cw - wx + shiftRow + (cw - tw) * .5, ty = y * rs - wy + (L.S - th) * .5;
         var cx = tx + tw * .5, cy = ty + th * .5;
         var t = Math.min(1, Math.hypot(cx - W * .5, cy - H * .5) / maxD);
         var sc = L.cS + (L.minS - L.cS) * t;
