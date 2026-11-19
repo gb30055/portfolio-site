@@ -1,6 +1,6 @@
 /* Multiplayer cursors, Figma style. The visitor is "Guest". A "Genc"
-   cursor hangs around near them, and when a section with a note comes
-   into view it drifts over to it and leaves a short message, once.
+   cursor hangs around near them. Rest the cursor on a screen, demo or
+   number that has a note, and Genc comes over and comments on it.
    Mouse only, off for reduced motion, hidden while the lightbox is open
    (the poke cursor owns that view). */
 (function () {
@@ -54,7 +54,7 @@
 
   var mx = -1, my = -1, seen = false;
   var gx = innerWidth + 60, gy = innerHeight * .7;   // Genc enters from the right
-  var mode = 'follow', visit = null, visitUntil = 0, nextAllowed = 0, typing = 0;
+  var mode = 'follow', visit = null, typing = 0;
 
   addEventListener('pointermove', function (e) {
     if (e.pointerType !== 'mouse') return;
@@ -64,35 +64,28 @@
   document.addEventListener('mouseleave', function () { layer.classList.add('away'); });
   document.addEventListener('mouseenter', function () { layer.classList.remove('away'); });
 
-  // Where Genc's cursor goes for a note: right at the thing it talks
-  // about, with the bubble in the nearest free space. Tries the right
-  // side, then the left, then above. Returns the cursor tip and side.
-  function anchorPoint(el, w, h) {
+  // The box that counts as "hovering" a note's target. For text, the
+  // actual words (padded a little), not the full-width block.
+  function hoverBox(el) {
     var r = el.getBoundingClientRect();
-    if (el.classList.contains('big-stat')) {
-      // Big numbers sit right under the section heading with text beside
-      // them, so the note goes after the heading's last word instead.
-      var sec = el.closest('section'), hd = sec && sec.querySelector('h2');
-      if (hd) {
-        var hr = document.createRange(); hr.selectNodeContents(hd);
-        var hs = hr.getClientRects(), q = hs.length ? hs[hs.length - 1] : hd.getBoundingClientRect();
-        if (q.right + 20 + 16 + w + 16 < innerWidth) return { x: q.right + 20, y: Math.min(q.top - 12, q.bottom - 22 - h), flip: false };
-      }
-    }
     if (/^(P|STRONG|B|SPAN)$/.test(el.tagName)) {
-      // text: use the actual words, not the full-width block
       var range = document.createRange(); range.selectNodeContents(el);
-      var rs = range.getClientRects(); if (rs.length) r = el.classList.contains('big-stat') ? rs[0] : rs[rs.length - 1];
+      var rs = range.getClientRects(), u = null;
+      for (var i = 0; i < rs.length; i++) {
+        var q = rs[i];
+        u = u ? { left: Math.min(u.left, q.left), top: Math.min(u.top, q.top), right: Math.max(u.right, q.right), bottom: Math.max(u.bottom, q.bottom) }
+              : { left: q.left, top: q.top, right: q.right, bottom: q.bottom };
+      }
+      if (u) r = { left: u.left - 12, top: u.top - 12, right: u.right + 12, bottom: u.bottom + 12 };
     }
-    var gap = 14, edge = 16;
-    if (r.right + gap + 16 + w + edge < innerWidth && !el.classList.contains('big-stat'))
-      return { x: r.right + gap, y: r.top - 6, flip: false };
-    if (r.left - gap - w - 6 > edge)
-      return { x: r.left - gap, y: r.top - 6, flip: true };
-    // screens and demos: point inside the top-right corner, like a Figma comment
-    if (!/^(P|STRONG|B|SPAN)$/.test(el.tagName) && r.width > w + 80)
-      return { x: r.right - w - 40, y: r.top + 58, flip: false };
-    return { x: Math.max(edge, Math.min(r.left + 24, innerWidth - w - 40)), y: r.top - 26 - h, flip: false };
+    return r;
+  }
+  function hovered() {
+    for (var i = 0; i < notes.length; i++) {
+      var r = hoverBox(notes[i].el);
+      if (mx >= r.left && mx <= r.right && my >= r.top && my <= r.bottom) return notes[i];
+    }
+    return null;
   }
   function measure(text) {
     var c = chat.cloneNode(); c.textContent = text;
@@ -106,18 +99,22 @@
     typing = setInterval(function () { chat.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typing); }, 26);
     live.textContent = 'Genc: ' + text;
   }
-  function pickNote(now) {
-    if (now < nextAllowed || !seen || mode !== 'follow') return;
-    var vh = innerHeight;
-    for (var i = 0; i < notes.length; i++) {
-      var n = notes[i]; if (n.done) continue;
-      var r = n.el.getBoundingClientRect();
-      if (r.top > vh * .18 && r.top < vh * .6) {
-        n.done = true; n.m = measure(n.text); n.start = now; visit = n; mode = 'visit';
-        visitUntil = now + 1100 + n.text.length * 26 + 3200;
-        setTimeout(function () { if (visit === n) say(n.text); }, 650);
-        return;
-      }
+  // Hover rules: rest on a target for a moment and Genc comes over to
+  // your cursor and says the note. Move off it and Genc goes back to
+  // hanging around. Coming back to it says it again.
+  var hoverNote = null, hoverSince = 0, leftAt = 0;
+  function track(now) {
+    var h = hovered();
+    if (h !== hoverNote) { hoverNote = h; hoverSince = now; }
+    if (mode === 'follow' && hoverNote && now - hoverSince > 350) {
+      visit = hoverNote; visit.m = measure(visit.text); mode = 'visit'; leftAt = 0;
+      var n = visit;
+      setTimeout(function () { if (visit === n) say(n.text); }, 300);
+    }
+    if (mode === 'visit') {
+      if (hoverNote === visit) leftAt = 0;
+      else if (!leftAt) leftAt = now;
+      else if (now - leftAt > 600) { mode = 'follow'; visit = null; clearInterval(typing); genc.classList.remove('talk'); }
     }
   }
 
@@ -128,17 +125,12 @@
     layer.classList.toggle('off', lb || !seen);
     if (seen) {
       guest.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
-      pickNote(t);
+      track(t);
       var tx, ty, tau, flip = false;
       if (mode === 'visit' && visit) {
-        var p = anchorPoint(visit.el, visit.m.w, visit.m.h); tx = p.x; ty = p.y; tau = .35; flip = p.flip;
-        var vr = visit.el.getBoundingClientRect();
-        if (vr.bottom < 60 || vr.top > innerHeight) {
-          // scrolled away before it could be read: end it, and allow it again later
-          if (t < visit.start + 2500) visit.done = false;
-          visitUntil = 0;
-        }
-        if (t > visitUntil) { mode = 'follow'; visit = null; genc.classList.remove('talk'); nextAllowed = t + 2500; }
+        // right next to the guest's cursor, below its label; flip near the edge
+        flip = mx + 60 + visit.m.w > innerWidth - 16;
+        tx = flip ? mx - 8 : mx + 34; ty = my + 42; tau = .18;
       } else {
         // Hang around near the guest without sitting on them, with a slow drift.
         var side = mx > innerWidth - 260 ? -1 : 1;
