@@ -214,3 +214,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .wall-btns a:hover{transform:translateY(-2px)}
 .wall-btns a:focus-visible{outline:2px solid #0A5FE0;outline-offset:3px}
 @media (max-width:699px){.wall-btns a{width:64px;height:64px;border-radius:16px}.wall-talk h2{font-size:26px}}
+.wall-rim{box-shadow:none!important;background:linear-gradient(90deg,rgba(255,90,70,.16),transparent 40px,transparent calc(100% - 40px),rgba(70,130,255,.2))}

@@ -108,13 +108,11 @@
   function tileW(i, L) { return Math.max(40, Math.min(L.maxTileW, CFG.tileHeight * Math.max(.4, ratios[i]))); }
 
   /* ---- lens ---- */
+  // Lens only on the left and right edges: the wall is full-bleed, so there
+  // are no corners to round (the Framer soft-min version curved them).
   function lensField(px, py, w, h, band) {
-    var dx = w * .5 - Math.abs(px - w * .5), dy = h * .5 - Math.abs(py - h * .5);
-    var sx = px >= w * .5 ? 1 : -1, sy = py >= h * .5 ? 1 : -1;
-    var soft = Math.max(1, band * .3), m = Math.min(dx, dy);
-    var ex = Math.exp(-(dx - m) / soft), ey = Math.exp(-(dy - m) / soft), z = ex + ey;
-    var d = m - soft * Math.log(z), wx = ex / z * sx, wy = ey / z * sy, len = Math.hypot(wx, wy) || 1;
-    return { d: d, nx: wx / len, ny: wy / len };
+    var dx = w * .5 - Math.abs(px - w * .5);
+    return { d: dx, nx: px >= w * .5 ? 1 : -1, ny: 0 };
   }
   function frameLens(px, py, w, h, band, st) {
     var f = lensField(px, py, w, h, band), B = Math.max(1, band);
