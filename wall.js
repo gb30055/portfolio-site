@@ -109,10 +109,12 @@
   function tileH(i, L) { var r = Math.max(.4, ratios[i]); return r >= 1 ? L.S / r : L.S; }
 
   /* ---- lens ---- */
-  // Lens only on the left and right edges: the wall is full-bleed, so there
+  // Lens on the left, right and bottom edges: the wall is full-bleed, so there
   // are no corners to round (the Framer soft-min version curved them).
   function lensField(px, py, w, h, band) {
-    var dx = w * .5 - Math.abs(px - w * .5);
+    var dx = w * .5 - Math.abs(px - w * .5), db = h - py;
+    // Left, right and bottom edges bend; the top stays calm (it fades into the page).
+    if (db < dx) return { d: db, nx: 0, ny: 1 };
     return { d: dx, nx: px >= w * .5 ? 1 : -1, ny: 0 };
   }
   function frameLens(px, py, w, h, band, st) {
