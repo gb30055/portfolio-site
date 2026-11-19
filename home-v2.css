@@ -328,3 +328,6 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 /* Bigger glow (Genc) */
 .talk-card::after{inset:-160px -260px -120px;-webkit-backdrop-filter:blur(28px);backdrop-filter:blur(28px)}
 @media (max-width:699px){.talk-card::after{inset:-110px -90px -80px}}
+/* Glow must not extend the page below the wall */
+.wall-sec{overflow:clip}
+.r-mono.r-round{background:#fff;padding:2px}.r-mono.r-round img{border-radius:50%}
