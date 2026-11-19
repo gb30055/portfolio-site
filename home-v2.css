@@ -162,3 +162,9 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .meet-bio{z-index:2}
 @media (max-width:699px){.meet-bg{left:0;right:0;top:4%;bottom:14%}}
 @media (prefers-reduced-motion:reduce){.meet-bg{transform:none}}
+/* Meet v3b: the whole scene blurred behind the subject, like portrait mode */
+.meet-bg{left:6%;right:6%;top:14%;bottom:10%;border-radius:28px;background-position:50% 30%;background-size:cover;
+  -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%);filter:saturate(1.3)}
+/* Meet v3c: clean café plate behind the subject */
+.meet-bg{filter:none;background-position:50% 45%}
+@media (max-width:699px){.meet-bg{left:0;right:0;top:calc(100vw * .1);bottom:auto;height:calc(100vw * .7);border-radius:0}}
