@@ -230,3 +230,23 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .hb-lab{font:500 15px/1.3 var(--sans);color:#4a5160;max-width:12ch}
 @media (max-width:1023px){.hero-bento{max-width:520px}}
 @media (max-width:520px){.hb-tile{padding:18px;border-radius:22px}.hb-num{font-size:56px}.hb-lab{font-size:14px}}
+/* Hero v4: tiles stacked, number + label side by side, spanning exactly the headline's height */
+@media (min-width:1024px){
+  .v2home .hero-grid{grid-template-columns:1.6fr 1fr!important;grid-template-rows:auto auto auto auto;column-gap:56px;row-gap:0;align-items:start}
+  .v2home .hero-grid>div:first-child{display:contents}
+  .v2home .hero-grid>div:first-child>*{grid-column:1}
+  .hero-bento{grid-column:2;grid-row:2;align-self:stretch;grid-template-columns:1fr;grid-template-rows:1fr 1fr;gap:14px;padding:.12em 0 .06em}
+}
+.hb-tile{position:relative;overflow:hidden;flex-direction:row;align-items:center;justify-content:flex-start;gap:22px;aspect-ratio:auto;min-height:120px;padding:0 32px;border-radius:30px;
+  background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(255,255,255,.62));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(17,17,17,.045),0 1px 2px rgba(17,17,17,.04),0 24px 48px -28px rgba(30,50,110,.28)}
+.hb-tile::after{content:"";position:absolute;inset:auto -20% -60% 40%;height:120%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(120,150,255,.16),rgba(255,120,200,.08) 55%,transparent);filter:blur(10px)}
+.hb-num{position:relative;z-index:1;font:600 clamp(72px,7.6vw,118px)/.8 var(--sans);letter-spacing:-.06em;
+  background:linear-gradient(180deg,#111 30%,#3b4256);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.hb-lab{position:relative;z-index:1;font:600 clamp(16px,1.35vw,20px)/1.2 var(--sans);letter-spacing:-.01em;color:#111;max-width:10ch}
+.hb-lab small{display:block;margin-top:4px;font:500 13px/1.3 var(--sans);letter-spacing:0;color:#5b6272}
+@media (max-width:1023px){.hero-bento{grid-template-columns:1fr;max-width:560px;gap:12px}.hb-tile{min-height:104px;padding:0 24px;border-radius:24px}.hb-num{font-size:72px}}
+.v2home .hero-grid .avail-pill{justify-self:start}
+.hb-num{min-width:1.12em}
+@media (min-width:1024px){.hero-bento{padding:.16em 0 .1em}}
