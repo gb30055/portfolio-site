@@ -317,3 +317,11 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 @media (max-width:699px){.meet-studio{margin:56px 0 0}.ms-logo img{width:150px}.meet-bio{margin:-8px 16px 0}}
 /* Wall rim: sides and bottom */
 .wall-rim{background:linear-gradient(90deg,rgba(255,90,70,.16),transparent 40px,transparent calc(100% - 40px),rgba(70,130,255,.2)),linear-gradient(0deg,rgba(140,90,255,.16),transparent 40px)}
+/* Closing: no box, just a soft blurred glow behind the text (Genc) */
+.wall-sec .talk-card,.talk-card{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;isolation:isolate;padding:48px 64px 44px}
+.talk-card::before{display:none}
+.talk-card::after{content:"";position:absolute;inset:-70px -120px;z-index:-1;pointer-events:none;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(232,239,249,.96) 0%,rgba(232,239,249,.9) 45%,rgba(232,239,249,.55) 72%,rgba(232,239,249,0) 100%);
+  -webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
+  -webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent 100%);mask-image:radial-gradient(closest-side,#000 55%,transparent 100%)}
+@media (max-width:699px){.talk-card{padding:28px 12px 24px}.talk-card::after{inset:-50px -40px}}
