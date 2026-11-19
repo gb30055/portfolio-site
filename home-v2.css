@@ -250,3 +250,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .v2home .hero-grid .avail-pill{justify-self:start}
 .hb-num{min-width:1.12em}
 @media (min-width:1024px){.hero-bento{padding:.16em 0 .1em}}
+.hb-num{line-height:1;padding:0 .08em 0 .02em;margin:-.06em -.08em -.06em -.02em;min-width:1.2em}

@@ -60,7 +60,7 @@
   addEventListener('pointermove', function (e) {
     if (e.pointerType !== 'mouse') return;
     mx = e.clientX; my = e.clientY;
-    if (!seen) { seen = true; document.documentElement.classList.add('mp-on'); }
+    if (!seen) { seen = true; document.documentElement.classList.add('mp-on'); greet(); }
   }, { passive: true });
   document.addEventListener('mouseleave', function () { layer.classList.add('away'); });
   document.addEventListener('mouseenter', function () { layer.classList.remove('away'); });
@@ -100,11 +100,23 @@
     typing = setInterval(function () { chat.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typing); }, 26);
     live.textContent = 'Genc: ' + text;
   }
+  // On entering a project, Genc flies in, says hi and explains the game.
+  var GREETING = 'Hi, I\u2019m Genc. Rest your cursor on a screen and I\u2019ll tell you the story behind it.';
+  var greetEnd = 0;
+  function greet() {
+    mode = 'greet'; visit = { text: GREETING, m: measure(GREETING) };
+    setTimeout(function () { if (mode === 'greet') say(GREETING); }, 700);
+    greetEnd = performance.now() + 700 + GREETING.length * 26 + 3200;
+  }
   // Hover rules: rest on a target for a moment and Genc comes over to
   // your cursor and says the note. Move off it and Genc goes back to
   // hanging around. Coming back to it says it again.
   var hoverNote = null, hoverSince = 0, leftAt = 0;
   function track(now) {
+    if (mode === 'greet') {
+      if (now < greetEnd) return;
+      mode = 'follow'; visit = null; clearInterval(typing); genc.classList.remove('talk');
+    }
     var h = hovered();
     if (h !== hoverNote) { hoverNote = h; hoverSince = now; }
     if (mode === 'follow' && hoverNote && now - hoverSince > 350) {
@@ -128,10 +140,10 @@
       guest.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
       track(t);
       var tx, ty, tau, flip = false;
-      if (mode === 'visit' && visit) {
+      if ((mode === 'visit' || mode === 'greet') && visit) {
         // right next to the guest's cursor, below its label; flip near the edge
         flip = mx + 60 + visit.m.w > innerWidth - 16;
-        tx = flip ? mx - 8 : mx + 34; ty = my + 42; tau = .18;
+        tx = flip ? mx - 8 : mx + 34; ty = my + 42; tau = mode === 'greet' ? .3 : .18;
       } else {
         // Hang around near the guest without sitting on them, with a slow drift.
         var side = mx > innerWidth - 260 ? -1 : 1;
