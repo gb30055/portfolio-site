@@ -222,3 +222,11 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 /* Hero: just an availability pill (name + photo now live in Nice to meet you) */
 .status.avail-pill{display:inline-flex;align-items:center;margin:0 0 24px;padding:8px 16px 8px 14px;border-radius:999px;background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(17,17,17,.08);font:500 14px/1.2 var(--sans);color:#1d2b1f}
 .status.avail-pill>.dot{display:inline-flex;align-items:center;line-height:1.2}.status.avail-pill>.dot::before{vertical-align:0;margin-right:9px}
+/* Hero v3: headline left, two Apple-like bento tiles right */
+@media (min-width:1024px){.v2home .hero-grid{grid-template-columns:1.6fr 1fr!important;align-items:end;gap:56px}}
+.hero-bento{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hb-tile{display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:1;padding:24px 24px 22px;border-radius:28px;background:rgba(255,255,255,.72);box-shadow:inset 0 0 0 1px rgba(17,17,17,.05),0 1px 2px rgba(17,17,17,.04),0 12px 32px -12px rgba(30,50,90,.12);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.hb-num{font:600 clamp(64px,7.4vw,112px)/.9 var(--sans);letter-spacing:-.05em;color:#111}
+.hb-lab{font:500 15px/1.3 var(--sans);color:#4a5160;max-width:12ch}
+@media (max-width:1023px){.hero-bento{max-width:520px}}
+@media (max-width:520px){.hb-tile{padding:18px;border-radius:22px}.hb-num{font-size:56px}.hb-lab{font-size:14px}}
