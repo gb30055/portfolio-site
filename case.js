@@ -47,7 +47,7 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
 // Chapter nav: highlight the section in view, and the one you tap (v2)
 (function(){
   var nav=document.querySelector('.chapters');if(!nav)return;
-  var as=[].slice.call(nav.querySelectorAll('a')),secs=as.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
+  var as=[].slice.call(nav.querySelectorAll('.ch-tabs a, nav.chapters > div > a:not(.ch-home)')),secs=as.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
   var lock=0;
   function set(i){as.forEach(function(a,j){a.classList.toggle('on',j===i)});var a=as[i],d=a&&a.parentNode;if(a&&(a.offsetLeft<d.scrollLeft||a.offsetLeft+a.offsetWidth>d.scrollLeft+d.clientWidth))d.scrollTo({left:a.offsetLeft-16,behavior:'smooth'});}
   function upd(){if(Date.now()<lock)return;var y=innerHeight*.35,cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<=y)cur=i});if(cur>-1&&secs[cur].getBoundingClientRect().bottom<0)cur=-1;set(cur);var art=document.querySelector('.cs-body');nav.classList.toggle('gone',!!art&&art.getBoundingClientRect().bottom<80);}
@@ -367,17 +367,4 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     .then(function(){at(93.9,23.4);return w(1000,id)}).then(function(){click();set('list');say('Saved. Back in the list.');return w(2400,id)})
     .then(loop,function(){})}
   if('IntersectionObserver' in window) new IntersectionObserver(function(es){var was=vis;vis=es[0].isIntersecting;if(vis&&!was)loop();else if(!vis){run++;ed.classList.remove('auto')}},{threshold:.4}).observe(ed);
-})();
-// Pinned header: always reachable. Compacts after the hero; chapter tabs sit under it.
-(function(){
-  var top=document.querySelector('.top');if(!top)return;
-  var root=document.documentElement;
-  function hh(){root.style.setProperty('--hh',top.offsetHeight+'px')}
-  function upd(){root.classList.toggle('scrolled',scrollY>40);hh()}
-  addEventListener('scroll',function(){requestAnimationFrame(upd)},{passive:true});addEventListener('resize',hh);upd();
-  // Case studies menu: mark the current one, close on outside click or Escape
-  var d=top.querySelector('.nav-work');if(!d)return;
-  [].forEach.call(d.querySelectorAll('.nw-menu a'),function(a){if(a.pathname===location.pathname)a.setAttribute('aria-current','page')});
-  document.addEventListener('click',function(e){if(d.open&&!d.contains(e.target))d.open=false});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.open){d.open=false;d.querySelector('summary').focus()}});
 })();

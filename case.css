@@ -728,33 +728,10 @@ html.mp-on:not(.lb-on),html.mp-on:not(.lb-on) *{cursor:none!important}
    Project colours stay only inside product screens and data (stats, demos). */
 :root{--ds-ink:#111;--ds-paper:#fff;--ds-line-l:rgba(0,0,0,.18);--ds-line-d:rgba(255,255,255,.28);--ds-muted-d:#a9a9b3}
 
-/* Pinned header */
-.cs .top{position:sticky;top:0;z-index:60;transition:padding .25s,background .25s,box-shadow .25s}
-html.scrolled .cs .top{background:rgba(13,13,15,.86);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);box-shadow:0 0 0 100vmax rgba(13,13,15,.86);clip-path:inset(0 -100vmax -260px)}
-html.scrolled .cs .top a,html.scrolled .cs .top nav a,html.scrolled .cs .top summary{color:#e9e9ee}
-html.scrolled .cs .top .q-on-light{display:none}html.scrolled .cs .top .q-on-dark{display:block}
-.v2 .chapters{top:var(--hh,64px)}
-
-/* Case studies menu */
-.nav-work{position:relative}
-.nav-work summary{list-style:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:999px;font-size:15px;color:var(--muted);cursor:pointer}
-.dark-stage .nav-work summary{color:#e9e9ee}
-.nav-work summary::-webkit-details-marker{display:none}
-.nav-work summary::after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
-.nav-work[open] summary::after{transform:translateY(1px) rotate(-135deg)}
-.nw-menu{position:absolute;right:0;top:calc(100% + 8px);width:300px;padding:8px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 24px 60px -20px rgba(0,0,0,.45);display:grid;gap:2px;z-index:70}
-.top .nw-menu a,html.scrolled .cs .top .nw-menu a{display:grid;gap:2px;padding:10px 12px;border-radius:12px;color:#111;min-height:0}
-.nw-menu a b{font-weight:600;font-size:15px}
-.nw-menu a span{font-size:13px;color:#6b6f78}
-.nw-menu a:hover{background:#f1f3f7}
-.nw-menu a[aria-current]{background:#111;color:#fff}.nw-menu a[aria-current] span{color:#c9cbd2}
-.top .nw-menu .nw-all{display:block;margin-top:4px;padding:12px;border-top:1px solid #eee;border-radius:0 0 12px 12px;font-size:14px;color:#111}
-@media (max-width:640px){.v2 .top nav .nav-work{display:block}.v2 .top nav a:not(.nav-cta){display:none}.top .nw-menu a{display:grid!important}.nav-work summary{padding:0 8px;font-size:14px}.nw-menu{position:fixed;left:12px;right:12px;width:auto;top:calc(var(--hh,64px) + 4px)}}
-
 /* Header email button: white on dark, black on light (was yellow) */
-.dark-stage .top .msplit,html.scrolled .cs .top .msplit{background:#fff;color:#111}
-.dark-stage .top .nav-cta,html.scrolled .cs .top .nav-cta{background:none;color:#111!important}
-.dark-stage .top .m-copy,html.scrolled .cs .top .m-copy{color:#111;border-left-color:rgba(0,0,0,.18)}
+.dark-stage .top .msplit{background:#fff;color:#111}
+.dark-stage .top .nav-cta{background:none;color:#111!important}
+.dark-stage .top .m-copy{color:#111;border-left-color:rgba(0,0,0,.18)}
 
 /* Footer: calm, no repeated glass lines */
 .close-lines,.dark-end .close-lines{display:none!important}
@@ -775,10 +752,17 @@ html.scrolled .cs .top .q-on-light{display:none}html.scrolled .cs .top .q-on-dar
 .lb-btn:hover{background:#e9e9ee}
 .lb-btn:focus-visible,.cs img.zoomable:focus-visible{outline-color:#111}
 .tj-copy{background:#fff;color:#111}
-html.scrolled .cs .top{box-shadow:none;background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-html.scrolled .cs .top::before{content:"";position:absolute;top:0;bottom:0;left:-100vmax;right:-100vmax;z-index:-1;background:rgba(13,13,15,.86);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}
-html .cs .top .nw-menu a[aria-current]{background:#111;color:#fff}
-html .cs .top .nw-menu a[aria-current] span{color:#c9cbd2}
-.nav-work summary{white-space:nowrap}
-.nw-s{display:none}
-@media (max-width:640px){.nw-l{display:none}.nw-s{display:inline}}
+
+/* Section bar: tabs scroll, Home button fixed on the right (Genc) */
+.v2 .chapters .ch-in{display:flex;align-items:center;gap:12px;overflow:visible;width:min(100% - 32px,var(--max));margin:0 auto;padding:8px 0}
+.v2 .chapters .ch-tabs{flex:1;min-width:0;width:auto;margin:0;padding:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.v2 .chapters a.ch-home{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(0,0,0,.18);background:#fff;color:#111;font-size:14px;font-weight:500;text-decoration:none}
+.v2 .chapters a.ch-home:hover{background:#111;color:#fff;border-color:#111}
+@media (max-width:640px){.v2 .chapters a.ch-home{padding:0 12px;min-height:38px}.v2 .chapters a.ch-home{font-size:0;gap:0}.v2 .chapters a.ch-home svg{width:18px;height:18px}}
+/* Screen-reader live note must not add page height under the footer */
+body > p.sr{position:fixed!important;top:0;left:0}
+/* Footer Email me: outline like Download CV and LinkedIn, copy part kept (Genc) */
+.close-ctas .cta-split{background:none;box-shadow:inset 0 0 0 1px var(--ds-line-d)}
+.close-ctas .cta-split .cta-y,.close-ctas .cta-copy{color:#fff}
+.close-ctas .cta-copy{border-left-color:var(--ds-line-d)}
+.close-ctas .cta-split:hover{background:rgba(255,255,255,.08)}
