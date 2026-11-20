@@ -1,4 +1,4 @@
-/* Multiplayer cursors, Figma style. The visitor is "Guest". A "Genc"
+/* Multiplayer cursors, Figma style. The visitor is "Guest". A "Genc's assistant"
    cursor hangs around near them. Rest the cursor on a screen, demo or
    number that has a note, and Genc comes over and comments on it.
    Mouse only, off for reduced motion, hidden while the lightbox is open
@@ -7,7 +7,7 @@
   if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // DRAFT notes. Genc rewrites these in their own voice.
+  // DRAFT notes, spoken by Genc's assistant (third person about Genc). Genc may rewrite them.
   // [section, what the note points at, text it must contain (optional), note]
   var NOTES = {
     'fancircle': [
@@ -18,17 +18,17 @@
       ['#outcome', 'p', 'did not take off', 'Honest bit: it didn\u2019t take off. The money ran out first.']
     ],
     'career-navig8r': [
-      ['#problem', '.big-stat', '', '30 controls on one page. This is what I inherited.'],
+      ['#problem', '.big-stat', '', '30 controls on one page. This is what Genc inherited.'],
       ['#setup', 'figure', 'one job at a time', 'One question per step. That\u2019s most of the trick.'],
       ['#availability', '.avail', '', 'Try it: switch a day on. The pickers only show up when needed.'],
       ['#executive', '.tier-json', '', 'Copy this into any image model and change the "subject" lines to get new icons in the same 3D style.'],
       ['#outcome', '.big-stat', '', '13 \u2192 6 min is from walkthroughs, not analytics. Just so you know.']
     ],
     'scandlearn': [
-      ['#problem', '.big-stat', '', '21 steps to publish one training. I counted them.'],
+      ['#problem', '.big-stat', '', '21 steps to publish one training. Genc counted them.'],
       ['#research', 'strong, b', 'keep the control', 'Rivals looked nicer, we had more control. Keep the control, lose the maze.'],
       ['#search', '.gs-fig', '', 'More menus wouldn\u2019t fix findability. Search became the main road.'],
-      ['#outcome', '.big-stat', '', 'They kept me on for 4 more months. Best metric I got.']
+      ['#outcome', '.big-stat', '', 'They kept Genc on for 4 more months. The best metric there is.']
     ]
   };
   var key = Object.keys(NOTES).filter(function (k) { return location.pathname.indexOf('/' + k) > -1; })[0];
@@ -44,7 +44,7 @@
   var layer = document.createElement('div');
   layer.className = 'mp'; layer.setAttribute('aria-hidden', 'true');
   layer.innerHTML =
-    '<div class="mp-c mp-genc">' + ARROW + '<span class="mp-tag">Genc</span><span class="mp-chat"></span></div>' +
+    '<div class="mp-c mp-genc">' + ARROW + '<span class="mp-tag">Genc\u2019s assistant</span><span class="mp-chat"></span></div>' +
     '<div class="mp-c mp-guest">' + ARROW + '<span class="mp-tag">Guest</span></div>';
   document.body.appendChild(layer);
   var guest = layer.querySelector('.mp-guest'), genc = layer.querySelector('.mp-genc');
@@ -101,7 +101,7 @@
     live.textContent = 'Genc: ' + text;
   }
   // On entering a project, Genc flies in, says hi and explains the game.
-  var GREETING = 'Hi, I\u2019m Genc. Rest your cursor on a screen and I\u2019ll tell you the story behind it.';
+  var GREETING = 'Hi, I\u2019m Genc\u2019s assistant. Rest your cursor on a screen and I\u2019ll tell you the story behind it.';
   var greetEnd = 0;
   function greet() {
     mode = 'greet'; visit = { text: GREETING, m: measure(GREETING) };
