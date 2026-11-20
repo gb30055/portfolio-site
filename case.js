@@ -368,3 +368,16 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     .then(loop,function(){})}
   if('IntersectionObserver' in window) new IntersectionObserver(function(es){var was=vis;vis=es[0].isIntersecting;if(vis&&!was)loop();else if(!vis){run++;ed.classList.remove('auto')}},{threshold:.4}).observe(ed);
 })();
+// Pinned header: always reachable. Compacts after the hero; chapter tabs sit under it.
+(function(){
+  var top=document.querySelector('.top');if(!top)return;
+  var root=document.documentElement;
+  function hh(){root.style.setProperty('--hh',top.offsetHeight+'px')}
+  function upd(){root.classList.toggle('scrolled',scrollY>40);hh()}
+  addEventListener('scroll',function(){requestAnimationFrame(upd)},{passive:true});addEventListener('resize',hh);upd();
+  // Case studies menu: mark the current one, close on outside click or Escape
+  var d=top.querySelector('.nav-work');if(!d)return;
+  [].forEach.call(d.querySelectorAll('.nw-menu a'),function(a){if(a.pathname===location.pathname)a.setAttribute('aria-current','page')});
+  document.addEventListener('click',function(e){if(d.open&&!d.contains(e.target))d.open=false});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.open){d.open=false;d.querySelector('summary').focus()}});
+})();

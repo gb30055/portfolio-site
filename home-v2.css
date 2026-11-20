@@ -367,3 +367,10 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .talk-split .m-copy{color:var(--ink,#111);border-left-color:rgba(0,0,0,.18)}
 .talk-split .m-copy:hover{background:rgba(0,0,0,.05)}
 .talk-split:hover{background:#fff}
+/* Studio as its own black card: colour lockup leads, mission is quiet (Genc: logo got lost) */
+.meet-studio.ms-card{max-width:640px;margin:clamp(72px,8vw,120px) auto 0;padding:clamp(48px,6vw,72px) clamp(24px,5vw,56px) clamp(40px,5vw,56px);border-radius:32px;background:#0b0b0d;color:#fff;box-shadow:0 40px 80px -40px rgba(10,20,40,.45)}
+.ms-card .ms-logo img{width:clamp(190px,18vw,240px);height:auto}
+.ms-card .ms-lead{margin-top:clamp(32px,3.5vw,44px);max-width:34ch;font:400 clamp(16px,1.3vw,18px)/1.5 var(--sans);color:#a9a9b3}
+.ms-card .ms-link{margin-top:22px;color:#fff;border-bottom-color:rgba(255,255,255,.35)}
+.ms-card .ms-link:hover{border-bottom-color:#fff}
+@media (max-width:699px){.meet-studio.ms-card{border-radius:24px;margin-left:0;margin-right:0}}

@@ -41,11 +41,17 @@
   }).filter(Boolean);
 
   var ARROW = '<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 2.2 L19 9.4 L11.6 11.6 L9.4 19 Z" fill="currentColor" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+  // Like Figma: over something clickable the cursor turns into a hand,
+  // over a text field into a text beam. Same colour, same name tag.
+  var HAND = '<svg class="mp-hand" width="24" height="26" viewBox="0 0 24 26" aria-hidden="true"><path d="M8.6 1.6c1.3 0 2.2 1 2.2 2.3v6.2l.4-.1c1.1-.2 2.1.4 2.4 1.4 1-.4 2.2 0 2.6 1.1 1-.3 2.2.3 2.4 1.4l.6 3.6c.5 3-.4 5.4-2.7 7-1.3.9-2.8 1.3-4.6 1.3H11c-2.3 0-4.2-1-5.4-2.9L2.3 17c-.7-1-.4-2.3.5-2.9.9-.6 2.1-.4 2.8.4l.8 1V3.9c0-1.3 1-2.3 2.2-2.3z" fill="currentColor" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M10.8 10.4v5M13.6 11.6v4.2M16.2 12.8v3.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".85"/></svg>';
+  var BEAM = '<svg class="mp-beam" width="14" height="22" viewBox="0 0 14 22" aria-hidden="true"><path d="M3 2.2c2 0 3.2.6 4 1.6.8-1 2-1.6 4-1.6M3 19.8c2 0 3.2-.6 4-1.6.8 1 2 1.6 4 1.6M7 3.8v14.4M4.6 11h4.8" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M3 2.2c2 0 3.2.6 4 1.6.8-1 2-1.6 4-1.6M3 19.8c2 0 3.2-.6 4-1.6.8 1 2 1.6 4 1.6M7 3.8v14.4M4.6 11h4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  var CLICKABLE = 'a[href],button:not(:disabled),[role=button],label,select,summary,input[type=checkbox],input[type=radio],input[type=range],img.zoomable,[data-copy],[tabindex]:not([tabindex="-1"])';
+  var TEXTY = 'input:not([type]),input[type=text],input[type=search],input[type=email],textarea,[contenteditable=true]';
   var layer = document.createElement('div');
   layer.className = 'mp'; layer.setAttribute('aria-hidden', 'true');
   layer.innerHTML =
     '<div class="mp-c mp-genc">' + ARROW + '<span class="mp-tag">Genc\u2019s assistant</span><span class="mp-chat"></span></div>' +
-    '<div class="mp-c mp-guest">' + ARROW + '<span class="mp-tag">Guest</span></div>';
+    '<div class="mp-c mp-guest">' + ARROW + HAND + BEAM + '<span class="mp-tag">Guest</span></div>';
   document.body.appendChild(layer);
   var guest = layer.querySelector('.mp-guest'), genc = layer.querySelector('.mp-genc');
   var chat = genc.querySelector('.mp-chat');
@@ -53,13 +59,16 @@
   var live = document.createElement('p'); live.className = 'sr'; live.setAttribute('aria-live', 'polite');
   document.body.appendChild(live);
 
-  var mx = -1, my = -1, seen = false;
+  var mx = -1, my = -1, seen = false, guestKind = '';
   var gx = innerWidth + 60, gy = innerHeight * .7;   // Genc enters from the right
   var mode = 'follow', visit = null, typing = 0;
 
   addEventListener('pointermove', function (e) {
     if (e.pointerType !== 'mouse') return;
     mx = e.clientX; my = e.clientY;
+    var t = e.target && e.target.closest ? e.target : null;
+    var kind = !t ? '' : t.closest(TEXTY) ? 'beam' : t.closest(CLICKABLE) ? 'hand' : '';
+    if (kind !== guestKind) { guestKind = kind; guest.classList.toggle('is-hand', kind === 'hand'); guest.classList.toggle('is-beam', kind === 'beam'); }
     if (!seen) { seen = true; document.documentElement.classList.add('mp-on'); greet(); }
   }, { passive: true });
   document.addEventListener('mouseleave', function () { layer.classList.add('away'); });
