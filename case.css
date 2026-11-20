@@ -766,3 +766,4 @@ body > p.sr{position:fixed!important;top:0;left:0}
 .close-ctas .cta-split .cta-y,.close-ctas .cta-copy{color:#fff}
 .close-ctas .cta-copy{border-left-color:var(--ds-line-d)}
 .close-ctas .cta-split:hover{background:rgba(255,255,255,.08)}
+@media (max-width:640px){.v2 .chapters a.ch-home{min-height:44px;min-width:44px;justify-content:center}}

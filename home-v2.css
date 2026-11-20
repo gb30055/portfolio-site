@@ -374,3 +374,5 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 .ms-card .ms-link{margin-top:22px;color:#fff;border-bottom-color:rgba(255,255,255,.35)}
 .ms-card .ms-link:hover{border-bottom-color:#fff}
 @media (max-width:699px){.meet-studio.ms-card{border-radius:24px;margin-left:0;margin-right:0}}
+/* The growing top-lines image stays behind the content below the hero (it greyed out "Selected work") */
+#work,.how,#experience{position:relative;z-index:1}
