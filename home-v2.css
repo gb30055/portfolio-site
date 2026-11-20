@@ -361,3 +361,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
   .clock b{white-space:nowrap}
 }
 @media (max-width:699px){.meet-h{transform:none!important}}
+@media (max-width:699px){.talk-btns>.h-cta.dark{flex-basis:100%}}
