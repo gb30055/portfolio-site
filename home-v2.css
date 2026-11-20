@@ -361,4 +361,9 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
   .clock b{white-space:nowrap}
 }
 @media (max-width:699px){.meet-h{transform:none!important}}
-@media (max-width:699px){.talk-btns>.h-cta.dark{flex-basis:100%}}
+/* Closing: Email me keeps its copy part but matches the white buttons */
+.talk-split{background:rgba(255,255,255,.75);color:var(--ink,#111);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.talk-split .h-cta.dark{color:var(--ink,#111)}
+.talk-split .m-copy{color:var(--ink,#111);border-left-color:rgba(0,0,0,.18)}
+.talk-split .m-copy:hover{background:rgba(0,0,0,.05)}
+.talk-split:hover{background:#fff}
