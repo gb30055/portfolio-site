@@ -171,7 +171,7 @@ TPL = open(os.path.join(ROOT, "_build", "case.tpl.html")).read()
 OLD_FOOTER = """<footer class="contact wrap">
   <h2>Let's talk.</h2>
   <a class="mail" href="mailto:gencberisha3@gmail.com">gencberisha3@gmail.com</a>
-  <p class="links"><a href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a><a href="../genc-berisha-cv.pdf">Download CV</a></p>
+  <p class="links"><a href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a><a href="../genc-berisha-cv.pdf" target="_blank" rel="noopener">Download CV</a></p>
   <p class="fine">© 2026 Genc Berisha.</p>
 </footer>"""
 exec(open(os.path.join(ROOT, "_build", "fancircle_v2.py")).read())

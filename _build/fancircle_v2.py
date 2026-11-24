@@ -29,7 +29,7 @@ V2_FOOTER = ('<footer class="contact close">'
   '<svg class="i-copy" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>'
   '<svg class="i-ok" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
   '<span class="cta-tip" aria-live="polite"></span></button></span>'
-  '<a class="cta-o" href="../genc-berisha-cv.pdf">Download CV</a><a class="cta-o" href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a></div>'
+  '<a class="cta-o" href="../genc-berisha-cv.pdf" target="_blank" rel="noopener">Download CV</a><a class="cta-o" href="https://www.linkedin.com/in/genc-berisha">LinkedIn</a></div>'
   '<p class="fine">© 2026 Genc Berisha · The Qualia Lab</p></div>'
   '<div class="close-lines" aria-hidden="true"></div></footer>')
 
