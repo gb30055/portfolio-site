@@ -12,6 +12,8 @@
     frameRadius: 0, cornerRadius: 30, tileWidth: 190, tileHeight: 190,
     buttonLabel: 'View project'
   };
+  // Phones: tighter corners on the tiles (Genc, 2026-11-24).
+  if (matchMedia('(max-width:699px)').matches) CFG.cornerRadius = 12;
   var src = root.querySelector('script[type="application/json"]');
   var items = [];
   try { items = JSON.parse(src.textContent); } catch (e) {}
