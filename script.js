@@ -138,7 +138,8 @@ var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classLis
   var cta=document.querySelector('.hero-ctas'), top=document.querySelector('header.top');
   if(!cta||!top) return;
   var html=document.documentElement;
-  function onScroll(){ html.classList.toggle('hdr-stuck', scrollY>8); }
+  var dark=document.querySelector('.ms-card');
+  function onScroll(){ html.classList.toggle('hdr-stuck', scrollY>8); if(dark) html.classList.toggle('hdr-dark', dark.getBoundingClientRect().top < top.offsetHeight/2); }
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
   new IntersectionObserver(function(e){ html.classList.toggle('hdr-mail', !e[0].isIntersecting && e[0].boundingClientRect.top < 0); }, {rootMargin:'-64px 0px 0px 0px'}).observe(cta);
 })();

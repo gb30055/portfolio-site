@@ -401,3 +401,43 @@ html.hdr-stuck .top::before{opacity:1}
 .top .nav-split{transition:opacity .25s ease,visibility .25s}
 html:not(.hdr-mail) .top .nav-split{opacity:0;visibility:hidden}
 html{scroll-padding-top:76px}
+
+/* Dark ending (Genc, 2026-11-24): from The Qualia Lab block to the end of the page,
+   one continuous black background, hard edge at the top, no fade. */
+:root{--end:#0b0b0d}
+.meet{padding-bottom:0}
+.meet-studio.ms-card{max-width:none;width:100vw;margin-left:calc(50% - 50vw);margin-right:0;margin-bottom:0;border-radius:0;box-shadow:none;padding-top:clamp(72px,8vw,120px);padding-bottom:clamp(40px,5vw,72px);background:var(--end)}
+@media (max-width:699px){.meet-studio.ms-card{margin-left:calc(50% - 50vw);border-radius:0}}
+.wall-sec{background:var(--end)}
+.wall{background:transparent}
+.wall-tile{background:rgba(255,255,255,.06)}
+.talk-card::after{background:radial-gradient(closest-side,rgba(11,11,13,.95) 0%,rgba(11,11,13,.88) 45%,rgba(11,11,13,.5) 72%,rgba(11,11,13,0) 100%)}
+.wall-talk .talk-card h2{color:#fff}
+.talk-eyebrow{color:#a9a9b3}
+/* buttons: white on black (design system) */
+.talk-btns .h-cta:not(.dark){background:#fff;color:#111;box-shadow:none}
+.talk-split{background:#fff;box-shadow:none}
+.talk-split:hover{background:#f1f1f3}
+html{background:var(--end)}
+body{background:var(--page,#E4ECF7)}
+/* Sticky header turns dark over the dark ending */
+html.hdr-dark .top::before{background:rgba(11,11,13,.72);box-shadow:inset 0 -1px 0 rgba(255,255,255,.08)}
+html.hdr-dark .top .name.logo{color:#fff}
+html.hdr-dark .top .name.logo .q-on-light{display:none}
+html.hdr-dark .top .name.logo .q-on-dark{display:inline-block}
+html.hdr-dark .top .logo-text small{color:#a9a9b3}
+html.hdr-dark .top nav a:not(.nav-cta){color:#c9c9d1}
+html.hdr-dark .top nav a:not(.nav-cta):hover{color:#fff}
+html.hdr-dark .top .nav-split{background:#fff}
+html.hdr-dark .top .nav-split .nav-cta,html.hdr-dark .top .nav-split .m-copy{color:#111}
+html.hdr-dark .top .nav-split .m-copy{border-left-color:rgba(0,0,0,.18)}
+.wall-talk .talk-card .talk-direct{color:#d4d4da}
+.meet .meet-studio.ms-card{max-width:none;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+.talk-card::after{background:radial-gradient(closest-side,rgba(11,11,13,.85) 0%,rgba(11,11,13,.7) 50%,rgba(11,11,13,0) 100%)}
+/* let the black band reach the screen edges (the .meet clip cut it to the column); clip the portrait instead */
+.meet{overflow-x:visible}
+.meet-stage{overflow-x:clip}
+/* Mission as a big white statement (Genc's mockup, 2026-11-24) */
+.ms-card .ms-lead{max-width:none;margin-top:clamp(40px,4.5vw,64px);font:600 clamp(26px,3.3vw,48px)/1.15 var(--sans);letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.ms-card .ms-link{margin-top:clamp(28px,3vw,40px)}
+@media (max-width:699px){.ms-br{display:none}}
