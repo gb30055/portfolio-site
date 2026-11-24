@@ -132,3 +132,13 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
 // Footer glass fades in as you arrive
 (function(){var l=document.querySelector('.close-lines');if(!l)return;if(!('IntersectionObserver' in window)){l.classList.add('on');return}
 var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classList.add('on');io.disconnect()}},{threshold:.2});io.observe(l.parentNode);})();
+
+// Sticky homepage header: frosted once scrolled; its Email me shows only after the hero's has gone.
+(function(){
+  var cta=document.querySelector('.hero-ctas'), top=document.querySelector('header.top');
+  if(!cta||!top) return;
+  var html=document.documentElement;
+  function onScroll(){ html.classList.toggle('hdr-stuck', scrollY>8); }
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  new IntersectionObserver(function(e){ html.classList.toggle('hdr-mail', !e[0].isIntersecting && e[0].boundingClientRect.top < 0); }, {rootMargin:'-64px 0px 0px 0px'}).observe(cta);
+})();
