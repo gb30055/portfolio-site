@@ -449,3 +449,11 @@ html.hdr-dark .top nav .nav-cv:hover{background:rgba(255,255,255,.08)}
 @media (max-width:640px){.top nav a.nav-cv{display:inline-flex;padding:0 14px;margin:0}.top nav{gap:8px}}
 .top nav .nav-cta,.top nav .nav-cv{white-space:nowrap}
 @media (max-width:374px){.top .logo-text{display:none}.top nav a.nav-cv{padding:0 12px}}
+/* Drifting light from thequalialab.com, inside The Qualia Lab block */
+.meet .meet-studio.ms-card{position:relative;overflow:hidden;isolation:isolate}
+.ms-card>*:not(.ms-glow){position:relative;z-index:1}
+.ms-glow{position:absolute;left:0;top:0;z-index:0;border-radius:50%;pointer-events:none;will-change:transform;
+  background:radial-gradient(circle closest-side,#f3e46a 0%,#ece070 40%,#c9bf8e 62%,#a395b8 78%,#7b68cf 90%,rgba(70,40,170,0) 100%);
+  filter:blur(40px);opacity:0;transition:opacity 2.5s ease}
+.ms-glow.on{opacity:1}
+.ms-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:35%;z-index:0;pointer-events:none;background:linear-gradient(rgba(11,11,13,0),var(--end))}
