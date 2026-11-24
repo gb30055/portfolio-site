@@ -379,3 +379,13 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 
 /* Phones: the wall fills the whole screen, also once Safari's bars collapse */
 @media (max-width:699px){.wall{height:100vh;height:100lvh}}
+
+/* Phones: the closing block spans the full width, 16px from each edge (Genc, 2026-11-24) */
+@media (max-width:699px){
+  .wall-talk{padding:0 16px}
+  .wall-sec .talk-card,.talk-card{width:100%;max-width:none;box-sizing:border-box;padding:28px 0 24px}
+  .wall-talk .talk-card h2{max-width:none}
+  .talk-btns{max-width:none}
+  .talk-card::after{inset:-110px -70px -80px}
+  .talk-btns .h-cta{white-space:nowrap;padding-left:12px;padding-right:12px}
+}
