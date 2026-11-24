@@ -1,6 +1,6 @@
-/* Multiplayer cursors, Figma style. The visitor is "Guest". A "Genc's assistant"
-   cursor hangs around near them. Rest the cursor on a screen, demo or
-   number that has a note, and Genc comes over and comments on it.
+/* Multiplayer cursors, Figma style. The visitor is "Guest". "Genc's assistant"
+   stays out of the way: it only shows up when the visitor rests on a screen,
+   demo or number that has a note, types the note, and leaves again.
    Mouse only, off for reduced motion, hidden while the lightbox is open
    (the poke cursor owns that view). */
 (function () {
@@ -69,7 +69,7 @@
     var t = e.target && e.target.closest ? e.target : null;
     var kind = !t ? '' : t.closest(TEXTY) ? 'beam' : t.closest(CLICKABLE) ? 'hand' : '';
     if (kind !== guestKind) { guestKind = kind; guest.classList.toggle('is-hand', kind === 'hand'); guest.classList.toggle('is-beam', kind === 'beam'); }
-    if (!seen) { seen = true; document.documentElement.classList.add('mp-on'); greet(); }
+    if (!seen) { seen = true; document.documentElement.classList.add('mp-on'); }
   }, { passive: true });
   document.addEventListener('mouseleave', function () { layer.classList.add('away'); });
   document.addEventListener('mouseenter', function () { layer.classList.remove('away'); });
@@ -109,34 +109,25 @@
     typing = setInterval(function () { chat.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typing); }, 26);
     live.textContent = 'Genc: ' + text;
   }
-  // On entering a project, Genc flies in, says hi and explains the game.
-  var GREETING = 'Hi, I\u2019m Genc\u2019s assistant. Rest your cursor on a screen and I\u2019ll tell you the story behind it.';
-  var greetEnd = 0;
-  function greet() {
-    mode = 'greet'; visit = { text: GREETING, m: measure(GREETING) };
-    setTimeout(function () { if (mode === 'greet') say(GREETING); }, 700);
-    greetEnd = performance.now() + 700 + GREETING.length * 26 + 3200;
-  }
   // Hover rules: rest on a target for a moment and Genc comes over to
   // your cursor and says the note. Move off it and Genc goes back to
   // hanging around. Coming back to it says it again.
   var hoverNote = null, hoverSince = 0, leftAt = 0;
   function track(now) {
-    if (mode === 'greet') {
-      if (now < greetEnd) return;
-      mode = 'follow'; visit = null; clearInterval(typing); genc.classList.remove('talk');
-    }
     var h = hovered();
     if (h !== hoverNote) { hoverNote = h; hoverSince = now; }
     if (mode === 'follow' && hoverNote && now - hoverSince > 350) {
       visit = hoverNote; visit.m = measure(visit.text); mode = 'visit'; leftAt = 0;
+      // glide in from a short way off, not from across the page
+      gx = mx + 90; gy = my + 110;
+      genc.classList.add('here');
       var n = visit;
-      setTimeout(function () { if (visit === n) say(n.text); }, 300);
+      setTimeout(function () { if (visit === n) say(n.text); }, 250);
     }
     if (mode === 'visit') {
       if (hoverNote === visit) leftAt = 0;
       else if (!leftAt) leftAt = now;
-      else if (now - leftAt > 600) { mode = 'follow'; visit = null; clearInterval(typing); genc.classList.remove('talk'); }
+      else if (now - leftAt > 500) { mode = 'follow'; visit = null; clearInterval(typing); genc.classList.remove('talk', 'here'); }
     }
   }
 
@@ -149,14 +140,13 @@
       guest.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
       track(t);
       var tx, ty, tau, flip = false;
-      if ((mode === 'visit' || mode === 'greet') && visit) {
+      if (mode === 'visit' && visit) {
         // right next to the guest's cursor, below its label; flip near the edge
         flip = mx + 60 + visit.m.w > innerWidth - 16;
-        tx = flip ? mx - 8 : mx + 34; ty = my + 42; tau = mode === 'greet' ? .3 : .18;
+        tx = flip ? mx - 8 : mx + 34; ty = my + 42; tau = .18;
       } else {
-        // Hang around near the guest without sitting on them, with a slow drift.
-        var side = mx > innerWidth - 260 ? -1 : 1;
-        tx = mx + side * (130 + 18 * Math.sin(t / 1300)); ty = my + 70 + 14 * Math.cos(t / 1700); tau = .7; flip = side < 0;
+        // Hidden: it stays where it faded out.
+        tx = gx; ty = gy; tau = 1; flip = genc.classList.contains('flip');
       }
       var k = 1 - Math.exp(-dt / tau);
       gx += (tx - gx) * k; gy += (ty - gy) * k;
