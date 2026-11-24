@@ -1,4 +1,4 @@
-/* Proximity image wall: plain-JS port of Genc's ProximityImageWallLite
+/* Archive navigator. Proximity image wall: plain-JS port of Genc's ProximityImageWallLite
    Framer component. Infinite hex wall, tiles grow toward the centre,
    drag + momentum, wheel/touch scroll rule (down at the page end moves
    the wall, up scrolls the page), glass rim lens, tap to enlarge. */
@@ -19,7 +19,7 @@
   try { items = JSON.parse(src.textContent); } catch (e) {}
   // { thumb, full, alt, link }
   var IM = items.filter(function (i) { return i && (i.thumb || i.full); });
-  IM = IM.slice(0, 20); // up to 20 images; they repeat across the endless wall
+  IM = IM.slice(0, 30); // up to 30 images; they repeat across the endless wall
   if (!IM.length) return;
   IM.forEach(function (i) { i.thumb = i.thumb || i.full; i.full = i.full || i.thumb; });
 
