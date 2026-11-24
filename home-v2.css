@@ -351,7 +351,7 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
 }
 /* Bigger touch targets without changing the look */
 @media (pointer:coarse){
-  .roles .r-case{min-height:44px;display:inline-flex;align-items:center}
+  .roles .r-case:not(.r-none){min-height:44px;display:inline-flex;align-items:center}
   .ms-link,.name.logo{position:relative}
   .ms-link::after,.name.logo::after{content:"";position:absolute;inset:-12px -8px}
 }
@@ -389,3 +389,4 @@ article:hover .w-media video,article:hover .w-media img{transform:scale(1.025)}
   .talk-card::after{inset:-110px -70px -80px}
   .talk-btns .h-cta{white-space:nowrap;padding-left:12px;padding-right:12px}
 }
+@media (max-width:899px){.roles .r-none{display:none!important}}
