@@ -104,8 +104,10 @@
   // offset rows. Wide images keep their ratio inside the slot.
   function layout() {
     var minS = clamp(CFG.minimumScale, 0, 1), cS = Math.max(.2, CFG.centerScale);
-    var S = clamp(W * .235, 130, 340);
-    return { minS: minS, cS: cS, S: S, cellW: S * 1.72, rowStep: Math.min(S * 1.72 * .75, Math.max(S * 1.15, H * .43)) };
+    var S = clamp(W * .235, 130, 340), sp = 1.72;
+    // Phones: about twice as big, a bit closer together, and less shrinking at the edges (Genc, 2026-11-24).
+    if (W < 700) { S = clamp(W * .5, 150, 280); sp = 1.45; minS = Math.max(minS, .62); }
+    return { minS: minS, cS: cS, S: S, cellW: S * sp, rowStep: Math.min(S * sp * .75, Math.max(S * 1.15, H * .43)) };
   }
   function tileW(i, L) { var r = Math.max(.4, ratios[i]); return r >= 1 ? L.S : L.S * r; }
   function tileH(i, L) { var r = Math.max(.4, ratios[i]); return r >= 1 ? L.S / r : L.S; }
