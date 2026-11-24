@@ -282,8 +282,13 @@
     if (selectedKey || !touchStart) return;
     if (!touchOwner) {
       var t = e.touches[0]; if (!t) return;
-      var dx = t.clientX - touchStart.x, dy = t.clientY - touchStart.y, vert = Math.abs(dy) >= Math.abs(dx);
-      touchOwner = !vert || (dy < 0 && atPageEnd()) ? 'wall' : 'page';
+      var dx = t.clientX - touchStart.x, dy = t.clientY - touchStart.y;
+      // Wait for a real move before deciding: the first 1-2 px of a thumb
+      // swipe are noise, and deciding on them grabbed the wall when people
+      // meant to scroll the page. Only a clearly sideways swipe takes the wall.
+      if (Math.hypot(dx, dy) < 10) return;
+      var side = Math.abs(dx) > Math.abs(dy) * 1.5;
+      touchOwner = side || (dy < 0 && Math.abs(dy) >= Math.abs(dx) && atPageEnd()) ? 'wall' : 'page';
     }
     if (touchOwner === 'wall' && e.cancelable) e.preventDefault();
   }, { passive: false });
