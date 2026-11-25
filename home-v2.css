@@ -460,7 +460,7 @@ html.hdr-dark .top nav .nav-cv:hover{background:rgba(255,255,255,.08)}
 
 /* Phones: wall first, closer below (no overlap) */
 @media (max-width:699px){
-  .wall{height:78vh;height:78svh;-webkit-mask-image:linear-gradient(transparent,#000 16%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 16%,#000 82%,transparent)}
+  .wall{height:100vh;height:100svh;-webkit-mask-image:linear-gradient(transparent,#000 16%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 16%,#000 82%,transparent)}
   .wall-talk{position:relative;left:auto;right:auto;bottom:auto;padding:4px 16px 56px;margin-top:-8px}
   .talk-card::after{display:none}
   .wall-sec .talk-card,.talk-card{padding:0}
