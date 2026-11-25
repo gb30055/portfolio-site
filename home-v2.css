@@ -457,3 +457,11 @@ html.hdr-dark .top nav .nav-cv:hover{background:rgba(255,255,255,.08)}
   filter:blur(40px);opacity:0;transition:opacity 2.5s ease}
 .ms-glow.on{opacity:1}
 .ms-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:35%;z-index:0;pointer-events:none;background:linear-gradient(rgba(11,11,13,0),var(--end))}
+
+/* Phones: wall first, closer below (no overlap) */
+@media (max-width:699px){
+  .wall{height:78vh;height:78svh;-webkit-mask-image:linear-gradient(transparent,#000 16%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 16%,#000 82%,transparent)}
+  .wall-talk{position:relative;left:auto;right:auto;bottom:auto;padding:4px 16px 56px;margin-top:-8px}
+  .talk-card::after{display:none}
+  .wall-sec .talk-card,.talk-card{padding:0}
+}
