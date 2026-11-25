@@ -23,6 +23,44 @@
   if (!IM.length) return;
   IM.forEach(function (i) { i.thumb = i.thumb || i.full; i.full = i.full || i.thumb; });
 
+  /* Phones: a plain sideways slider instead of the free-drag wall (Genc, 2026-11-25).
+     Native horizontal scroll with snap, so vertical swipes always scroll the page. */
+  if (matchMedia('(max-width:699px)').matches) {
+    root.classList.add('wall-phone');
+    var row = document.createElement('div'); row.className = 'ws-row';
+    IM.forEach(function (it, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'ws-item';
+      b.setAttribute('aria-label', (it.alt || 'Image') + ', enlarge');
+      var im = document.createElement('img'); im.src = it.thumb; im.alt = ''; im.loading = i < 4 ? 'eager' : 'lazy'; im.decoding = 'async';
+      b.appendChild(im); b.addEventListener('click', function () { phoneOpen(it, im); }); row.appendChild(b);
+    });
+    root.appendChild(row);
+    var hint = document.querySelector('.wall-hint'); if (hint) hint.textContent = 'Archive. Swipe sideways, tap to open.';
+    row.addEventListener('scroll', function () { var s = root.closest('.wall-sec'); if (s && row.scrollLeft > 20) s.classList.add('used'); }, { passive: true });
+    return;
+  }
+  function phoneOpen(it, thumb) {
+    var r = thumb.getBoundingClientRect(), ratio = r.width / r.height || 1;
+    var vw = innerWidth, vh = innerHeight, fw = Math.min(vw * .92, vh * .8 * ratio), fh = fw / ratio;
+    var fin = { left: (vw - fw) / 2, top: (vh - fh) / 2 };
+    var o = document.createElement('div'); o.className = 'wall-ov'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-label', it.alt || 'Image');
+    o.innerHTML = '<div class="wall-ov-bg"></div><div class="wall-ov-frame"><img alt=""></div><button type="button" class="wall-ov-x" aria-label="Close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>' + (it.link ? '<a class="wall-ov-go"></a>' : '');
+    var fr = o.querySelector('.wall-ov-frame'), img = fr.querySelector('img'), x = o.querySelector('.wall-ov-x'), go = o.querySelector('.wall-ov-go');
+    img.src = it.thumb; img.alt = it.alt || '';
+    if (it.full !== it.thumb) { var hi = new Image(); hi.onload = function () { img.src = it.full; }; hi.src = it.full; }
+    fr.style.cssText = 'left:' + fin.left + 'px;top:' + fin.top + 'px;width:' + fw + 'px;height:' + fh + 'px;border-radius:14px;overflow:hidden';
+    var dx = r.left + r.width / 2 - vw / 2, dy = r.top + r.height / 2 - vh / 2, k = r.width / fw;
+    fr.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')';
+    x.style.top = Math.max(12, fin.top - 60) + 'px'; x.style.right = '16px';
+    if (go) { go.href = it.link; go.textContent = CFG.buttonLabel; go.style.left = '50%'; go.style.top = Math.min(vh - 16, fin.top + fh + 64) + 'px'; }
+    document.body.appendChild(o);
+    o.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+    requestAnimationFrame(function () { requestAnimationFrame(function () { o.classList.add('open'); fr.style.transform = 'none'; x.focus({ preventScroll: true }); }); });
+    function close() { o.classList.remove('open'); o.style.pointerEvents = 'none'; fr.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')'; setTimeout(function () { o.remove(); }, 420); document.removeEventListener('keydown', esc); }
+    function esc(e) { if (e.key === 'Escape') close(); }
+    o.querySelector('.wall-ov-bg').addEventListener('click', close); fr.addEventListener('click', close); x.addEventListener('click', close); document.addEventListener('keydown', esc);
+  }
+
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
   function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a || 1; }
   function hashGrid(x, y) {
