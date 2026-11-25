@@ -292,7 +292,10 @@
       // meant to scroll the page. Only a clearly sideways swipe takes the wall.
       if (Math.hypot(dx, dy) < 10) return;
       var side = Math.abs(dx) > Math.abs(dy) * 1.5;
-      touchOwner = side || (dy < 0 && Math.abs(dy) >= Math.abs(dx) && atPageEnd()) ? 'wall' : 'page';
+      // Touch: only a sideways swipe takes the wall, and it then moves on the x
+      // axis only. Vertical swipes always scroll the page, so the tiles never
+      // jerk up or down under the thumb.
+      touchOwner = side ? 'wall' : 'page';
     }
     if (touchOwner === 'wall' && e.cancelable) e.preventDefault();
   }, { passive: false });
@@ -315,6 +318,7 @@
     if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 10) didDrag = true;
     var dx = down.lx - e.clientX, dy = down.ly - e.clientY; down.lx = e.clientX; down.ly = e.clientY;
     if (e.pointerType === 'touch' && touchOwner !== 'wall') return;
+    if (e.pointerType === 'touch') dy = 0;
     off.x += dx; off.y += dy; target.x = off.x; target.y = off.y; dirty = true;
     var now = performance.now(); samples.push({ t: now, x: off.x, y: off.y });
     while (samples.length > 2 && now - samples[0].t > 100) samples.shift();
@@ -323,7 +327,7 @@
     if (e.pointerId !== ptr) return;
     var now = performance.now(), a = samples[0], b = samples[samples.length - 1];
     if (e.type === 'pointerup' && a && b && now - b.t < 80 && b.t - a.t > 0) {
-      var span = b.t - a.t; mom.x = clamp((b.x - a.x) / span, -4, 4); mom.y = clamp((b.y - a.y) / span, -4, 4);
+      var span = b.t - a.t; mom.x = clamp((b.x - a.x) / span, -4, 4); mom.y = e.pointerType === 'touch' ? 0 : clamp((b.y - a.y) / span, -4, 4);
     }
     if (e.type === 'pointerup' && !didDrag) {
       var r = root.getBoundingClientRect(); pending = pick(e.clientX - r.left, e.clientY - r.top);

@@ -771,3 +771,6 @@ body > p.sr{position:fixed!important;top:0;left:0}
 /* Assistant cursor only appears while it has a note to say */
 .mp-genc{opacity:0;transition:opacity .25s}
 .mp-genc.here{opacity:1}
+
+/* Phones: every phone-screen strip uses the same screen size (2026-11-25) */
+@media (max-width:767px){.v2.cs .phones.three{grid-auto-columns:72vw;gap:16px}.v2.cs .phones,.v2.cs .phones.two{gap:16px}.v2 .story-phones{gap:16px}}
