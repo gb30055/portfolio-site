@@ -470,3 +470,12 @@ html.hdr-dark .top nav .nav-cv:hover{background:rgba(255,255,255,.08)}
 .top{transition:transform .35s cubic-bezier(.2,.7,.2,1),padding .25s}
 html.hdr-hide .top{transform:translateY(-110%)}
 @media (prefers-reduced-motion:reduce){.top{transition:none}}
+
+/* Closing: small AI line, big call to direct (2026-11-25) */
+.wall-talk .talk-card .talk-ai{margin:0 0 18px;font:400 clamp(16px,1.55vw,22px)/1.35 var(--sans);letter-spacing:-.005em;color:#d4d4da}
+.wall-talk .talk-card h2{max-width:none;font-size:clamp(34px,4.6vw,60px)}
+.wall-talk .talk-card .talk-ai{text-wrap:balance}
+.wall-talk .talk-card h2{text-wrap:balance}
+.wall-talk .talk-card .talk-btns{margin-top:36px}
+@media (min-width:700px){.wall-sec .talk-card,.talk-card{max-width:1100px}.wall-talk .talk-card h2{white-space:nowrap}}
+@media (max-width:699px){.wall-talk .talk-card .talk-ai{margin-bottom:12px;font-size:16px}.wall-talk .talk-card h2{font-size:36px}.wall-talk .talk-card .talk-btns{margin-top:28px}}
