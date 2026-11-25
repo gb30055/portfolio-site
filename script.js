@@ -139,6 +139,10 @@ var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classLis
   if(!top) return;
   var html=document.documentElement;
   var dark=document.querySelector('.ms-card');
-  function onScroll(){ html.classList.toggle('hdr-stuck', scrollY>8); if(dark) html.classList.toggle('hdr-dark', dark.getBoundingClientRect().top < top.offsetHeight/2); }
+  var lastY=scrollY;
+  function onScroll(){ var y=scrollY, d=y-lastY;
+    if(Math.abs(d)>6){ html.classList.toggle('hdr-hide', d>0 && y>top.offsetHeight && !top.contains(document.activeElement)); lastY=y; }
+    if(y<=8) html.classList.remove('hdr-hide');
+    html.classList.toggle('hdr-stuck', y>8); if(dark) html.classList.toggle('hdr-dark', dark.getBoundingClientRect().top < top.offsetHeight/2); }
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 })();

@@ -465,3 +465,8 @@ html.hdr-dark .top nav .nav-cv:hover{background:rgba(255,255,255,.08)}
   .talk-card::after{display:none}
   .wall-sec .talk-card,.talk-card{padding:0}
 }
+
+/* Header hides on scroll down, returns on scroll up */
+.top{transition:transform .35s cubic-bezier(.2,.7,.2,1),padding .25s}
+html.hdr-hide .top{transform:translateY(-110%)}
+@media (prefers-reduced-motion:reduce){.top{transition:none}}
