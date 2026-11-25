@@ -6,7 +6,8 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Gentle rise-in for phone rows and big moments (A and C)
   if('IntersectionObserver' in window&&!reduce){
-    var els=document.querySelectorAll('.phones figure, .cs-body h2, .big-stat, ul.decisions li');
+    // Phones: screens in sideways strips never animate (rising as they slide in looked like a vertical drag).
+    var els=document.querySelectorAll(matchMedia('(max-width:767px)').matches?'.cs-body h2, .big-stat, ul.decisions li':'.phones figure, .cs-body h2, .big-stat, ul.decisions li');
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
     els.forEach(function(el,i){el.classList.add('reveal');el.style.transitionDelay=(el.matches('.phones figure')?(Array.prototype.indexOf.call(el.parentNode.children,el)*80):0)+'ms';io.observe(el);});
   }

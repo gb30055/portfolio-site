@@ -788,3 +788,5 @@ html.hdr-hide .cs .top{transform:translateY(-110%)}
 /* 2026-11-25: main header is not sticky on case pages; only the section tabs stick (they hide/return on phones) */
 .cs .top{position:relative;transform:none!important}
 .v2 .chapters{top:0}
+/* Phones: reveals fade only, no upward slide (2026-11-25) */
+@media (max-width:767px){.reveal{transform:none!important}}
