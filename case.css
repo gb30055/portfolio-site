@@ -785,3 +785,6 @@ html.hdr-hide .cs .top{transform:translateY(-110%)}
   html.hdr-hide .v2 .chapters{transform:translateY(-110%)}
   .v2 .chapters .ch-tabs{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent);padding:0 14px;scroll-padding:0 14px}
 }
+/* 2026-11-25: main header is not sticky on case pages; only the section tabs stick (they hide/return on phones) */
+.cs .top{position:relative;transform:none!important}
+.v2 .chapters{top:0}

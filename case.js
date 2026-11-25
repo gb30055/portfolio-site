@@ -371,7 +371,7 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
 /* Header hides on scroll down, returns on scroll up; section tabs sit under it */
 (function(){var top=document.querySelector('.top'),html=document.documentElement;if(!top)return;
   var lastY=scrollY;
-  function sync(){var hidden=html.classList.contains('hdr-hide');html.style.setProperty('--hdr-h',hidden?'0px':top.offsetHeight+'px')}
+  function sync(){}
   function onScroll(){var y=scrollY,d=y-lastY;
     if(Math.abs(d)>6){html.classList.toggle('hdr-hide',d>0&&y>top.offsetHeight&&!top.contains(document.activeElement));lastY=y;}
     if(y<=8)html.classList.remove('hdr-hide');sync();}
