@@ -774,3 +774,9 @@ body > p.sr{position:fixed!important;top:0;left:0}
 
 /* Phones: every phone-screen strip uses the same screen size (2026-11-25) */
 @media (max-width:767px){.v2.cs .phones.three{grid-auto-columns:72vw;gap:16px}.v2.cs .phones,.v2.cs .phones.two{gap:16px}.v2 .story-phones{gap:16px}}
+
+/* Case pages: header sticks, hides on scroll down, returns on scroll up (2026-11-25) */
+.cs .top{position:sticky;top:0;z-index:60;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+html.hdr-hide .cs .top{transform:translateY(-110%)}
+.v2 .chapters{top:var(--hdr-h,0px);transition:top .35s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){.cs .top,.v2 .chapters{transition:none}}

@@ -368,3 +368,11 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
     .then(loop,function(){})}
   if('IntersectionObserver' in window) new IntersectionObserver(function(es){var was=vis;vis=es[0].isIntersecting;if(vis&&!was)loop();else if(!vis){run++;ed.classList.remove('auto')}},{threshold:.4}).observe(ed);
 })();
+/* Header hides on scroll down, returns on scroll up; section tabs sit under it */
+(function(){var top=document.querySelector('.top'),html=document.documentElement;if(!top)return;
+  var lastY=scrollY;
+  function sync(){var hidden=html.classList.contains('hdr-hide');html.style.setProperty('--hdr-h',hidden?'0px':top.offsetHeight+'px')}
+  function onScroll(){var y=scrollY,d=y-lastY;
+    if(Math.abs(d)>6){html.classList.toggle('hdr-hide',d>0&&y>top.offsetHeight&&!top.contains(document.activeElement));lastY=y;}
+    if(y<=8)html.classList.remove('hdr-hide');sync();}
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',sync);onScroll();})();
