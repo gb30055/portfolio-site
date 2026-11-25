@@ -167,9 +167,9 @@ document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener(
   var box = document.createElement('div');
   box.className = 'lb'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Image viewer'); box.hidden = true;
   box.innerHTML = '<div class="lb-scroll"><img class="lb-img" alt=""></div>' +
-    '<button type="button" class="lb-btn lb-close" aria-label="Close">✕</button>' +
-    '<button type="button" class="lb-btn lb-prev" aria-label="Previous image">←</button>' +
-    '<button type="button" class="lb-btn lb-next" aria-label="Next image">→</button>' +
+    '<button type="button" class="lb-btn lb-close" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>' +
+    '<button type="button" class="lb-btn lb-prev" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg></button>' +
+    '<button type="button" class="lb-btn lb-next" aria-label="Next image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></button>' +
     '<p class="lb-cap"><span class="lb-n"></span><span class="lb-t"></span></p>';
   document.body.appendChild(box);
   var big = box.querySelector('.lb-img'), sc = box.querySelector('.lb-scroll'), cur = 0, last = null;
