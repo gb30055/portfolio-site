@@ -146,3 +146,9 @@ var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){l.classLis
     html.classList.toggle('hdr-stuck', y>8); if(dark) html.classList.toggle('hdr-dark', dark.getBoundingClientRect().top < top.offsetHeight/2); }
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 })();
+/* Archive navigator hint: fades after the first drag or tap */
+(function(){var s=document.querySelector('.wall-sec'),w=s&&s.querySelector('.wall');if(!w)return;
+  var sx,sy;function done(){s.classList.add('used')}
+  w.addEventListener('pointerdown',function(e){sx=e.clientX;sy=e.clientY},{passive:true});
+  w.addEventListener('pointermove',function(e){if(sx!=null&&Math.abs(e.clientX-sx)+Math.abs(e.clientY-sy)>12)done()},{passive:true});
+  w.addEventListener('click',done);w.addEventListener('wheel',done,{passive:true,once:true});})();

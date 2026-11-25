@@ -479,3 +479,10 @@ html.hdr-hide .top{transform:translateY(-110%)}
 .wall-talk .talk-card .talk-btns{margin-top:36px}
 @media (min-width:700px){.wall-sec .talk-card,.talk-card{max-width:1100px}.wall-talk .talk-card h2{white-space:nowrap}}
 @media (max-width:699px){.wall-talk .talk-card .talk-ai{margin-bottom:12px;font-size:16px}.wall-talk .talk-card h2{font-size:36px}.wall-talk .talk-card .talk-btns{margin-top:28px}}
+
+/* UX audit quick wins (2026-11-25) */
+.w-more{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:6px;font:600 15px/1 var(--sans);color:#111;text-decoration:none}
+.w-more span{transition:transform .2s}
+.w-sm:hover .w-more span,.w-more:hover span{transform:translateX(3px)}
+.wall-hint{position:absolute;top:28px;left:0;right:0;z-index:6;margin:0;text-align:center;font:500 14px/1.3 var(--sans);color:#8d8d97;pointer-events:none;transition:opacity .5s}
+.wall-sec.used .wall-hint{opacity:0}

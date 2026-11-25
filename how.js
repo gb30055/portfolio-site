@@ -17,17 +17,15 @@
   function count(f,on){var n=f.querySelector('.hd-num');if(!n)return;var u=f.querySelector('.hd-unit[data-on]');if(u)u.textContent=on?u.dataset.on:u.dataset.off;
     var a=+n.dataset.from,b=+n.dataset.to,p=n.dataset.plus;if(!on){var t=a;a=b;b=t;}
     if(reduce){n.textContent=b+(p&&b?'+':'');return}
-    var t0=null,dur=on?1100:500;cancelAnimationFrame(n._r);
+    var t0=null,dur=on?600:400;cancelAnimationFrame(n._r);
     (function st(t){t0=t0||t;var k=Math.min(1,(t-t0)/dur);k=1-Math.pow(1-k,3);
       var v=Math.round(a+(b-a)*k);n.textContent=v+(p&&k===1&&v===b&&b?'+':'');
       if(k<1)n._r=requestAnimationFrame(st)})(performance.now());}
   function set(f,on){f.classList.toggle('on',on);count(f,on)}
   if(reduce){figs.forEach(function(f){set(f,true)});return}
   var io=new IntersectionObserver(function(es){es.forEach(function(e){var f=e.target;
-    if(e.isIntersecting&&!f._t){var on=false,i=[].indexOf.call(figs,f);
-      var tick=function(){on=!on;set(f,on);f._t=setTimeout(tick,on?4200:1600)};
-      f._t=setTimeout(tick,500+i*350);}
-    else if(!e.isIntersecting&&f._t){clearTimeout(f._t);f._t=null;set(f,false)}})},{threshold:.4});
+    if(e.isIntersecting&&!f._done){f._done=1;io.unobserve(f);var i=[].indexOf.call(figs,f);
+      setTimeout(function(){set(f,true)},250+i*200);}})},{threshold:.4});
   figs.forEach(function(f){io.observe(f)});
 })();
 /* Typed greeting */
